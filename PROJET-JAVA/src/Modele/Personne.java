@@ -19,8 +19,24 @@ public class Personne {
         id_personne=id;
         nom=_nom;
         prenom=_prenom;
-        type=_type;
-               
+        type=_type;              
+    }
+    
+    //getters setters
+    public int getId(){
+        return id_personne;
+    }
+    
+    public String getNom(){
+        return nom;
+    }
+    
+    public String getPrenom(){
+        return prenom;
+    }
+    
+    public String getType(){
+        return type;
     }
     
 }

@@ -16,6 +16,7 @@ public class Inscription {
     
     public Inscription(){
         
+        
     }
     
 }

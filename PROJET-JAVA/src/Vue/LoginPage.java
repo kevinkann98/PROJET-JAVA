@@ -6,8 +6,11 @@
 package Vue;
 
 
+import Modele.Connexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -173,27 +176,7 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_motdepasseActionPerformed
 
     
-    //Retourne vrai si connexion reussie sinon false
-    boolean connectionOk(String username, String password, String server, String database){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database+"", username, password);
-            if(con!=null){
-                return true;
-            }
-            
-            else{
-                return false;
-            }
-            
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            return false;
-            
-        }
-        
-    }
+    
     
     //Vérifier les données de connexion
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -204,15 +187,12 @@ public class LoginPage extends javax.swing.JFrame {
         String password=motdepasse.getText();
         
         
-        //Verif de connexion
-        if(connectionOk(username,password,serveur,bdd)){
-           MenuPrincipal menuprincipal= new MenuPrincipal();
-           menuprincipal.setVisible(true);
-           dispose();
-            
-        }else{
+        if(Connexion.getConnection(username,password,serveur,bdd)){
+            MenuPrincipal menuprincipal= new MenuPrincipal();
+            menuprincipal.setVisible(true);
+            dispose();
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Identifiant ou mot de passe incorrect");
-            
         }
         
         

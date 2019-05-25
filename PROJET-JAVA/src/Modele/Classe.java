@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package Modele;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -15,5 +17,28 @@ public class Classe {
     private AnneeScolaire id_annee;
     private Ecole id_ecole;
     private Niveau id_niveau;
+    
+    public Classe(String _nom, AnneeScolaire _annee, Ecole _ecole, Niveau _niveau){
+        nom=_nom;
+        id_annee=_annee;
+        id_ecole=_ecole;
+        id_niveau=_niveau;
+        
+        
+        
+    }
+    
+    //Execute une requête et recupère les données de la table
+    public void getClasse(ResultSet rs) throws SQLException{
+        StringBuffer buffer= new StringBuffer();
+        
+        while(rs.next()){
+            buffer.append("ID:").append(rs.getInt("id_classe"));
+            
+            
+        
+    }
+        
+    }
     
 }
