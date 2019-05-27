@@ -6,13 +6,19 @@
 package Controleur;
 
 import Modele.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
  * @author kevin
  */
 public class ClasseDAO extends DAO<Classe>{
-
+    
+    public ClasseDAO() throws ClassNotFoundException, SQLException{
+        super();
+    }
+    
     @Override
     public Classe find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

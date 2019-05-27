@@ -190,17 +190,13 @@ public class LoginPage extends javax.swing.JFrame {
         Connexion.setPassword(motdepasse.getText());  
         
         
-        try {
-            if(Connexion.connectionOk()){
-                MenuPrincipal menuprincipal= new MenuPrincipal();
-                menuprincipal.setVisible(true);
-                dispose();
-                Personne.getAllPersonnes();
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Identifiant ou mot de passe incorrect");
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        if(Connexion.connect()!=null){
+            MenuPrincipal menuprincipal= new MenuPrincipal();
+            menuprincipal.setVisible(true);
+            dispose();
+            //Afficher les personnes
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Identifiant ou mot de passe incorrect");
         }
         
         

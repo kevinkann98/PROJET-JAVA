@@ -6,6 +6,7 @@
 package Controleur;
 
 import Modele.*;
+import static Modele.Connexion.*;
 import java.sql.*;
 
 /**
@@ -13,8 +14,14 @@ import java.sql.*;
  * @author kevin
  * @param <T>
  */
-public abstract class DAO <T>{
-    protected Connection con=Connexion.con; //Connexion à la bdd
+public abstract class DAO<T>{
+      
+    protected static Connection con=null;
+     
+     public DAO() throws ClassNotFoundException, SQLException{
+     Class.forName("com.mysql.jdbc.Driver");
+     con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd(), Connexion.getUsername(), Connexion.getPassword());   
+}
     
     /**
      * Retourne toutes les colonnes

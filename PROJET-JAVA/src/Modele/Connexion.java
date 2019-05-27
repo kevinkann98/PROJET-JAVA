@@ -15,10 +15,11 @@ import javax.swing.JOptionPane;
  * @author kevin
  */
 public class Connexion {
-    public static Connection con=null;
+    private static Connection con=null;
     public static Statement stmt=null;
     public static ResultSet rs=null;
     public static int rss=0;
+    
     private static String serveur;
     private static String bdd;
     private static String username;
@@ -27,24 +28,28 @@ public class Connexion {
     
 
     /**
-     * Retourne true si connexion reussie sinon false
+     * Retourne une connection
      * @return
      * @throws ClassNotFoundException
      */
-    static public boolean connectionOk() throws ClassNotFoundException{
-             
+    static public Connection connect(){
+                      
+        
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd, username, password);
                 
-        try{
-            Class.forName("com.mysql.jdbc.Driver");  
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd+"", username, password);
-            System.out.println("Connexion à la base "+bdd+" OK");            
-            return con!=null;
+                if(con!=null){
+                    System.out.println("Connexion à la base "+bdd+" OK");                     
+                }
+                
+            } catch (SQLException ex) {
+                System.out.println("Connection fail");
+            } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
             
-        }
-        catch(SQLException e){
-            return false;         
-        }
-        finally{
+            finally{
             if(con!=null){
                 try{
                     //Fermer la connexion
@@ -56,41 +61,9 @@ public class Connexion {
                 
             }
         }
-        
-    }
-    
-    /**
-     *
-     * @param sql Requete sql en param
-     * @throws java.sql.SQLException
-     * @throws java.lang.ClassNotFoundException
-     */
-    public static void executeSQL(String sql)throws SQLException, ClassNotFoundException{
-        try{
-            Class.forName("com.mysql.jdbc.Driver");  
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd, username, password);
-            
-            stmt=con.createStatement();
-            int rs=stmt.executeUpdate(sql);//Retourne le nbr de colonne affecté par le changement
-            
-            
-            if(rs!=0){
-                System.out.println("Ajoute OK");
-            }
-            else{ //Si aucune ligne est maj, lancer l'exception
-                throw new SQLException();
-            }
-            
-        }
-        catch(SQLException e){
-            System.out.println("OUPS");
-            
-        }
-    } 
-    
-    
-    
-    
+    return con;
+                          
+        }   
     
     //Getter setters
     public static Connection getCon() {
@@ -132,5 +105,31 @@ public class Connexion {
     public static void setPassword(String password) {
         Connexion.password = password;
     }  
+
+    public static Statement getStmt() {
+        return stmt;
+    }
+
+    public static void setStmt(Statement stmt) {
+        Connexion.stmt = stmt;
+    }
+
+    public static ResultSet getRs() {
+        return rs;
+    }
+
+    public static void setRs(ResultSet rs) {
+        Connexion.rs = rs;
+    }
+
+    public static int getRss() {
+        return rss;
+    }
+
+    public static void setRss(int rss) {
+        Connexion.rss = rss;
+    }
+    
+    
 }
 

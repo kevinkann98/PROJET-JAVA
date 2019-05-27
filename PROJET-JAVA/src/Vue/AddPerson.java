@@ -6,6 +6,7 @@
 package Vue;
 
 import Modele.Personne;
+import Controleur.*;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -151,9 +152,9 @@ public class AddPerson extends javax.swing.JFrame {
         String name=nom.getText();
         String prename=prenom.getText();
         String type="";
-        int id; //Generé aléatoirement
-        Random rand=new Random();
-        id=rand.nextInt(10000); //10000personnes max
+        int id=0; //Generé aléatoirement
+        //Random rand=new Random();
+        //id=rand.nextInt(10000); //10000personnes max
         
         if(etudiant.isSelected()){
             type="etudiant";
@@ -165,18 +166,22 @@ public class AddPerson extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane,"Erreur: Veuillez sélectionner un seul type");
         }
         
-        //Instancier la personne crééee puis l'ajouter à la bdd
+        //Instancier la personne crééee et la DAO associée
         Personne personne=new Personne(id,name,prename,type);
+        personne.afficher(); //Afficher en console
         
-        //personne.afficher(); //Afficher en console
-        
+        DAO<Personne> personneDAO;
         try {
-            personne.addPersonne();     
-            
-            
-        } catch (SQLException | ClassNotFoundException ex) {
+            personneDAO = new PersonneDAO();
+            personneDAO.create(personne);
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        
+        
+        
         
         
         

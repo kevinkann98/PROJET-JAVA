@@ -5,6 +5,7 @@
  */
 package Modele;
 
+import static Modele.Connexion.*;
 import java.sql.Connection;
 import java.sql.Statement;
 import Vue.LoginPage;
@@ -63,8 +64,8 @@ public class Personne {
         try{
             //Appel au module de connexion
             
-            stmt=Connexion.getCon().createStatement();
-            ResultSet rs=stmt.executeQuery("SELECT * FROM personne");
+            stmt=getCon().createStatement();
+            rs=stmt.executeQuery("SELECT * FROM personne");
             
             System.out.println("Voici les personnes:");
             while(rs.next()){
@@ -86,6 +87,7 @@ public class Personne {
      * @throws java.lang.ClassNotFoundException
      * @throws SQLException
      */
+ 
     
     
     
