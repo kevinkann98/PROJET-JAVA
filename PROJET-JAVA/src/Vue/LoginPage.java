@@ -7,8 +7,10 @@ package Vue;
 
 
 import Modele.Connexion;
+import Modele.Personne;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
  * @author kevin
  */
 public class LoginPage extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form LoginPage
@@ -181,18 +184,23 @@ public class LoginPage extends javax.swing.JFrame {
     //Vérifier les données de connexion
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String serveur=server.getText();
-        String bdd=database.getText();
-        String username=identifiant.getText();
-        String password=motdepasse.getText();
+        Connexion.setServeur(server.getText());
+        Connexion.setBdd(database.getText());
+        Connexion.setUsername(identifiant.getText());  
+        Connexion.setPassword(motdepasse.getText());  
         
         
-        if(Connexion.getConnection(username,password,serveur,bdd)){
-            MenuPrincipal menuprincipal= new MenuPrincipal();
-            menuprincipal.setVisible(true);
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Identifiant ou mot de passe incorrect");
+        try {
+            if(Connexion.connectionOk()){
+                MenuPrincipal menuprincipal= new MenuPrincipal();
+                menuprincipal.setVisible(true);
+                dispose();
+                Personne.getAllPersonnes();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Identifiant ou mot de passe incorrect");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         

@@ -16,5 +16,15 @@ public class AnneeScolaire {
     public AnneeScolaire(int anneeSco){
         id_anneeScolaire=anneeSco;
     }
+
+    public int getId_anneeScolaire() {
+        return id_anneeScolaire;
+    }
+
+    public void setId_anneeScolaire(int id_anneeScolaire) {
+        this.id_anneeScolaire = id_anneeScolaire;
+    }
+    
+    
     
 }

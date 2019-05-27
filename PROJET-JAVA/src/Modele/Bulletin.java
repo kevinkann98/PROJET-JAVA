@@ -11,9 +11,26 @@ package Modele;
  */
 public class Bulletin {
     private int id_bulletin;
-    private String appreciation;
+    private String appreciation;  
     private Trimestre id_trimestre;
     private Inscription id_inscription;
+
+    public int getId_bulletin() {
+        return id_bulletin;
+    }
+
+    public String getAppreciation() {
+        return appreciation;
+    }
+
+    public Trimestre getId_trimestre() {
+        return id_trimestre;
+    }
+
+    public Inscription getId_inscription() {
+        return id_inscription;
+    }
+    
     
     
     public Bulletin(int id, String _appreciation, Trimestre tri, Inscription inscription){

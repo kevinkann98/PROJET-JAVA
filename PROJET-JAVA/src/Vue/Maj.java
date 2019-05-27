@@ -10,6 +10,13 @@ package Vue;
  * @author kevin
  */
 public class Maj extends javax.swing.JFrame {
+    
+    //Variables statiques qui valent vrai si les boutons sont appuyés
+    public static boolean etudiants=false;
+    public static boolean enseignants=false;
+    public static boolean classes=false;
+    public static boolean bulletins=false;
+    
 
     /**
      * Creates new form Maj
@@ -27,30 +34,39 @@ public class Maj extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        etudiant = new javax.swing.JToggleButton();
+        enseignant = new javax.swing.JToggleButton();
+        classe = new javax.swing.JToggleButton();
+        bulletin = new javax.swing.JButton();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("jLabel1");
 
-        jButton1.setText("Ajouter une nouvelle personne");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Ajouter une nouvelle classe");
-
         jButton3.setText("Retour");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+
+        etudiant.setText("Gérer étudiants");
+        etudiant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                etudiantActionPerformed(evt);
             }
         });
+
+        enseignant.setText("Gérer enseignants");
+        enseignant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enseignantActionPerformed(evt);
+            }
+        });
+
+        classe.setText("Gérer classes");
+
+        bulletin.setText("Gérer bulletins");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,14 +78,16 @@ public class Maj extends javax.swing.JFrame {
                         .addGap(546, 546, 546)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(420, 420, 420)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton3)))
-                .addContainerGap(437, Short.MAX_VALUE))
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(513, 513, 513)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(enseignant)
+                            .addComponent(etudiant)
+                            .addComponent(classe)
+                            .addComponent(bulletin))))
+                .addContainerGap(528, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,29 +96,39 @@ public class Maj extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addGap(31, 31, 31)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(531, Short.MAX_VALUE))
+                .addGap(134, 134, 134)
+                .addComponent(etudiant)
+                .addGap(28, 28, 28)
+                .addComponent(enseignant)
+                .addGap(32, 32, 32)
+                .addComponent(classe)
+                .addGap(34, 34, 34)
+                .addComponent(bulletin)
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+    private void etudiantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_etudiantActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    //Retour à la page précédene (menu principal)
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
-        MenuPrincipal menuprincipal= new MenuPrincipal();
-        menuprincipal.setVisible(true);
+        etudiants=true;
+        Gerer gerer = new Gerer();
+        gerer.setVisible(true);
         dispose();
         
-    }//GEN-LAST:event_jButton3ActionPerformed
+        
+        
+    }//GEN-LAST:event_etudiantActionPerformed
+
+    private void enseignantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enseignantActionPerformed
+        // TODO add your handling code here:
+        enseignants=true;
+        Gerer gerer= new Gerer();
+        gerer.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_enseignantActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,6 +156,7 @@ public class Maj extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Maj.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -138,9 +167,12 @@ public class Maj extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton bulletin;
+    private javax.swing.JToggleButton classe;
+    private javax.swing.JToggleButton enseignant;
+    private javax.swing.JToggleButton etudiant;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
     // End of variables declaration//GEN-END:variables
 }

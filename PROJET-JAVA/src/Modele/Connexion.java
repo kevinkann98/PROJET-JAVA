@@ -5,9 +5,7 @@
  */
 package Modele;
 import Vue.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,15 +15,29 @@ import javax.swing.JOptionPane;
  * @author kevin
  */
 public class Connexion {
+    public static Connection con=null;
+    public static Statement stmt=null;
+    public static ResultSet rs=null;
+    public static int rss=0;
+    private static String serveur;
+    private static String bdd;
+    private static String username;
+    private static String password;  
+       
     
-    //Retourne vrai si connexion reussie sinon false
-    static boolean connectionOk(String username, String password, String server, String database) throws ClassNotFoundException{
-          Class.forName("com.mysql.jdbc.Driver");
-          Connection con = null;
-        
+
+    /**
+     * Retourne true si connexion reussie sinon false
+     * @return
+     * @throws ClassNotFoundException
+     */
+    static public boolean connectionOk() throws ClassNotFoundException{
+             
+                
         try{
-            
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+database+"", username, password);
+            Class.forName("com.mysql.jdbc.Driver");  
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd+"", username, password);
+            System.out.println("Connexion à la base "+bdd+" OK");            
             return con!=null;
             
         }
@@ -47,15 +59,78 @@ public class Connexion {
         
     }
     
-    //Verification des éléments de connexion à la bdd
-    public static boolean getConnection(String username, String password, String serveur, String bdd){
-        try {
-            //Verif de connexion
-            return connectionOk(username,password,serveur,bdd);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+    /**
+     *
+     * @param sql Requete sql en param
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public static void executeSQL(String sql)throws SQLException, ClassNotFoundException{
+        try{
+            Class.forName("com.mysql.jdbc.Driver");  
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd, username, password);
+            
+            stmt=con.createStatement();
+            int rs=stmt.executeUpdate(sql);//Retourne le nbr de colonne affecté par le changement
+            
+            
+            if(rs!=0){
+                System.out.println("Ajoute OK");
+            }
+            else{ //Si aucune ligne est maj, lancer l'exception
+                throw new SQLException();
+            }
+            
         }
-        return false;
-    }
+        catch(SQLException e){
+            System.out.println("OUPS");
+            
+        }
+    } 
     
+    
+    
+    
+    
+    //Getter setters
+    public static Connection getCon() {
+        return con;
+    }
+
+    public static void setCon(Connection con) {
+        Connexion.con = con;
+    }
+
+    public static String getServeur() {
+        return serveur;
+    }
+
+    public static void setServeur(String serveur) {
+        Connexion.serveur = serveur;
+    }
+
+    public static String getBdd() {
+        return bdd;
+    }
+
+    public static void setBdd(String bdd) {
+        Connexion.bdd = bdd;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        Connexion.username = username;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        Connexion.password = password;
+    }  
 }
+

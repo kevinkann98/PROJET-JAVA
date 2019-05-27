@@ -5,6 +5,13 @@
  */
 package Vue;
 
+import Modele.Personne;
+import java.sql.SQLException;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author kevin
@@ -61,6 +68,11 @@ public class AddPerson extends javax.swing.JFrame {
         });
 
         nom.setText("Nom");
+        nom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomActionPerformed(evt);
+            }
+        });
 
         prenom.setText("Prenom");
 
@@ -136,7 +148,43 @@ public class AddPerson extends javax.swing.JFrame {
     //Inscription d'une personne dans la bdd
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String name=nom.getText();
+        String prename=prenom.getText();
+        String type="";
+        int id; //Generé aléatoirement
+        Random rand=new Random();
+        id=rand.nextInt(10000); //10000personnes max
+        
+        if(etudiant.isSelected()){
+            type="etudiant";
+        }
+        else if (enseignant.isSelected()){
+            type="enseignant";
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane,"Erreur: Veuillez sélectionner un seul type");
+        }
+        
+        //Instancier la personne crééee puis l'ajouter à la bdd
+        Personne personne=new Personne(id,name,prename,type);
+        
+        //personne.afficher(); //Afficher en console
+        
+        try {
+            personne.addPersonne();     
+            
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomActionPerformed
 
     /**
      * @param args the command line arguments

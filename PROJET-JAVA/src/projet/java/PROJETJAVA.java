@@ -5,6 +5,10 @@
  */
 package projet.java;
 
+import Modele.*;
+import Vue.*;
+import java.sql.SQLException;
+
 /**
  *
  * @author kevin
@@ -13,9 +17,11 @@ public class PROJETJAVA {
 
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
      */
     public static void main(String[] args) {
         // TODO code application logic here
+      
     }
     
 }
