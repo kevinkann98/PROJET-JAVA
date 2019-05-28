@@ -43,7 +43,7 @@ public class Connexion {
                     System.out.println("Connexion à la base "+bdd+" OK");                     
                 }
                 
-            } catch (SQLException ex) {
+            } catch (SQLException e) {
                 System.out.println("Connection fail");
             } catch (ClassNotFoundException ex) {
             Logger.getLogger(Connexion.class.getName()).log(Level.SEVERE, null, ex);
