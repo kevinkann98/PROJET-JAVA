@@ -13,10 +13,33 @@ public class Niveau {
     private int id_niveau;
     private String nom;
     
+    public Niveau(){
+        
+    }
+    
     public Niveau(int id, String _nom){
         id_niveau=id;
         nom=_nom;
         
     }
+    
+    //Getters setters
+
+    public int getId_niveau() {
+        return id_niveau;
+    }
+
+    public void setId_niveau(int id_niveau) {
+        this.id_niveau = id_niveau;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    
     
 }

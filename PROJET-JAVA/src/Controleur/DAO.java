@@ -8,6 +8,7 @@ package Controleur;
 import Modele.*;
 import static Modele.Connexion.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,7 +28,7 @@ public abstract class DAO<T>{
      * Retourne toutes les colonnes
      * @return
      */
-    public abstract T all();
+    public abstract ArrayList<T> all();
     
     /**
      * Recup une colonne via l'id

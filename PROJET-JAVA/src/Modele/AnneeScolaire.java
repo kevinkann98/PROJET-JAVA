@@ -17,6 +17,8 @@ public class AnneeScolaire {
         id_anneeScolaire=anneeSco;
     }
 
+    
+    //Getters setters
     public int getId_anneeScolaire() {
         return id_anneeScolaire;
     }

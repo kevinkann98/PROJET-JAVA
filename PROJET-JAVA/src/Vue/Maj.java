@@ -49,6 +49,11 @@ public class Maj extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         jButton3.setText("Retour");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         etudiant.setText("Gérer étudiants");
         etudiant.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +134,13 @@ public class Maj extends javax.swing.JFrame {
         gerer.setVisible(true);
         dispose();
     }//GEN-LAST:event_enseignantActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        MenuPrincipal menuprincipal= new MenuPrincipal();
+        menuprincipal.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

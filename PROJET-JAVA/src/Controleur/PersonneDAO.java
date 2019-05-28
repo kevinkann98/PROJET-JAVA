@@ -8,6 +8,7 @@ package Controleur;
 import Modele.*;
 import static Modele.Connexion.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,14 +29,18 @@ public class PersonneDAO extends DAO<Personne>{
         Personne personne=new Personne();
         try{
             Connexion.stmt=this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            Connexion.rs=Connexion.getStmt().executeQuery("SELECT * FROM personne WHERE id_personne="+id); //Execution de la requête
+            rs=Connexion.getStmt().executeQuery("SELECT * FROM personne WHERE id_personne="+id); //Execution de la requête
             
             if(rs.first()){ //Instancier un objet Personne
-                personne=new Personne();
+                String nom=rs.getString("nom");
+                String prenom=rs.getString("prenom");
+                String type=rs.getString("type");
+                personne=new Personne(id,nom,prenom,type);
                 
             }
         }
         catch(SQLException e){
+            System.out.println("Non trouvé...");
         }
         
         return personne;
@@ -47,7 +52,7 @@ public class PersonneDAO extends DAO<Personne>{
     public Personne create(Personne personne) { 
         try {
                        
-        //Crée une personne et l'ajoute dans la bdd       
+            
         //Crer un id 
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
         
@@ -60,18 +65,20 @@ public class PersonneDAO extends DAO<Personne>{
         
         if(prepare!=null){
             System.out.println("Personne ajoutée dans la base.");
+            
+            //Retourner la personne avec l'id
+           rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom="+personne.getNom()+"AND prenom="+personne.getPrenom()+"AND type="+personne.getType());
+
+           if(rs.first()){
+               int id=rs.getInt("id_personne");
+               personne.setId(id);
+           }
         }
+        
         else{
             throw new SQLException();       
         }
-              
-        //Retourner la personne avec l'id
-       rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom="+personne.getNom()+"AND prenom="+personne.getPrenom()+"AND type="+personne.getType());
-       
-       if(rs.first()){
-           int id=rs.getInt("id_personne");
-           personne.setId(id);
-       }
+  
         
         } catch (SQLException ex) {
             Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,22 +86,65 @@ public class PersonneDAO extends DAO<Personne>{
         return personne;       
     }
 
+    
     @Override
     public void delete(Personne obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            
+            rss=stmt.executeUpdate("DELETE FROM personne WHERE id_personne="+obj.getId());
+            if(rss!=0){
+                System.out.println(obj.getId()+obj.getNom()+"a été supprimé.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    
     @Override
     public Personne update(Personne obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+            rss=stmt.executeUpdate("UPDATE personne SET nom='"+obj.getNom()+"'"+" WHERE id_personne="+obj.getId()); //modifier le nom à partir de l'id
+            
+            obj=this.find(obj.getId()); //retourner l'objet modifié
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return obj;
+        
     }
 
     @Override
     
-    public Personne all() {
+    //Retourne toutes les personnes
+    public ArrayList<Personne> all() {
         
-        return null;
-       
+        ArrayList<Personne> all= new ArrayList();
+        Personne personne=new Personne();
+        try {
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);           
+            rs=stmt.executeQuery("SELECT * FROM personne");
+            
+            while(rs.next()){
+                int id=rs.getInt("id_personne");
+                String nom=rs.getString("nom");
+                String prenom=rs.getString("prenom");
+                String type=rs.getString("type");
+                personne=new Personne();
+                
+                all.add(personne);
+            }
+            
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return all;       
     }
     
     

@@ -46,7 +46,10 @@ public class Personne {
         type=_type;              
     }
     
-    //Afficher les infos de la personne
+
+    /**
+     Affiche les caractéristiques de la personne
+     */
     public void afficher(){
         System.out.println("Voici la personne: ");
         System.out.println(id_personne);

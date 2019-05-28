@@ -10,11 +10,28 @@ package Modele;
  * @author kevin
  */
 public class Bulletin {
-    private int id_bulletin;
-    private String appreciation;  
-    private Trimestre id_trimestre;
-    private Inscription id_inscription;
+    private final int id_bulletin;
+    private final String appreciation;  
+    private final Trimestre trimestre;
+    private final Inscription inscription;
 
+    //Constructeur par défaut
+    public Bulletin(){
+        id_bulletin=0;
+        appreciation="";
+        trimestre=null;
+        inscription=null;
+        
+    }
+    
+    //Constructeur surchargé
+    public Bulletin(int id, String _appreciation, Trimestre tri, Inscription _inscription){
+        id_bulletin=id;
+        appreciation=_appreciation;
+        trimestre=tri;
+        inscription=_inscription;
+    }
+    
     public int getId_bulletin() {
         return id_bulletin;
     }
@@ -23,22 +40,14 @@ public class Bulletin {
         return appreciation;
     }
 
-    public Trimestre getId_trimestre() {
-        return id_trimestre;
+    public Trimestre getTrimestre() {
+        return trimestre;
     }
 
-    public Inscription getId_inscription() {
-        return id_inscription;
+    public Inscription getInscription() {
+        return inscription;
     }
     
-    
-    
-    public Bulletin(int id, String _appreciation, Trimestre tri, Inscription inscription){
-        id_bulletin=id;
-        appreciation=_appreciation;
-        id_trimestre=tri;
-        id_inscription=inscription;
-    }
     
     
 }

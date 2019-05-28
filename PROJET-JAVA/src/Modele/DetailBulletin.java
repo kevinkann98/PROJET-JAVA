@@ -12,7 +12,61 @@ package Modele;
 public class DetailBulletin {
     private int id_detail;
     private String appreciation;
-    private Bulletin id_bulletin;
-    private Enseignement id_enseignement;
+    
+    //Clés étrangères
+    private Bulletin bulletin;
+    private Enseignement enseignement;
+    
+    public DetailBulletin(){
+        id_detail=0;
+        appreciation="";
+        bulletin=null;
+        enseignement=null;
+    }
+
+    public DetailBulletin(int id_detail, String appreciation, Bulletin bulletin, Enseignement enseignement) {
+        this.id_detail = id_detail;
+        this.appreciation = appreciation;
+        this.bulletin = bulletin;
+        this.enseignement = enseignement;
+    }
+
+    //Getters setters
+    
+    public int getId_detail() {
+        return id_detail;
+    }
+
+    public void setId_detail(int id_detail) {
+        this.id_detail = id_detail;
+    }
+
+    public String getAppreciation() {
+        return appreciation;
+    }
+
+    public void setAppreciation(String appreciation) {
+        this.appreciation = appreciation;
+    }
+
+    public Bulletin getBulletin() {
+        return bulletin;
+    }
+
+    public void setBulletin(Bulletin bulletin) {
+        this.bulletin = bulletin;
+    }
+
+    public Enseignement getEnseignement() {
+        return enseignement;
+    }
+
+    public void setEnseignement(Enseignement enseignement) {
+        this.enseignement = enseignement;
+    }
+    
+    
+    
+    
     
 }
