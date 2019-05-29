@@ -5,8 +5,12 @@
  */
 package Controleur;
 
-import Modele.Bulletin;
+import Modele.*;
+import static Modele.Connexion.*;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,5 +42,6 @@ public class BulletinDAO extends DAO<Bulletin>{
     public Bulletin update(Bulletin obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     
 }

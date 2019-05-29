@@ -38,5 +38,5 @@ public class DetailBulletinDAO extends DAO<DetailBulletin>{
     public DetailBulletin update(DetailBulletin obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+  
 }

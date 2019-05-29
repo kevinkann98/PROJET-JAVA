@@ -30,14 +30,15 @@ public class Classe {
         
     }
     //Constructeur surcchargé
-    public Classe(String _nom, AnneeScolaire _annee, Ecole _ecole, Niveau _niveau){
+    public Classe(int _id,String _nom, AnneeScolaire _annee, Ecole _ecole, Niveau _niveau){
+        id_classe=_id;
         nom=_nom;
         annee=_annee;
         ecole=_ecole;
         niveau=_niveau;
-     
-        
+           
     }
+
 
     //Getters setters
 

@@ -108,7 +108,12 @@ public class PersonneDAO extends DAO<Personne>{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE); 
             rss=stmt.executeUpdate("UPDATE personne SET nom='"+obj.getNom()+"'"+" WHERE id_personne="+obj.getId()); //modifier le nom à partir de l'id
             
+            if(rss!=0){
             obj=this.find(obj.getId()); //retourner l'objet modifié
+            }
+            else{
+                throw new SQLException();
+            }
             
             
         } catch (SQLException ex) {

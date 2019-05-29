@@ -41,6 +41,9 @@ public class Connexion {
                 
                 if(con!=null){
                     System.out.println("Connexion à la base "+bdd+" OK");                     
+                } 
+                else{
+                    throw new ClassNotFoundException();
                 }
                 
             } catch (SQLException e) {

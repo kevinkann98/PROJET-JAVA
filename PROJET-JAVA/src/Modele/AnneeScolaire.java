@@ -12,6 +12,9 @@ package Modele;
 public class AnneeScolaire {
     private int id_anneeScolaire;
     
+    public AnneeScolaire(){
+        id_anneeScolaire=0;
+    }
     //Constructeur surchargé
     public AnneeScolaire(int anneeSco){
         id_anneeScolaire=anneeSco;

@@ -27,18 +27,42 @@ public class ClasseDAO extends DAO<Classe>{
     public Classe find(int id) {
         Classe classe=new Classe();
         
+        AnneeScolaire annee=new AnneeScolaire();
+        Ecole ecole=new Ecole();
+        Niveau niveau=new Niveau();
+        
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             
             rs=stmt.executeQuery("SELECT * FROM classe WHERE id_classe="+id);
             
             if(rs.first()){
-                rs.getInt("id_classe");
-                rs.getString("nom");
-                rs.getInt("id_annee");
-                rs.getInt("id_ecole");
-                rs.getInt("id_niveau");
                 
+                String nom=rs.getString("nom");
+                
+                //Instancier une annee
+                int id_annee=rs.getInt("id_annee");
+                annee=new AnneeScolaire(id_annee);
+       
+                //Instancier une ecole
+                int id_ecole=rs.getInt("id_ecole");
+                ResultSet rs1=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id_ecole);
+                if(rs1.first()){
+                    String nom_ecole= rs1.getString("nom");
+                    ecole=new Ecole(id_ecole,nom_ecole);
+                }
+                
+                //Instancier un niveau
+                int id_niveau=rs.getInt("id_niveau");
+                rs1=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id_niveau);
+                if(rs1.first()){
+                    String nom_niveau=rs1.getString("nom");
+                    niveau=new Niveau(id_niveau,nom_niveau);               
+                    
+                }
+                
+                //Instancier la classe puis la retourner
+                classe=new Classe(id,nom,annee,ecole,niveau);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,18 +113,93 @@ public class ClasseDAO extends DAO<Classe>{
     }
 
     @Override
-    public void delete(Classe obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Classe classe) {
+        try {
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            
+            rss=stmt.executeUpdate("DELETE FROM classe WHERE id_classe="+classe.getId_classe());
+            
+            if(rss!=0){
+                System.out.println(classe.getId_classe()+classe.getNom()+" a ete supprimé.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }
 
     @Override
-    public Classe update(Classe obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Classe update(Classe classe) {
+        try {
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            
+            rss=stmt.executeUpdate("UPDATE classe SET nom="+classe.getNom()+"WHERE id_classe="+classe.getId_classe());
+            
+            if(rss!=0){
+                classe=find(classe.getId_classe());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return classe;
+               
     }
 
     @Override
     public ArrayList<Classe> all() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Classe> all= new ArrayList<Classe>();
+        try {
+            
+            Classe classe=new Classe();
+            
+            AnneeScolaire annee=new AnneeScolaire();
+            Ecole ecole=new Ecole();
+            Niveau niveau=new Niveau();
+            
+            ResultSet rs1;
+            
+            
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            
+            rs=stmt.executeQuery("SELECT * FROM classe");
+            
+            while(rs.next()){
+                int id=rs.getInt("id_classe");
+                String nom=rs.getString("nom");
+                
+                //Instancier une annee 
+                int id_annee=rs.getInt("id_annee");  
+                annee=new AnneeScolaire(id_annee);
+                
+                //Instancier une ecole
+                int id_ecole=rs.getInt("id_ecole");
+                rs1=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id_ecole);
+                if(rs1.first()){
+                    String nom_ecole=rs1.getString("nom");
+                    ecole=new Ecole(id_ecole,nom_ecole);
+                }
+                
+                //Instancier un niveau
+                int id_niveau=rs.getInt("id_niveau");
+                rs1=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id_niveau);
+                if(rs1.first()){
+                    String nom_niveau=rs1.getString("nom");
+                    niveau = new Niveau(id_niveau,nom_niveau);
+                }
+                
+                //Instancier la classe puis l'Array de liste de toutes les classes trouvées
+                classe=new Classe(id,nom,annee,ecole,niveau);
+                all.add(classe);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return all;
+              
     }
     
     

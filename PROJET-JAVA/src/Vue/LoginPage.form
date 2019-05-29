@@ -42,8 +42,10 @@
                           <Component id="identifiant" min="-2" pref="156" max="-2" attributes="0"/>
                           <Component id="motdepasse" min="-2" max="-2" attributes="0"/>
                           <Component id="pswforgot" min="-2" max="-2" attributes="0"/>
-                          <Component id="server" min="-2" max="-2" attributes="0"/>
-                          <Component id="database" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="server" alignment="0" max="32767" attributes="0"/>
+                              <Component id="database" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace pref="91" max="32767" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
