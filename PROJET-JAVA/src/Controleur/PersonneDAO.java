@@ -26,6 +26,7 @@ public class PersonneDAO extends DAO<Personne>{
     @Override
     
     public Personne find(int id) {
+
         Personne personne=new Personne();
         try{
             Connexion.stmt=this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -35,6 +36,7 @@ public class PersonneDAO extends DAO<Personne>{
                 String nom=rs.getString("nom");
                 String prenom=rs.getString("prenom");
                 String type=rs.getString("type");
+                
                 personne=new Personne(id,nom,prenom,type);
                 
             }
@@ -51,8 +53,7 @@ public class PersonneDAO extends DAO<Personne>{
     @Override
     public Personne create(Personne personne) { 
         try {
-                       
-            
+                                  
         //Crer un id 
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
         
@@ -64,15 +65,17 @@ public class PersonneDAO extends DAO<Personne>{
         prepare.executeUpdate();
         
         if(prepare!=null){
-            System.out.println("Personne ajoutée dans la base.");
-            
+           /* 
             //Retourner la personne avec l'id
            rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom="+personne.getNom()+"AND prenom="+personne.getPrenom()+"AND type="+personne.getType());
 
            if(rs.first()){
                int id=rs.getInt("id_personne");
-               personne.setId(id);
+               personne.setId(id);            
            }
+           else{
+               throw new SQLException(); 
+           }*/
         }
         
         else{
@@ -81,7 +84,8 @@ public class PersonneDAO extends DAO<Personne>{
   
         
         } catch (SQLException ex) {
-            Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("OUPS");
+            
         }
         return personne;       
     }
@@ -123,34 +127,27 @@ public class PersonneDAO extends DAO<Personne>{
         
     }
 
-    @Override
-    
-    //Retourne toutes les personnes
     public ArrayList<Personne> all() {
         
-        ArrayList<Personne> all= new ArrayList();
-        Personne personne=new Personne();
+        ArrayList<Personne> all= new ArrayList<Personne>();
+        
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);           
-            rs=stmt.executeQuery("SELECT * FROM personne");
+            ResultSet rs1=stmt.executeQuery("SELECT * FROM personne");
             
-            while(rs.next()){
-                int id=rs.getInt("id_personne");
-                String nom=rs.getString("nom");
-                String prenom=rs.getString("prenom");
-                String type=rs.getString("type");
-                personne=new Personne();
+            while(rs1.next()){
+                int id=rs1.getInt("id_personne");                
                 
-                all.add(personne);
+                Personne personne=new Personne();
+                personne=this.find(id);
+                all.add(personne);   
             }
-            
-
-            
+                     
         } catch (SQLException ex) {
             Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return all;       
     }
-    
+
     
 }

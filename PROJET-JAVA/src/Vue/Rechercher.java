@@ -8,9 +8,15 @@ package Vue;
 import Controleur.PersonneDAO;
 import Modele.Personne;
 import static com.sun.jmx.mbeanserver.Util.cast;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -23,6 +29,8 @@ public class Rechercher extends javax.swing.JFrame {
      */
     public Rechercher() {
         initComponents();
+       
+        
     }
 
     /**
@@ -34,80 +42,142 @@ public class Rechercher extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        id_personne = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        etudiant = new javax.swing.JButton();
+        enseignant = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Rechercher");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("Classes");
+
+        etudiant.setText("Etudiants");
+        etudiant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                etudiantActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Rechercher par ID:");
-
-        id_personne.setText("ID");
-        id_personne.addActionListener(new java.awt.event.ActionListener() {
+        enseignant.setText("Enseignants");
+        enseignant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                id_personneActionPerformed(evt);
+                enseignantActionPerformed(evt);
             }
         });
+
+        jTable1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setRowHeight(30);
+        jTable1.setRowMargin(0);
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addComponent(jLabel2)
-                .addGap(96, 96, 96)
-                .addComponent(id_personne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84)
-                .addComponent(jButton1)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134)
+                        .addComponent(etudiant, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(156, 156, 156)
+                        .addComponent(enseignant, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1071, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(362, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel2)
-                    .addComponent(id_personne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(629, Short.MAX_VALUE))
+                    .addComponent(jButton2)
+                    .addComponent(etudiant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(enseignant))
+                .addGap(59, 59, 59)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(246, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void id_personneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_personneActionPerformed
+    //Récuperer les enseignants
+    private void enseignantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enseignantActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_id_personneActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Personne personne=new Personne();
+        ArrayList<Personne> personnes= new ArrayList();       
+        PersonneDAO personnesDAO;
+        
+        String [] entites={"id","nom","prenom","type"};
+        DefaultTableModel tableModel= new DefaultTableModel(entites,0);
+        
         try {
-            PersonneDAO personneDAO=new PersonneDAO();
-            String idString=id_personne.getText();
-            int id=Integer.parseInt(idString);
             
-            personne=personneDAO.find(id);
+            personnesDAO = new PersonneDAO();
+            //On récupère tout le monde
+            personnes=personnesDAO.all();
             
-            personne.afficher();
+            jTable1=new JTable(tableModel);
+
+            pack();
+            
+            for(int i=0;i<personnes.size();i++){
+                int id=personnes.get(i).getId();
+                String nom=personnes.get(i).getNom();
+                String prenom=personnes.get(i).getPrenom();
+                String type=personnes.get(i).getType();
+                
+                Object[] pers={id,nom,prenom,type};
+                tableModel.addRow(pers);
+
+                
+            }
+            
+            
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Rechercher.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_enseignantActionPerformed
+
+    
+    //Récupérer tous les étudiants
+    private void etudiantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_etudiantActionPerformed
+        // TODO add your handling code here:
+        
+        ArrayList<Personne> personnes= new ArrayList();       
+        PersonneDAO personnesDAO;
+        try {
+            personnesDAO = new PersonneDAO();
+            //On récupère tout le monde
+            personnes=personnesDAO.all();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Rechercher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_etudiantActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException, SQLException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -135,13 +205,20 @@ public class Rechercher extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Rechercher().setVisible(true);
+                
             }
         });
+       
+        
+        
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField id_personne;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton enseignant;
+    private javax.swing.JButton etudiant;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

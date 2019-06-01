@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author kevin
+ * Ajoute une personne dans la bdd (etudiant/enseignant)
  */
 public class AddPerson extends javax.swing.JFrame {
 
@@ -169,7 +170,6 @@ public class AddPerson extends javax.swing.JFrame {
         
         //Instancier la personne crééee et la DAO associée
         Personne personne=new Personne(id,name,prename,type);
-        personne.afficher(); //Afficher en console
         
         DAO<Personne> personneDAO;
         try {
@@ -177,14 +177,7 @@ public class AddPerson extends javax.swing.JFrame {
             personneDAO.create(personne);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-        
-        
-        
+        }       
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

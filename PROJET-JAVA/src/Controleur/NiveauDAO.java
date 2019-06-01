@@ -6,6 +6,7 @@
 package Controleur;
 
 import Modele.Niveau;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,10 @@ import java.util.ArrayList;
  * @author kevin
  */
 public class NiveauDAO extends DAO<Niveau>{
+    
+    public NiveauDAO() throws ClassNotFoundException, SQLException{
+        super();
+    }
 
     @Override
     public ArrayList<Niveau> all() {

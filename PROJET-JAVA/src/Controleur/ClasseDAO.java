@@ -89,7 +89,7 @@ public class ClasseDAO extends DAO<Classe>{
             prepare.executeUpdate();
             
             if(prepare!=null){
-            System.out.println("Classe ajoutée dans la base.");
+                /*
             
             //Retourner la personne avec l'id
            rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom="+nom+"AND id_annee="+id_annee+"AND id_niveau="+id_niveau);
@@ -97,7 +97,7 @@ public class ClasseDAO extends DAO<Classe>{
            if(rs.first()){
                int id=rs.getInt("id_classe");
                classe.setId_classe(id);
-           }
+           }*/
         }
         
         else{
@@ -162,34 +162,16 @@ public class ClasseDAO extends DAO<Classe>{
             
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             
-            rs=stmt.executeQuery("SELECT * FROM classe");
+            rs1=stmt.executeQuery("SELECT * FROM classe");
             
-            while(rs.next()){
-                int id=rs.getInt("id_classe");
-                String nom=rs.getString("nom");
+            while(rs1.next()){
+                int id=rs1.getInt("id_classe");
                 
-                //Instancier une annee 
-                int id_annee=rs.getInt("id_annee");  
-                annee=new AnneeScolaire(id_annee);
-                
-                //Instancier une ecole
-                int id_ecole=rs.getInt("id_ecole");
-                rs1=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id_ecole);
-                if(rs1.first()){
-                    String nom_ecole=rs1.getString("nom");
-                    ecole=new Ecole(id_ecole,nom_ecole);
-                }
-                
-                //Instancier un niveau
-                int id_niveau=rs.getInt("id_niveau");
-                rs1=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id_niveau);
-                if(rs1.first()){
-                    String nom_niveau=rs1.getString("nom");
-                    niveau = new Niveau(id_niveau,nom_niveau);
-                }
                 
                 //Instancier la classe puis l'Array de liste de toutes les classes trouvées
-                classe=new Classe(id,nom,annee,ecole,niveau);
+                classe=new Classe();
+                classe=this.find(id);
+                
                 all.add(classe);
                 
             }

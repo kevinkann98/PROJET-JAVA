@@ -6,6 +6,7 @@
 package Controleur;
 
 import Modele.Trimestre;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,10 @@ import java.util.ArrayList;
  * @author kevin
  */
 public class TrimestreDAO extends DAO<Trimestre>{
+    
+    public TrimestreDAO() throws ClassNotFoundException, SQLException{
+        super();
+    }
 
     @Override
     public ArrayList<Trimestre> all() {

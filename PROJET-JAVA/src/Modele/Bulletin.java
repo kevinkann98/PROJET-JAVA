@@ -10,7 +10,7 @@ package Modele;
  * @author kevin
  */
 public class Bulletin {
-    private final int id_bulletin;
+    private int id_bulletin;
     private final String appreciation;  
     private final Trimestre trimestre;
     private final Inscription inscription;
@@ -35,6 +35,10 @@ public class Bulletin {
     public int getId_bulletin() {
         return id_bulletin;
     }
+    
+    public void setId_bulletin(int id){
+        id_bulletin=id;
+    }
 
     public String getAppreciation() {
         return appreciation;
@@ -47,6 +51,8 @@ public class Bulletin {
     public Inscription getInscription() {
         return inscription;
     }
+    
+    
     
     
     

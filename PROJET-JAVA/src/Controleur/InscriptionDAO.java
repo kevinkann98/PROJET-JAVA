@@ -6,6 +6,7 @@
 package Controleur;
 
 import Modele.Inscription;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,10 @@ import java.util.ArrayList;
  * @author kevin
  */
 public class InscriptionDAO extends DAO<Inscription>{
+    
+    public InscriptionDAO() throws ClassNotFoundException, SQLException{
+        super();
+    }
 
     @Override
     public ArrayList<Inscription> all() {

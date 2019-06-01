@@ -6,6 +6,7 @@
 package Controleur;
 
 import Modele.Evaluation;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,10 @@ import java.util.ArrayList;
  * @author kevin
  */
 public class EvaluationDAO extends DAO<Evaluation>{
+    
+    public EvaluationDAO() throws ClassNotFoundException, SQLException{
+        super();
+    }
 
     @Override
     public ArrayList<Evaluation> all() {
