@@ -127,7 +127,7 @@ public class PersonneDAO extends DAO<Personne>{
         
     }
 
-    public ArrayList<Personne> all() {
+    public ArrayList<Personne> all(String type) {
         
         ArrayList<Personne> all= new ArrayList<Personne>();
         
@@ -147,6 +147,11 @@ public class PersonneDAO extends DAO<Personne>{
             Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return all;       
+    }
+
+    @Override
+    public ArrayList<Personne> all() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

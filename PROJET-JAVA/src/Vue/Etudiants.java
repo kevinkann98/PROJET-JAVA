@@ -24,11 +24,43 @@ import javax.swing.table.TableModel;
  */
 public class Etudiants extends javax.swing.JFrame {
 
+    ArrayList<Personne> personnes= new ArrayList();       
+    PersonneDAO personnesDAO;
+    static DefaultTableModel modelStudent;   
+    
+        
     /**
      * Creates new form Rechercher
      */
     public Etudiants() {
         initComponents();
+        
+        modelStudent=(DefaultTableModel) jTable1.getModel();
+        
+             
+        try {
+            
+            personnesDAO = new PersonneDAO();
+            
+            //On récupère tout le monde
+            personnes=personnesDAO.all("etudiant");
+            pack();
+            
+            for(int i=0;i<personnes.size();i++){
+                int id=personnes.get(i).getId();
+                String nom=personnes.get(i).getNom();
+                String prenom=personnes.get(i).getPrenom();
+                String type=personnes.get(i).getType();
+                
+                Object[] pers={id,nom,prenom,type};
+                modelStudent.insertRow(jTable1.getRowCount(), pers);
+
+                
+            }            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+        }
        
         
     }
@@ -47,6 +79,8 @@ public class Etudiants extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,17 +88,16 @@ public class Etudiants extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Identifiant", "Nom", "Prenom", "Type"
             }
         ));
         jTable1.setRowHeight(30);
         jTable1.setRowMargin(0);
+        jTable1.getTableHeader().setResizingAllowed(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Ajouter");
@@ -75,8 +108,22 @@ public class Etudiants extends javax.swing.JFrame {
         });
 
         jButton2.setText("Supprimer");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Modifier");
+
+        jButton4.setText("Retour");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("Rechercher");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,15 +139,24 @@ public class Etudiants extends javax.swing.JFrame {
                         .addGap(153, 153, 153)
                         .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1071, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(266, Short.MAX_VALUE))
+                        .addGap(65, 65, 65)
+                        .addComponent(jButton4)
+                        .addGap(293, 293, 293)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(194, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -119,8 +175,29 @@ public class Etudiants extends javax.swing.JFrame {
         // TODO add your handling code here:
         AddPerson addpers= new AddPerson();
         addpers.setVisible(true);
-        dispose();
+        //dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    //Retour au menu principal
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        MenuPrincipal menu=new MenuPrincipal();
+        menu.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    //Supprimer
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            // TODO add your handling code here:
+            PersonneDAO personneDAO=new PersonneDAO();
+            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Etudiants.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     /**
@@ -168,7 +245,9 @@ public class Etudiants extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

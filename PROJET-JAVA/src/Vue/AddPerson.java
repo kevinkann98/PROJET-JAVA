@@ -48,13 +48,13 @@ public class AddPerson extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setText("Inscription d'un etudiant");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Nom:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Prénom:");
 
-        nom.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        nom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         nom.setText("Nom");
         nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,10 +62,10 @@ public class AddPerson extends javax.swing.JFrame {
             }
         });
 
-        prenom.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        prenom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         prenom.setText("Prenom");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("Inscrire");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,36 +80,36 @@ public class AddPerson extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(496, 496, 496)
+                        .addGap(208, 208, 208)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
-                        .addGap(50, 50, 50)
+                        .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(507, 507, 507)
-                        .addComponent(jLabel1)))
-                .addContainerGap(616, Short.MAX_VALUE))
+                            .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(225, 225, 225)
+                .addGap(131, 131, 131)
                 .addComponent(jLabel1)
-                .addGap(75, 75, 75)
+                .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
+                .addGap(59, 59, 59)
                 .addComponent(jButton1)
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,10 +132,19 @@ public class AddPerson extends javax.swing.JFrame {
         DAO<Personne> personneDAO;
         try {
             personneDAO = new PersonneDAO();
-            personneDAO.create(personne);
+            personneDAO.create(personne); //ajout de cette personne dans la bdd
+            
+            Object[]pers ={id,name,prename,type};
+            Etudiants.modelStudent.insertRow(Etudiants.modelStudent.getRowCount(),pers);
+        
+            //Fermer la fenêtre
+            dispose();
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
+        
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
