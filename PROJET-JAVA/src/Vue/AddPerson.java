@@ -39,9 +39,6 @@ public class AddPerson extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        etudiant = new javax.swing.JRadioButton();
-        enseignant = new javax.swing.JRadioButton();
         nom = new javax.swing.JTextField();
         prenom = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -49,26 +46,15 @@ public class AddPerson extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jLabel1.setText("Inscription d'un etudiant/enseignant");
+        jLabel1.setText("Inscription d'un etudiant");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("Nom:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel3.setText("Prénom");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("Prénom:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Type:");
-
-        etudiant.setText("Etudiant");
-
-        enseignant.setText("Enseignant");
-        enseignant.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enseignantActionPerformed(evt);
-            }
-        });
-
+        nom.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         nom.setText("Nom");
         nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +62,7 @@ public class AddPerson extends javax.swing.JFrame {
             }
         });
 
+        prenom.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         prenom.setText("Prenom");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -91,36 +78,28 @@ public class AddPerson extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(345, 345, 345)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(70, 70, 70)
-                                .addComponent(etudiant))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(77, 77, 77)
-                        .addComponent(enseignant))
+                        .addGap(496, 496, 496)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jButton1)))
-                .addContainerGap(308, Short.MAX_VALUE))
+                        .addGap(507, 507, 507)
+                        .addComponent(jLabel1)))
+                .addContainerGap(616, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(238, 238, 238)
+                .addGap(225, 225, 225)
                 .addComponent(jLabel1)
-                .addGap(62, 62, 62)
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -128,23 +107,13 @@ public class AddPerson extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(etudiant)
-                    .addComponent(enseignant))
-                .addGap(57, 57, 57)
+                .addGap(65, 65, 65)
                 .addComponent(jButton1)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void enseignantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enseignantActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_enseignantActionPerformed
 
     
     
@@ -153,20 +122,9 @@ public class AddPerson extends javax.swing.JFrame {
         // TODO add your handling code here:
         String name=nom.getText();
         String prename=prenom.getText();
-        String type="";
-        int id=0; //Generé aléatoirement
-        //Random rand=new Random();
-        //id=rand.nextInt(10000); //10000personnes max
-        
-        if(etudiant.isSelected()){
-            type="etudiant";
-        }
-        else if (enseignant.isSelected()){
-            type="enseignant";
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane,"Erreur: Veuillez sélectionner un seul type");
-        }
+        String type="etudiant";
+        int id=0; 
+
         
         //Instancier la personne crééee et la DAO associée
         Personne personne=new Personne(id,name,prename,type);
@@ -221,13 +179,10 @@ public class AddPerson extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton enseignant;
-    private javax.swing.JRadioButton etudiant;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField nom;
     private javax.swing.JTextField prenom;
     // End of variables declaration//GEN-END:variables
