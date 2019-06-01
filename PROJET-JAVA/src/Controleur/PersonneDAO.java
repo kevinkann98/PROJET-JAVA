@@ -65,7 +65,7 @@ public class PersonneDAO extends DAO<Personne>{
         prepare.executeUpdate();
         
         if(prepare!=null){
-           /* 
+           
             //Retourner la personne avec l'id
            rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom="+personne.getNom()+"AND prenom="+personne.getPrenom()+"AND type="+personne.getType());
 
@@ -73,11 +73,7 @@ public class PersonneDAO extends DAO<Personne>{
                int id=rs.getInt("id_personne");
                personne.setId(id);            
            }
-           else{
-               throw new SQLException(); 
-           }*/
-        }
-        
+        }       
         else{
             throw new SQLException();       
         }
@@ -100,6 +96,7 @@ public class PersonneDAO extends DAO<Personne>{
             if(rss!=0){
                 System.out.println(obj.getId()+obj.getNom()+"a été supprimé.");
             }
+            else throw new SQLException();
         } catch (SQLException ex) {
             Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

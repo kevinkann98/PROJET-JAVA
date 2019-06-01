@@ -7,7 +7,10 @@ package Vue;
 
 import Controleur.ClasseDAO;
 import Modele.Classe;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,26 +20,41 @@ import javax.swing.table.DefaultTableModel;
 public class Classes extends javax.swing.JFrame {
     
     ArrayList<Classe> classes=new ArrayList();
-    ClasseDAO classeDAO=new ClasseDAO();
+    ClasseDAO classeDAO;
     Classe classe=new Classe();
     
-    static DefaultTableModel modelProf;
+    static DefaultTableModel modelClass;
 
     /**
      * Creates new form Classes
      */
-    public Classes() {
-        initComponents();
-        
-        modelProf=(DefaultTableModel) jTable1.getModel();
-        
-        classes=classeDAO.all();
-        pack();
-        
-        for(int i=0;i<classes.size();i++){
-            int id=classes.get(i).getId_classe();
-            String nom=classes.get(i).getNom();
-            String ecole=classes.get(i).getEcole().getNom();
+    public Classes(){
+        try {
+            initComponents();
+            
+            modelClass=(DefaultTableModel) jTable1.getModel();
+            
+            classeDAO= new ClasseDAO();
+            
+            classes=classeDAO.all();
+            pack();
+            
+            for(int i=0;i<classes.size();i++){
+                int id=classes.get(i).getId_classe();
+                String nom=classes.get(i).getNom();
+                
+                String niveau=classes.get(i).getNiveau().getNom();
+                int annee=classes.get(i).getAnnee().getId_anneeScolaire();
+                String ecole=classes.get(i).getEcole().getNom();
+                
+                //Cree l'object à mettre dans le model
+                Object[]cls={id,nom,niveau,annee,ecole};
+                
+                modelClass.insertRow(modelClass.getRowCount(), cls);
+                
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Classes.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
