@@ -34,10 +34,10 @@ public class Personne {
     
     /**
      *
-     * @param id 
-     * @param _nom 
-     * @param _prenom
-     * @param _type
+     * @param id id 
+     * @param _nom nom
+     * @param _prenom prenom
+     * @param _type type
      */
     public Personne(int id, String _nom, String _prenom, String _type){
         id_personne=id;
@@ -84,12 +84,6 @@ public class Personne {
         
     }
     
-    /**
-     * Ajouter la personne dans la table personne de la bdd
-     * @param personne de type Personne
-     * @throws java.lang.ClassNotFoundException
-     * @throws SQLException
-     */
  
     
     

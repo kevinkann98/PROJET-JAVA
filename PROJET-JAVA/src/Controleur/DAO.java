@@ -19,7 +19,12 @@ public abstract class DAO<T>{
       
     protected static Connection con=null;
      
-     public DAO() throws ClassNotFoundException, SQLException{
+    /**
+     * Cree une connection 
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public DAO() throws ClassNotFoundException, SQLException{
      Class.forName("com.mysql.jdbc.Driver");
      con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd(), Connexion.getUsername(), Connexion.getPassword());   
 }
@@ -32,27 +37,27 @@ public abstract class DAO<T>{
     
     /**
      * Recup une colonne via l'id
-     * @param id
+     * @param id id
      * @return
      */
     public abstract T find(int id);
     
     /**
      * Créer une entrée à une bdd par rapport à l'objet
-     * @param obj
+     * @param obj objet de n'importe quel type
      * @return
      */
     public abstract T create(T obj);
     
     /**
-     *
-     * @param obj
+     * Supprimme une ligne d'une table via l'objet en param
+     * @param obj objet de n'importe quel type
      */
     public abstract void delete(T obj);
     
     /**
      *
-     * @param obj
+     * @param obj objet de n'importe quel type
      * @return
      */
     public abstract T update(T obj);

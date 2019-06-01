@@ -25,12 +25,9 @@ public class Connexion {
     private static String username;
     private static String password;  
        
-    
-
     /**
-     * Retourne une connection
+     **Cree une connection avec un objet de la classe Connection
      * @return
-     * @throws ClassNotFoundException
      */
     static public Connection connect(){
                       
