@@ -11,12 +11,13 @@ import java.sql.Statement;
 import Vue.LoginPage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  *
  * @author kevin
  */
-public class Personne {
+public class Personne implements Comparable<Personne>{
     private static Statement stmt=null;
     
     
@@ -78,14 +79,39 @@ public class Personne {
             
         }
         catch(SQLException e){
+            
             System.out.println("Aucune personne n'est présente dans la base.");
             
         }
         
     }
     
- 
-    
+    /**
+     * 
+     * @param personne
+     * @return
+     */
+    @Override
+    public boolean equals(Object personne){
+        
+        return personne instanceof Personne && 
+                ((Personne)personne).id_personne==this.id_personne &&
+                ((Personne)personne).nom.equals(this.nom) && 
+                ((Personne)personne).prenom.equals(this.prenom) &&
+                ((Personne)personne).type.equals(this.type);
+             
+        
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.id_personne;
+        hash = 97 * hash + Objects.hashCode(this.nom);
+        hash = 97 * hash + Objects.hashCode(this.prenom);
+        hash = 97 * hash + Objects.hashCode(this.type);
+        return hash;
+    }
     
     
     

@@ -36,6 +36,7 @@ public class Etudiants extends javax.swing.JFrame {
     public Etudiants() {
         initComponents();
         
+
         modelStudent=(DefaultTableModel) jTable1.getModel();
         
              
@@ -95,11 +96,24 @@ public class Etudiants extends javax.swing.JFrame {
             new String [] {
                 "Identifiant", "Nom", "Prenom", "Type"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setRowHeight(30);
         jTable1.setRowMargin(0);
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Ajouter");
@@ -117,6 +131,11 @@ public class Etudiants extends javax.swing.JFrame {
         });
 
         jButton3.setText("Modifier");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Retour");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +229,7 @@ public class Etudiants extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");                  
                 }
                 else{
-                    JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne à supprimer.");
+                    JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne.");
                 }
                 
             }
@@ -245,6 +264,8 @@ public class Etudiants extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
+  
+    
     //Recherche les etudiants par id
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
@@ -271,6 +292,66 @@ public class Etudiants extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     
+    //Modifier une ligne 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            Personne personne=new Personne();
+            PersonneDAO personneDAO=new PersonneDAO();
+            
+            if(jTable1.getSelectedRow()==-1){ //Si aucune ligne selectionnee...
+                if(modelStudent.getRowCount()==0){
+                   JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
+                    
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
+                }
+            }
+            else{
+                
+                //Recuperer toutes les valeurs de la ligne selectionnée puis update la bdd
+                int currentRow=jTable1.getSelectedRow();
+                
+                int id= (int) modelStudent.getValueAt(currentRow, 0); //Recuperer l'id
+                String nom=(String) modelStudent.getValueAt(currentRow, 1); //Recupere le nom
+                String prenom=(String)modelStudent.getValueAt(currentRow,2); //Recuperer le prenom
+                String type=(String)modelStudent.getValueAt(currentRow,3); //Recupere le type
+                
+                
+               
+                
+                
+                if(type!="enseignant" || type!="etudiant"){ 
+                    JOptionPane.showMessageDialog(rootPane, "Une personne est soit un etudiant soit un enseignant!");
+                    
+                }
+                
+                else{
+                
+                
+               
+                personne=new Personne(id,nom,prenom,type); //instanciation
+                
+                
+                if(personne.equals(personneDAO.update(personne)))              
+                  JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");               
+                else
+                  throw new SQLException(); 
+                }
+            }
+                     
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Oups...une erreur technique s'est produite");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -323,4 +404,5 @@ public class Etudiants extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField recherche;
     // End of variables declaration//GEN-END:variables
+
 }

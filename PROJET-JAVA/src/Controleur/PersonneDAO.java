@@ -67,7 +67,7 @@ public class PersonneDAO extends DAO<Personne>{
         if(prepare!=null){
            
             //Retourner la personne avec l'id
-           rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom="+personne.getNom()+"AND prenom="+personne.getPrenom()+"AND type="+personne.getType());
+           rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom='"+personne.getNom()+"'AND prenom='"+personne.getPrenom()+"'AND type='"+personne.getType()+"'");
 
            if(rs.first()){
                int id=rs.getInt("id_personne");
@@ -107,18 +107,20 @@ public class PersonneDAO extends DAO<Personne>{
     public Personne update(Personne obj) {
         try{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE); 
-            rss=stmt.executeUpdate("UPDATE personne SET nom='"+obj.getNom()+"'"+" WHERE id_personne="+obj.getId()); //modifier le nom à partir de l'id
+            rss=stmt.executeUpdate("UPDATE personne SET nom='"+obj.getNom()+"',prenom='"+obj.getPrenom()+"',type='"+obj.getType()+"' WHERE id_personne="+obj.getId()); //modifier le nom à partir de l'id
             
-            if(rss!=0){
-            obj=this.find(obj.getId()); //retourner l'objet modifié
+            if(rss!=0){                
+                obj=this.find(obj.getId()); //retourner l'objet modifié
+                
             }
             else{
+                
                 throw new SQLException();
             }
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Aucune ligne affectée");
         }
         return obj;
         

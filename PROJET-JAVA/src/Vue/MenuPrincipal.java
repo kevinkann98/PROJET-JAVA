@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author kevin
  */
+
 public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
@@ -132,6 +133,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Etudiants recherche=new Etudiants();
         recherche.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
