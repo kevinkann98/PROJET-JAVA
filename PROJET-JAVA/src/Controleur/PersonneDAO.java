@@ -54,7 +54,7 @@ public class PersonneDAO extends DAO<Personne>{
     public Personne create(Personne personne) { 
         try {
                                   
-        //Crer un id 
+       
         Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
         
         PreparedStatement prepare=con.prepareStatement("INSERT INTO personne(nom,prenom,type) VALUES(?,?,?)");
@@ -69,9 +69,10 @@ public class PersonneDAO extends DAO<Personne>{
             //Retourner la personne avec l'id
            rs=stmt.executeQuery("SELECT id_personne FROM personne WHERE nom='"+personne.getNom()+"'AND prenom='"+personne.getPrenom()+"'AND type='"+personne.getType()+"'");
 
-           if(rs.first()){
+           if(rs.first()){              
                int id=rs.getInt("id_personne");
-               personne.setId(id);            
+               personne.setId(id);          
+               
            }
         }       
         else{

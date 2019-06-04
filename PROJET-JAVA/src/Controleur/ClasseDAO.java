@@ -75,7 +75,9 @@ public class ClasseDAO extends DAO<Classe>{
     public Classe create(Classe classe) {
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            
             String nom=classe.getNom();
+            
             int id_annee=classe.getAnnee().getId_anneeScolaire();
             int id_ecole=classe.getEcole().getId_ecole();
             int id_niveau=classe.getNiveau().getId_niveau();
@@ -89,15 +91,15 @@ public class ClasseDAO extends DAO<Classe>{
             prepare.executeUpdate();
             
             if(prepare!=null){
-                /*
+                
             
             //Retourner la personne avec l'id
-           rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom="+nom+"AND id_annee="+id_annee+"AND id_niveau="+id_niveau);
+           rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom='"+nom+"'AND id_annee='"+id_annee+"'AND id_niveau='"+id_niveau+"'");
 
            if(rs.first()){
                int id=rs.getInt("id_classe");
                classe.setId_classe(id);
-           }*/
+           }
         }
         
         else{
