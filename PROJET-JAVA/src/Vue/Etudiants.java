@@ -37,7 +37,7 @@ public class Etudiants extends javax.swing.JFrame {
         initComponents();
         
 
-        modelStudent=(DefaultTableModel) jTable1.getModel();
+        modelStudent=(DefaultTableModel)jTable1.getModel();
         
              
         try {
@@ -319,27 +319,17 @@ public class Etudiants extends javax.swing.JFrame {
                 String type=(String)modelStudent.getValueAt(currentRow,3); //Recupere le type
                 
                 
-               
-                
-                
-                if(type!="enseignant" || type!="etudiant"){ 
-                    JOptionPane.showMessageDialog(rootPane, "Une personne est soit un etudiant soit un enseignant!");
-                    
-                }
-                
-                else{
-                
-                
-               
-                personne=new Personne(id,nom,prenom,type); //instanciation
-                
-                
-                if(personne.equals(personneDAO.update(personne)))              
-                  JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");               
-                else
-                  throw new SQLException(); 
-                }
+                                   
+                    personne=new Personne(id,nom,prenom,type); //instanciation
+
+
+                    if(personne.equals(personneDAO.update(personne)))              
+                      JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");               
+                    else
+                      throw new SQLException(); 
             }
+
+ 
                      
             
         } catch (ClassNotFoundException | SQLException ex) {
