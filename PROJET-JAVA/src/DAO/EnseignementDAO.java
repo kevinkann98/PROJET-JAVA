@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package DAO;
 
-import Modele.Niveau;
+import Modele.Enseignement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,34 +13,34 @@ import java.util.ArrayList;
  *
  * @author kevin
  */
-public class NiveauDAO extends DAO<Niveau>{
+public class EnseignementDAO extends DAO<Enseignement>{
     
-    public NiveauDAO() throws ClassNotFoundException, SQLException{
+    public EnseignementDAO() throws ClassNotFoundException, SQLException{
         super();
     }
 
     @Override
-    public ArrayList<Niveau> all() {
+    public ArrayList<Enseignement> all() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Niveau find(int id) {
+    public Enseignement find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Niveau create(Niveau obj) {
+    public Enseignement create(Enseignement obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Niveau obj) {
+    public void delete(Enseignement obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Niveau update(Niveau obj) {
+    public Enseignement update(Enseignement obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

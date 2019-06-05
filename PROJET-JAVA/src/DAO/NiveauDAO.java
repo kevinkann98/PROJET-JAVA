@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package DAO;
 
-import Modele.Evaluation;
+import Modele.Niveau;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,34 +13,34 @@ import java.util.ArrayList;
  *
  * @author kevin
  */
-public class EvaluationDAO extends DAO<Evaluation>{
+public class NiveauDAO extends DAO<Niveau>{
     
-    public EvaluationDAO() throws ClassNotFoundException, SQLException{
+    public NiveauDAO() throws ClassNotFoundException, SQLException{
         super();
     }
 
     @Override
-    public ArrayList<Evaluation> all() {
+    public ArrayList<Niveau> all() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Evaluation find(int id) {
+    public Niveau find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Evaluation create(Evaluation obj) {
+    public Niveau create(Niveau obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Evaluation obj) {
+    public void delete(Niveau obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Evaluation update(Evaluation obj) {
+    public Niveau update(Niveau obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

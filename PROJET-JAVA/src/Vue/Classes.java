@@ -5,7 +5,7 @@
  */
 package Vue;
 
-import Controleur.ClasseDAO;
+import DAO.ClasseDAO;
 import Modele.Classe;
 import java.sql.SQLException;
 import java.util.ArrayList;

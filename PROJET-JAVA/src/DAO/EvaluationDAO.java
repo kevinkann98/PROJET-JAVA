@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package DAO;
 
-import Modele.Discipline;
+import Modele.Evaluation;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,34 +13,34 @@ import java.util.ArrayList;
  *
  * @author kevin
  */
-public class DisciplineDAO extends DAO<Discipline>{
+public class EvaluationDAO extends DAO<Evaluation>{
     
-    public DisciplineDAO() throws ClassNotFoundException, SQLException{
+    public EvaluationDAO() throws ClassNotFoundException, SQLException{
         super();
     }
 
     @Override
-    public ArrayList<Discipline> all() {
+    public ArrayList<Evaluation> all() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Discipline find(int id) {
+    public Evaluation find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Discipline create(Discipline obj) {
+    public Evaluation create(Evaluation obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Discipline obj) {
+    public void delete(Evaluation obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Discipline update(Discipline obj) {
+    public Evaluation update(Evaluation obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

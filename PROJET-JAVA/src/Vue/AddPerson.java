@@ -5,8 +5,9 @@
  */
 package Vue;
 
+import DAO.DAO;
+import DAO.PersonneDAO;
 import Modele.Personne;
-import Controleur.*;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.logging.Level;

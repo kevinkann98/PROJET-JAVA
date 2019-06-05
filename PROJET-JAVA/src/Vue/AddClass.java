@@ -5,7 +5,7 @@
  */
 package Vue;
 
-import Controleur.ClasseDAO;
+import DAO.ClasseDAO;
 import Modele.AnneeScolaire;
 import Modele.Classe;
 import Modele.Ecole;

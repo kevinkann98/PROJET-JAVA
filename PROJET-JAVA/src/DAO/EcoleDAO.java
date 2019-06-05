@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package DAO;
 
-import Modele.DetailBulletin;
+import Modele.Ecole;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,35 +13,36 @@ import java.util.ArrayList;
  *
  * @author kevin
  */
-public class DetailBulletinDAO extends DAO<DetailBulletin>{
-
-    public DetailBulletinDAO() throws ClassNotFoundException, SQLException{
+public class EcoleDAO extends DAO<Ecole>{
+    
+    public EcoleDAO() throws ClassNotFoundException, SQLException{
         super();
     }
 
     @Override
-    public ArrayList<DetailBulletin> all() {
+    public ArrayList<Ecole> all() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public DetailBulletin find(int id) {
+    public Ecole find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public DetailBulletin create(DetailBulletin obj) {
+    public Ecole create(Ecole obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(DetailBulletin obj) {
+    public void delete(Ecole obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public DetailBulletin update(DetailBulletin obj) {
+    public Ecole update(Ecole obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-  
+    
+    
 }

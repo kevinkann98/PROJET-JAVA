@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package DAO;
 
 import Modele.*;
 import static Modele.Connexion.*;
@@ -22,7 +22,6 @@ public class BulletinDAO extends DAO<Bulletin>{
         super();
     }
 
-    @Override
     public ArrayList<Bulletin> all() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

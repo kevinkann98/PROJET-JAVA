@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
+package DAO;
 
-import Modele.Inscription;
+import Modele.Trimestre;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,34 +13,34 @@ import java.util.ArrayList;
  *
  * @author kevin
  */
-public class InscriptionDAO extends DAO<Inscription>{
+public class TrimestreDAO extends DAO<Trimestre>{
     
-    public InscriptionDAO() throws ClassNotFoundException, SQLException{
+    public TrimestreDAO() throws ClassNotFoundException, SQLException{
         super();
     }
 
     @Override
-    public ArrayList<Inscription> all() {
+    public ArrayList<Trimestre> all() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Inscription find(int id) {
+    public Trimestre find(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Inscription create(Inscription obj) {
+    public Trimestre create(Trimestre obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Inscription obj) {
+    public void delete(Trimestre obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Inscription update(Inscription obj) {
+    public Trimestre update(Trimestre obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

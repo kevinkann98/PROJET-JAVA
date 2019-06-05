@@ -5,7 +5,7 @@
  */
 package Vue;
 
-import Controleur.PersonneDAO;
+import DAO.PersonneDAO;
 import Modele.Personne;
 import static com.sun.jmx.mbeanserver.Util.cast;
 import java.awt.BorderLayout;
@@ -55,8 +55,7 @@ public class Etudiants extends javax.swing.JFrame {
                 
                 Object[] pers={id,nom,prenom,type}; //Creation de l'objet
                 modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
-
-                
+               
             }            
             
         } catch (ClassNotFoundException | SQLException ex) {

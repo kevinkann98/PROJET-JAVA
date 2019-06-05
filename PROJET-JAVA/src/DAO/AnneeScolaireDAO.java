@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controleur;
-
-import static Controleur.DAO.con;
+package DAO;
 import Modele.AnneeScolaire;
 import Modele.Connexion;
 import static Modele.Connexion.*;
