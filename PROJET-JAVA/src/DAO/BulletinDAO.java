@@ -44,77 +44,20 @@ public class BulletinDAO extends DAO<Bulletin>{
                 int id_inscription=rs.getInt("id_inscription");
                 
                 //Instancier un trimestre
-                ResultSet rs1=stmt.executeQuery("SELECT * FROM bulletin WHERE id_trimestre="+id_trimestre);
-                if(rs1.first()){
-                    int numero=rs1.getInt("numero");
-                    int fin=rs1.getInt("fin");
-                    int debut=rs1.getInt("debut");     
-                    
-                    int id_annee=rs1.getInt("id_annee");
-                    AnneeScolaire annee=new AnneeScolaire(id_annee);
-                    
-                    trimestre=new Trimestre(id_trimestre,numero,fin,debut,annee);                   
-                }
-                
+                TrimestreDAO trimestredao=new TrimestreDAO();
+                trimestre=trimestredao.find(id_trimestre);
+                              
                 //Instancier une inscription
-                rs1=stmt.executeQuery("SELECT * FROM inscription WHERE id_inscription="+id_inscription);
-                if(rs1.first()){
-                    int id_classe=rs1.getInt("id_classe");
-                    int id_personne=rs1.getInt("id_personne");
-                    
-                    Classe classe=new Classe();
-                    Personne personne=new Personne();
-                    //Instancier une classe de l'inscription
-                    ResultSet rs2=stmt.executeQuery("SELECT * FROM classe WHERE id_classe="+id_classe);
-                    if(rs2.first()){
-                        Ecole ecole=new Ecole();
-                        Niveau niveau=new Niveau();
-                        
-                        String nom_classe=rs2.getString("nom");
-                        
-                        int id_annee=rs2.getInt("id_annee");
-                        AnneeScolaire annee=new AnneeScolaire(id_annee); //Instanciation de l'annee
-                        
-                        int id_ecole=rs2.getInt("id_ecole");
-                        ResultSet rs3=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id_ecole);
-                        if(rs3.first()){
-                            String nom_ecole=rs3.getString("nom");
-                            ecole=new Ecole(id_ecole,nom_ecole);           //Instanciation de l'ecole associée                 
-                        }
-                        
-                        int id_niveau=rs2.getInt("id_niveau");
-                        rs3=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id_niveau);
-                        if(rs3.first()){
-                            String nom_niveau=rs3.getString("nom");
-                            niveau=new Niveau(id_niveau,nom_niveau);
-                        }
-                        
-                        //Instanciation de la classe associée à l'inscription
-                        classe=new Classe(id_classe,nom_classe,annee,ecole,niveau);
-                        
-                        
-                    }
-                    
-                    //Instancier une personne associée à l'inscription
-                    rs2=stmt.executeQuery("SELECT * FROM personne WHERE id_personne="+id_personne);
-                    if(rs2.first()){
-                        String nom=rs.getString("nom");
-                        String prenom=rs.getString("prenom");
-                        String type=rs.getString("type");
-                        personne=new Personne(id_personne,nom,prenom,type);
+                InscriptionDAO inscriptiondao=new InscriptionDAO();
+                inscription=inscriptiondao.find(id_inscription);
                 
-                    }
-                    
-                    inscription=new Inscription(id_inscription,classe,personne);
-                }
-                
-                //Instanciation du bulletin
+                //Instancier le bulletin à retourner
                 bulletin=new Bulletin(id,appreciation,trimestre,inscription);
             }
             
             
             
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(BulletinDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bulletin;
@@ -143,7 +86,7 @@ public class BulletinDAO extends DAO<Bulletin>{
                 System.out.println("Bulletin ajouté dans la base de données.");
                 
                 //recuperer l'id
-                rs=stmt.executeQuery("SELECT id_bulletin FROM bulletin WHERE id_trimestre="+id_trimestre+","+"AND id_inscription="+id_inscription);
+                rs=stmt.executeQuery("SELECT id_bulletin FROM bulletin WHERE id_trimestre="+id_trimestre+"AND id_inscription="+id_inscription);
                 if(rs.first()){
                     int id_bulletin=rs.getInt("id_bulletin");                
                     bulletin.setId_bulletin(id_bulletin);
@@ -181,8 +124,8 @@ public class BulletinDAO extends DAO<Bulletin>{
     public Bulletin update(Bulletin bulletin) {
         
         try {
-            stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rss=stmt.executeUpdate("UPDATE bulletin SET appreciation="+bulletin.getAppreciation());
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rss=stmt.executeUpdate("UPDATE bulletin SET appreciation='"+bulletin.getAppreciation()+"'");
             
             if(rss!=0){
                 bulletin=this.find(bulletin.getId_bulletin());

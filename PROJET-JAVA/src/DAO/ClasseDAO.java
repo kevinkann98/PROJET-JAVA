@@ -30,6 +30,7 @@ public class ClasseDAO extends DAO<Classe>{
         AnneeScolaire annee=new AnneeScolaire();
         Ecole ecole=new Ecole();
         Niveau niveau=new Niveau();
+     
         
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -42,29 +43,24 @@ public class ClasseDAO extends DAO<Classe>{
                 
                 //Instancier une annee
                 int id_annee=rs.getInt("id_annee");
-                annee=new AnneeScolaire(id_annee);
+                AnneeScolaireDAO anneescolairedao=new AnneeScolaireDAO();
+                annee=anneescolairedao.find(id_annee);
        
-                //Instancier une ecole
+                //Instancier l'ecole à l'aide de l'id
                 int id_ecole=rs.getInt("id_ecole");
-                ResultSet rs1=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id_ecole);
-                if(rs1.first()){
-                    String nom_ecole= rs1.getString("nom");
-                    ecole=new Ecole(id_ecole,nom_ecole);
-                }
+                EcoleDAO ecoledao=new EcoleDAO();
+                ecole=ecoledao.find(id_ecole);
                 
                 //Instancier un niveau
                 int id_niveau=rs.getInt("id_niveau");
-                rs1=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id_niveau);
-                if(rs1.first()){
-                    String nom_niveau=rs1.getString("nom");
-                    niveau=new Niveau(id_niveau,nom_niveau);               
-                    
-                }
+                NiveauDAO niveaudao=new NiveauDAO();
+                niveau=niveaudao.find(id_niveau);
+                
                 
                 //Instancier la classe puis la retourner
                 classe=new Classe(id,nom,annee,ecole,niveau);
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return classe;
@@ -94,7 +90,7 @@ public class ClasseDAO extends DAO<Classe>{
                 
             
             //Retourner la personne avec l'id
-           rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom='"+nom+"'AND id_annee='"+id_annee+"'AND id_niveau='"+id_niveau+"'");
+           rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom='"+nom+"' AND id_annee="+id_annee+"AND id_niveau="+id_niveau);
 
            if(rs.first()){
                int id=rs.getInt("id_classe");
@@ -135,7 +131,7 @@ public class ClasseDAO extends DAO<Classe>{
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             
-            rss=stmt.executeUpdate("UPDATE classe SET nom="+classe.getNom()+"WHERE id_classe="+classe.getId_classe());
+            rss=stmt.executeUpdate("UPDATE classe SET nom='"+classe.getNom()+"' WHERE id_classe="+classe.getId_classe());
             
             if(rss!=0){
                 classe=find(classe.getId_classe());
@@ -152,26 +148,18 @@ public class ClasseDAO extends DAO<Classe>{
     public ArrayList<Classe> all() {
         ArrayList<Classe> all= new ArrayList<Classe>();
         try {
-            
-            Classe classe=new Classe();
-            
-            AnneeScolaire annee=new AnneeScolaire();
-            Ecole ecole=new Ecole();
-            Niveau niveau=new Niveau();
-            
-            ResultSet rs1;
-            
+           
             
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             
-            rs1=stmt.executeQuery("SELECT * FROM classe");
+            ResultSet rs1=stmt.executeQuery("SELECT * FROM classe");
             
             while(rs1.next()){
                 int id=rs1.getInt("id_classe");
                 
                 
                 //Instancier la classe puis l'Array de liste de toutes les classes trouvées
-                classe=new Classe();
+                Classe classe=new Classe();
                 classe=this.find(id);
                 
                 all.add(classe);

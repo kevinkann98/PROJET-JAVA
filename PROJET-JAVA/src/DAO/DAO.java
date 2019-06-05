@@ -25,9 +25,20 @@ public abstract class DAO<T>{
      * @throws SQLException
      */
     public DAO() throws ClassNotFoundException, SQLException{
-     Class.forName("com.mysql.jdbc.Driver");
-     con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd(), Connexion.getUsername(), Connexion.getPassword());   
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd(), Connexion.getUsername(), Connexion.getPassword());  
+            
+            if(con==null){
+                throw new ClassNotFoundException();          
+            }
+        }
+        catch(ClassNotFoundException | SQLException e){
+            System.out.println("Problème de connexion.");
+            
+        }
 }
+    
     
     /**
      * Retourne toutes les colonnes

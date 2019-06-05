@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class NiveauDAO extends DAO<Niveau>{
     
-    public NiveauDAO() throws ClassNotFoundException, SQLException{
+    public NiveauDAO() throws ClassNotFoundException, SQLException {
         super();
     }
 
@@ -58,8 +58,7 @@ public class NiveauDAO extends DAO<Niveau>{
             rs=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id);
             
             if(rs.first()){
-                String nom=rs.getString("nom");
-                
+                String nom=rs.getString("nom");               
                 niveau=new Niveau(id,nom);
             }
             else
@@ -88,19 +87,15 @@ public class NiveauDAO extends DAO<Niveau>{
                     obj.setId_niveau(id_niveau);
                     
                 }
-                else
-                    throw new SQLException();
-                
-                
+                                
             }else{
-                throw new SQLException();
-                    
+                throw new SQLException();                   
             }
             
         }
         
         catch(SQLException e){
-            
+            System.out.println("OUPS");
         }
         
         return obj;

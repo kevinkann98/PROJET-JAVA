@@ -13,8 +13,7 @@ public class Evaluation {
     private int id_evaluation;
     private int note;
     private String appreciation;
-    
-    
+       
     private DetailBulletin detail; //Rattachée à un detail de bulletin donc à un bulletin
 
     public Evaluation() {
