@@ -128,6 +128,7 @@ public class BulletinDAO extends DAO<Bulletin>{
         String appreciation=bulletin.getAppreciation();
         int id_trimestre=bulletin.getTrimestre().getId_trimestre();
         int id_inscription=bulletin.getInscription().getId_inscription();
+        
         try {
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             PreparedStatement prepare=con.prepareStatement("INSERT INTO bulletin (appreciation,id_trimestre,id_inscription) VALUES (?,?,?)");
@@ -161,13 +162,37 @@ public class BulletinDAO extends DAO<Bulletin>{
     }
 
     @Override
-    public void delete(Bulletin obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Bulletin bulletin) {
+        try {
+            stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rs=stmt.executeQuery("DELETE bulletin WHERE id_bulletin="+bulletin.getId_bulletin());
+            
+            if(rs.first()){
+                System.out.println("Le bulletin numéro "+bulletin.getId_bulletin()+bulletin+"a été supprimé.");
+            }
+            else
+                throw new SQLException();
+        } catch (SQLException ex) {
+            Logger.getLogger(BulletinDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    @Override
-    public Bulletin update(Bulletin obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override //One ne modifie que l'appréciation!!
+    public Bulletin update(Bulletin bulletin) {
+        
+        try {
+            stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rss=stmt.executeUpdate("UPDATE bulletin SET appreciation="+bulletin.getAppreciation());
+            
+            if(rss!=0){
+                bulletin=this.find(bulletin.getId_bulletin());
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println("Aucune ligne affectée");
+        }
+        
+        return bulletin;
     }
     
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 01 juin 2019 à 15:48
+-- Généré le :  mer. 05 juin 2019 à 15:07
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -216,19 +216,19 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id_personne`),
   UNIQUE KEY `id_personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `personne`
 --
 
 INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `type`) VALUES
-(1, 'Kann', 'Kevin', 'etudiant'),
-(3, 'Kevin', 'Kann', 'enseignant'),
-(15, 'Kann', 'KK', 'etudiant'),
-(16, 'Nom', 'Prenodsqm', 'etudiant'),
-(17, 'Norezm', 'Prereznom', 'etudiant'),
-(18, 'Nom', 'Prenhkom', 'etudiant');
+(1, 'Kann', 'Kevin', 'enseignant'),
+(3, 'Im', 'Yoona', 'enseignant'),
+(19, 'Tran', 'Maxime', 'etudiant'),
+(22, 'Mahouni', 'Emy', 'etudiant'),
+(23, 'Sauteee', 'Alexis', 'etudiant'),
+(27, 'Nom', 'Prenom', 'etudiant');
 
 -- --------------------------------------------------------
 
@@ -240,8 +240,8 @@ DROP TABLE IF EXISTS `trimestre`;
 CREATE TABLE IF NOT EXISTS `trimestre` (
   `id_trimestre` int(11) NOT NULL AUTO_INCREMENT,
   `numero` int(11) NOT NULL,
-  `fin` int(11) NOT NULL,
-  `debut` int(11) NOT NULL,
+  `fin` date NOT NULL,
+  `debut` date NOT NULL,
   `id_annee` int(11) NOT NULL,
   PRIMARY KEY (`id_trimestre`),
   KEY `id_annee` (`id_annee`)

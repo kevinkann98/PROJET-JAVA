@@ -99,7 +99,7 @@ public class PersonneDAO extends DAO<Personne>{
             }
             else throw new SQLException();
         } catch (SQLException ex) {
-            Logger.getLogger(PersonneDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Aucune ligne affectée...");
         }
     }
 
@@ -133,7 +133,7 @@ public class PersonneDAO extends DAO<Personne>{
         
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);           
-            ResultSet rs1=stmt.executeQuery("SELECT * FROM personne");
+            ResultSet rs1=stmt.executeQuery("SELECT * FROM personne WHERE type='"+type+"'");
             
             while(rs1.next()){
                 int id=rs1.getInt("id_personne");                
