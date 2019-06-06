@@ -25,37 +25,13 @@ public class NiveauDAO extends DAO<Niveau>{
     public NiveauDAO() throws ClassNotFoundException, SQLException {
         super();
     }
-
-    @Override
-    public ArrayList<Niveau> all() {
-        ArrayList<Niveau> niveaux=new ArrayList<Niveau>();
-        try {
-            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs1=stmt.executeQuery("SELECT * FROM niveau");
-            
-            while(rs1.first()){ //recuperer les id puis utiliser methode find pour recuperer les champs associés
-                int id_niveau=rs1.getInt("id_niveau");
-                
-                Niveau niveau=new Niveau();
-                niveau=this.find(id_niveau);
-                
-                niveaux.add(niveau);
-                
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(NiveauDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return niveaux;
-    }
-
+    
     @Override
     public Niveau find(int id) {
         
         Niveau niveau=new Niveau();
         try {
-            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             rs=stmt.executeQuery("SELECT * FROM niveau WHERE id_niveau="+id);
             
             if(rs.first()){
@@ -69,6 +45,32 @@ public class NiveauDAO extends DAO<Niveau>{
             System.out.println("Non trouvé...");
         }
         return niveau;
+    }
+    
+
+    @Override
+    public ArrayList<Niveau> all() {
+        ArrayList<Niveau> niveaux=new ArrayList<Niveau>();
+        
+        try {
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs1=stmt.executeQuery("SELECT * FROM niveau");
+            
+            while(rs1.next()){ //recuperer les id puis utiliser methode find pour recuperer les champs associés
+                int id_niveau=rs1.getInt("id_niveau");
+                
+                System.out.println(id_niveau);
+                Niveau niveau=new Niveau();
+                niveau=this.find(id_niveau);                
+                niveaux.add(niveau);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NiveauDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return niveaux;
     }
 
     @Override

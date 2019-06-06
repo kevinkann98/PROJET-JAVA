@@ -39,7 +39,7 @@ public class InscriptionDAO extends DAO<Inscription>{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs1=stmt.executeQuery("SELECT * FROM inscription");
             
-            if(rs1.first()){
+            if(rs1.next()){
                 int id=rs1.getInt("id_inscription");
                 
                 Inscription inscription=new Inscription();

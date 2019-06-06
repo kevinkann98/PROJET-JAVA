@@ -14,6 +14,7 @@ import Modele.Classe;
 import Modele.Ecole;
 import Modele.Niveau;
 import Modele.Personne;
+import static Vue.Classes.modelClass;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -28,10 +29,13 @@ public class AddClass extends javax.swing.JFrame {
     /**
      * Creates new form AddClass
      */
+    ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
+    ArrayList<AnneeScolaire>allYears=new ArrayList<AnneeScolaire>();
+    
     public AddClass() {
         initComponents();
         fillLevels();
-        //fillYears();
+        fillYears();
         
     }
     
@@ -39,9 +43,11 @@ public class AddClass extends javax.swing.JFrame {
      *  Remplit le dropbox de niveaux avec ceux existants dans la bdd 
      */
     public void fillLevels(){
-        ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
+        
+        
         try {
             NiveauDAO niveaudao=new NiveauDAO();
+
 
             allLevels=niveaudao.all(); //On récupère tous les niveaux dans un arraylist
             for(int i=0;i<allLevels.size();i++)
@@ -58,7 +64,7 @@ public class AddClass extends javax.swing.JFrame {
     public void fillYears(){
         
         try {
-            ArrayList<AnneeScolaire>allYears=new ArrayList<AnneeScolaire>();
+            
             AnneeScolaireDAO anneescolairedao=new AnneeScolaireDAO();
             
             allYears=anneescolairedao.all();
@@ -194,25 +200,47 @@ public class AddClass extends javax.swing.JFrame {
             Classe classe=new Classe();
             ClasseDAO classeDAO=new ClasseDAO();
             
-            AnneeScolaire annee=new AnneeScolaire();
+            AnneeScolaire annee=new AnneeScolaire();           
             Ecole ecole=new Ecole();
             Niveau niveau=new Niveau();
                        
-            int id=0;                       
+            int id=0;  
+            
+            //On récupère les champs
             String nom=name.getText();
                
-            int id_annee=(int)year.getSelectedItem();
-            annee=new AnneeScolaire(id_annee);
+            //On convertit l'annee choisi (type object) en String puis en int
+            int id_annee=Integer.parseInt((String)year.getSelectedItem());
+            
+            for(int i=0;i<allYears.size();i++){
+                if(allYears.get(i).getId_anneeScolaire()==id_annee)
+                    annee=new AnneeScolaire(allYears.get(i).getId_anneeScolaire());
+                else
+                    System.out.println("oups");
+               
+            }
             
             String nom_ecole="ECE Paris";
-            //ecole=new Ecole(nom_ecole);
+            ecole=new Ecole(1,nom_ecole);
             
-            String id_niveau=(String)level.getSelectedItem();
+            //Instancier le niveau choisi
             
+            for(int i=0;i<allLevels.size();i++){
+                if(allLevels.get(i).getNom()==(String)level.getSelectedItem())
+                    niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
+                else
+                    System.out.println("oups");
+            }          
             
             //Instancier la classe puis l'ajouter dans la bdd
             classe=new Classe(id,nom,annee,ecole,niveau);
             classe=classeDAO.create(classe);
+            
+            //L'afficher dans le tableau
+            Object []classes={classe.getId_classe(),classe.getNom(),classe.getAnnee().getId_anneeScolaire(),classe.getEcole().getNom(),classe.getNiveau().getNom()}; 
+            modelClass.insertRow(modelClass.getRowCount(), classes);
+
+            dispose();
         
             
             

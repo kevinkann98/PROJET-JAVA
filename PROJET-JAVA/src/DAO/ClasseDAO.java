@@ -81,7 +81,7 @@ public class ClasseDAO extends DAO<Classe>{
             int id_ecole=classe.getEcole().getId_ecole();
             int id_niveau=classe.getNiveau().getId_niveau();
             
-            PreparedStatement prepare=con.prepareStatement("INSERT INTO classe VALUES (nom,id_annee,id_ecole,id_niveau) VALUES(?,?,?,?)");
+            PreparedStatement prepare=con.prepareStatement("INSERT INTO classe (nom,id_annee,id_ecole,id_niveau) VALUES(?,?,?,?)");
             prepare.setString(1,nom);
             prepare.setInt(2,id_annee);
             prepare.setInt(3,id_ecole);
@@ -93,7 +93,7 @@ public class ClasseDAO extends DAO<Classe>{
                 
             
             //Retourner la personne avec l'id
-           rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom='"+nom+"' AND id_annee="+id_annee+"AND id_niveau="+id_niveau);
+           rs=stmt.executeQuery("SELECT id_classe FROM classe WHERE nom='"+nom+"' AND id_annee="+id_annee);
 
            if(rs.first()){
                int id=rs.getInt("id_classe");

@@ -34,7 +34,7 @@ public class EcoleDAO extends DAO<Ecole>{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs1=stmt.executeQuery("SELECT * FROM ecole");
             
-            while(rs1.first()){
+            while(rs1.next()){
                 int id=rs1.getInt("id_ecole");
                 Ecole ecole=new Ecole();
                 ecole=this.find(id);

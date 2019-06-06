@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -119,8 +120,18 @@ public class Classes extends javax.swing.JFrame {
         });
 
         jButton3.setText("Supprimer");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Modifier");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -181,6 +192,85 @@ public class Classes extends javax.swing.JFrame {
         addClass.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    //Supprimer une classe
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         try {
+             
+            if(jTable1.getSelectedRow()==-1){//Si aucune ligne est selectionnee
+                if(modelClass.getRowCount()==0){
+                    JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");                  
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne.");
+                }
+                
+            }
+            else{
+                
+                // TODO add your handling code here:
+                classeDAO=new ClasseDAO();
+                classe=new Classe();
+
+                int currentRow=jTable1.getSelectedRow();
+
+                int id=(int) modelClass.getValueAt(currentRow,0);//Récupèrer l'id de la case sélectionnée
+                
+                System.out.println(id);
+                classe=classeDAO.find(id); //Trouver la personne dans la bdd avec l'id
+
+                
+                //Demande de confirmation
+                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+classe.getNom()+" "+classe.getNiveau().getNom()+" ?");
+                if(confirm==JOptionPane.YES_OPTION){                   
+                    classeDAO.delete(classe); //Enlever de la bdd
+                    modelClass.removeRow(currentRow);                            
+                }
+
+            }
+            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Etudiants.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    
+    //Modifier une classe
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            classe=new Classe();
+            classeDAO=new ClasseDAO();
+            
+            //Si aucune ligne n'est sélectionnée...
+            if(jTable1.getSelectedRow()==-1){
+                if(modelClass.getRowCount()==0){
+                    JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
+                }
+            }
+            
+            //On récup toutes la ligne puis la mettre à jour
+            int currentRow=jTable1.getSelectedRow();
+            
+            int id=(int)modelClass.getValueAt(currentRow,0);
+            String nom=(String)modelClass.getValueAt(currentRow, 1);
+            int annee=(int)modelClass.getValueAt(currentRow, 2);
+            String ecole=(String)modelClass.getValueAt(currentRow, 3);
+            String niveau=(String)modelClass.getValueAt(currentRow, 4);
+            
+            
+            
+            //classe=new Classe(id,nom,annee,ecole,niveau);
+            
+            } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Classes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

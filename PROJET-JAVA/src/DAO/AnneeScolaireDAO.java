@@ -26,6 +26,32 @@ public class AnneeScolaireDAO extends DAO<AnneeScolaire> {
     public AnneeScolaireDAO() throws ClassNotFoundException, SQLException{
         super();
     }
+    
+        @Override
+    public AnneeScolaire find(int id) {
+        AnneeScolaire annee=new AnneeScolaire();
+        
+        try {            
+            
+            stmt=this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            rs=stmt.executeQuery("SELECT * FROM anneescolaire WHERE id_annee="+id);
+            
+            if(rs.first()){
+                int id_annee=rs.getInt("id_annee");
+                System.out.println(id_annee);
+                annee=new AnneeScolaire(id_annee);
+                return annee;
+            }
+            else{
+                throw new SQLException();
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Non trouvé...");
+            return annee;
+        }
+        
+    }
 
     @Override
     public ArrayList<AnneeScolaire> all() {
@@ -35,7 +61,7 @@ public class AnneeScolaireDAO extends DAO<AnneeScolaire> {
             Statement stmt=this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs1=stmt.executeQuery("SELECT * FROM anneescolaire");
             
-            while(rs1.first()){
+            while(rs1.next()){
                 int id=rs1.getInt("id_annee");
                 AnneeScolaire annee=new AnneeScolaire();
                 annee=this.find(id);
@@ -49,32 +75,6 @@ public class AnneeScolaireDAO extends DAO<AnneeScolaire> {
         }
         
         return all;
-    }
-
-    @Override
-    public AnneeScolaire find(int id) {
-        AnneeScolaire annee=new AnneeScolaire();
-        
-        try {
-            
-            
-            Statement stmt=this.con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            rs=stmt.executeQuery("SELECT * FROM anneescolaire WHERE id_annee="+id);
-            
-            if(rs.first()){
-                int id_annee=rs.getInt("id_annee");
-                annee=new AnneeScolaire(id_annee);
-                return annee;
-            }
-            else{
-                throw new SQLException();
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println("Non trouvé...");
-            return annee;
-        }
-        
     }
 
     @Override

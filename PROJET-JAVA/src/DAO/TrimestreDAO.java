@@ -35,7 +35,7 @@ public class TrimestreDAO extends DAO<Trimestre>{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs1=stmt.executeQuery("SELECT * FROM trimestre");
             
-            while(rs1.first()){
+            while(rs1.next()){
                 int id=rs1.getInt("id_trimestre");
                 
                 Trimestre trimestre=new Trimestre();
