@@ -23,7 +23,7 @@ import javax.swing.table.TableModel;
  *
  * @author kevin
  */
-public class Etudiants extends javax.swing.JFrame {
+public class Persons extends javax.swing.JFrame {
 
     ArrayList<Personne> personnes= new ArrayList();       
     PersonneDAO personnesDAO;
@@ -34,7 +34,7 @@ public class Etudiants extends javax.swing.JFrame {
      * Creates new form Rechercher
      * @param type0 le type de personne à afficher etudiant ou enseignant?
      */
-    public Etudiants(String type0) { 
+    public Persons(String type0) { 
         initComponents();
         modelStudent=(DefaultTableModel)jTable1.getModel();
         fillPersons(type0);
@@ -263,7 +263,7 @@ public class Etudiants extends javax.swing.JFrame {
             
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Etudiants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Persons.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -291,7 +291,7 @@ public class Etudiants extends javax.swing.JFrame {
             
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Etudiants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Persons.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton5ActionPerformed

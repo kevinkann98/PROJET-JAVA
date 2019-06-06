@@ -90,4 +90,16 @@ public class Classe {
         System.out.println("Niveau:"+niveau.getNom());
     }
     
+    @Override
+    public boolean equals(Object classe){
+        
+        return classe instanceof Classe && 
+            ((Classe)classe).id_classe==this.id_classe &&
+            ((Classe)classe).nom.equals(this.nom)&&
+            ((Classe)classe).annee.equals(this.annee) &&
+            ((Classe)classe).ecole.equals(this.ecole);
+            
+                   
+    }
+    
 }

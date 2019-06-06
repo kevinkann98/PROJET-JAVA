@@ -41,6 +41,15 @@ public class Ecole {
         this.nom = nom;
     }
     
+    @Override
+    public boolean equals(Object ecole){
+        
+        return ecole instanceof Ecole &&
+                ((Ecole) ecole).id_ecole==this.id_ecole &&
+                ((Ecole) ecole).nom.equals(this.nom);
+        
+    }
+    
     
     
     

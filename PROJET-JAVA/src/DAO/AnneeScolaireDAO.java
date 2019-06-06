@@ -38,7 +38,6 @@ public class AnneeScolaireDAO extends DAO<AnneeScolaire> {
             
             if(rs.first()){
                 int id_annee=rs.getInt("id_annee");
-                System.out.println(id_annee);
                 annee=new AnneeScolaire(id_annee);
                 return annee;
             }

@@ -29,8 +29,7 @@ public class AddClass extends javax.swing.JFrame {
     /**
      * Creates new form AddClass
      */
-    ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
-    ArrayList<AnneeScolaire>allYears=new ArrayList<AnneeScolaire>();
+    
     
     public AddClass() {
         initComponents();
@@ -49,9 +48,9 @@ public class AddClass extends javax.swing.JFrame {
             NiveauDAO niveaudao=new NiveauDAO();
 
 
-            allLevels=niveaudao.all(); //On récupère tous les niveaux dans un arraylist
-            for(int i=0;i<allLevels.size();i++)
-                level.addItem(allLevels.get(i).getNom());
+            Classes.allLevels=niveaudao.all(); //On récupère tous les niveaux dans un arraylist
+            for(int i=0;i<Classes.allLevels.size();i++)
+                level.addItem(Classes.allLevels.get(i).getNom());
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddClass.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,9 +66,9 @@ public class AddClass extends javax.swing.JFrame {
             
             AnneeScolaireDAO anneescolairedao=new AnneeScolaireDAO();
             
-            allYears=anneescolairedao.all();
-            for(int i=0;i<allYears.size();i++){
-                String yearTemp=""+allYears.get(i).getId_anneeScolaire();
+            Classes.allYears=anneescolairedao.all();
+            for(int i=0;i<Classes.allYears.size();i++){
+                String yearTemp=""+Classes.allYears.get(i).getId_anneeScolaire();
                 year.addItem(yearTemp);
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -192,6 +191,7 @@ public class AddClass extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameActionPerformed
 
+    
     //Ajout d'une classe
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
@@ -209,29 +209,20 @@ public class AddClass extends javax.swing.JFrame {
             //On récupère les champs
             String nom=name.getText();
                
-            //On convertit l'annee choisi (type object) en String puis en int
+            //On convertit l'annee choisie (type object) en String puis en int
             int id_annee=Integer.parseInt((String)year.getSelectedItem());
             
-            for(int i=0;i<allYears.size();i++){
-                if(allYears.get(i).getId_anneeScolaire()==id_annee)
-                    annee=new AnneeScolaire(allYears.get(i).getId_anneeScolaire());
-                else
-                    System.out.println("oups");
-               
-            }
+            //ON instancie un objet année à partir de son id en le cherchant dans l'arraylist
+            annee=Classes.findYear(id_annee);
+            
             
             String nom_ecole="ECE Paris";
             ecole=new Ecole(1,nom_ecole);
-            
-            //Instancier le niveau choisi
-            
-            for(int i=0;i<allLevels.size();i++){
-                if(allLevels.get(i).getNom()==(String)level.getSelectedItem())
-                    niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
-                else
-                    System.out.println("oups");
-            }          
-            
+       
+            //On instancie un niveau en le cherchant dans l'arraylist récupéré depuis la bdd
+            String nom_niveau=(String)level.getSelectedItem();
+            niveau=Classes.findLevel(nom_niveau);
+                           
             //Instancier la classe puis l'ajouter dans la bdd
             classe=new Classe(id,nom,annee,ecole,niveau);
             classe=classeDAO.create(classe);

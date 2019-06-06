@@ -30,8 +30,7 @@ public class ClasseDAO extends DAO<Classe>{
         AnneeScolaire annee=new AnneeScolaire();
         Ecole ecole=new Ecole();
         Niveau niveau=new Niveau();
-     
-        
+            
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             
@@ -61,6 +60,7 @@ public class ClasseDAO extends DAO<Classe>{
                 
                 //Instancier la classe puis la retourner
                 classe=new Classe(id,nom,annee,ecole,niveau);
+                
                 
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -133,11 +133,12 @@ public class ClasseDAO extends DAO<Classe>{
     public Classe update(Classe classe) {
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            
-            rss=stmt.executeUpdate("UPDATE classe SET nom='"+classe.getNom()+"' WHERE id_classe="+classe.getId_classe());
+            String sql="UPDATE classe SET nom='"+classe.getNom()+"',id_annee="+classe.getAnnee().getId_anneeScolaire()+",id_ecole="+classe.getEcole().getId_ecole()+", id_niveau="+classe.getNiveau().getId_niveau()+" WHERE id_classe="+classe.getId_classe();
+            rss=stmt.executeUpdate(sql);
             
             if(rss!=0){
-                classe=find(classe.getId_classe());
+                System.out.println("trouve");
+                classe=this.find(classe.getId_classe());
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);

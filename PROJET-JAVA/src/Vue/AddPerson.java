@@ -143,7 +143,7 @@ public class AddPerson extends javax.swing.JFrame {
             personne=personneDAO.create(personne); //ajout de cette personne dans la bdd
             
             Object[]pers ={personne.getId(),personne.getNom(),personne.getPrenom(),personne.getType()};
-            Etudiants.modelStudent.insertRow(Etudiants.modelStudent.getRowCount(),pers);
+            Persons.modelStudent.insertRow(Persons.modelStudent.getRowCount(),pers);
         
             //Fermer la fenêtre
             dispose();

@@ -122,7 +122,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     //Afficher les élèves
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Etudiants etudiant=new Etudiants("etudiant");
+        Persons etudiant=new Persons("etudiant");
         etudiant.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -130,7 +130,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     //Afficher les enseignants
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Etudiants etudiant=new Etudiants("enseignant");
+        Persons etudiant=new Persons("enseignant");
         etudiant.setVisible(true);
         dispose();
         

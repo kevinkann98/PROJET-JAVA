@@ -30,6 +30,11 @@ public class AnneeScolaire {
         this.id_anneeScolaire = id_anneeScolaire;
     }
     
+    public boolean equals(Object annee){
+        return annee instanceof AnneeScolaire &&
+               ((AnneeScolaire)annee).id_anneeScolaire==this.id_anneeScolaire;
+    }
+    
     
     
 }

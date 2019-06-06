@@ -99,8 +99,7 @@ public class Personne implements Comparable<Personne>{
                 ((Personne)personne).nom.equals(this.nom) && 
                 ((Personne)personne).prenom.equals(this.prenom) &&
                 ((Personne)personne).type.equals(this.type);
-             
-        
+                   
     }
 
     @Override

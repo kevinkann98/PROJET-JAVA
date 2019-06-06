@@ -100,7 +100,7 @@
                 <Column editable="false" title="Identifiant" type="java.lang.Object"/>
                 <Column editable="true" title="Nom" type="java.lang.Object"/>
                 <Column editable="true" title="Ann&#xe9;e Scolaire" type="java.lang.Object"/>
-                <Column editable="true" title="Ecole" type="java.lang.Object"/>
+                <Column editable="false" title="Ecole" type="java.lang.Object"/>
                 <Column editable="true" title="Niveau" type="java.lang.Object"/>
               </Table>
             </Property>

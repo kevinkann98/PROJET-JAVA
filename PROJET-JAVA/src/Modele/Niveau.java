@@ -41,5 +41,10 @@ public class Niveau {
         this.nom = nom;
     }
     
-    
+    @Override
+    public boolean equals(Object niveau){
+        return niveau instanceof Niveau &&
+                ((Niveau) niveau).id_niveau==this.id_niveau &&
+                ((Niveau) niveau).nom.equals(this.nom);
+    }
 }

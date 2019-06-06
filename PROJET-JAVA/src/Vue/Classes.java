@@ -6,7 +6,10 @@
 package Vue;
 
 import DAO.ClasseDAO;
+import Modele.AnneeScolaire;
 import Modele.Classe;
+import Modele.Ecole;
+import Modele.Niveau;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,6 +26,10 @@ public class Classes extends javax.swing.JFrame {
     ArrayList<Classe> classes=new ArrayList();
     ClasseDAO classeDAO;
     Classe classe=new Classe();
+    AddClass addClass=new AddClass();
+    
+    static ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
+    static ArrayList<AnneeScolaire>allYears=new ArrayList<AnneeScolaire>();
     
     static DefaultTableModel modelClass;
 
@@ -32,6 +39,7 @@ public class Classes extends javax.swing.JFrame {
     public Classes(){
         initComponents();          
         modelClass=(DefaultTableModel) jTable1.getModel();
+        addClass=new AddClass(); //ON récupère tous les niveaux, annees associés.
         
         try {          
             classeDAO= new ClasseDAO();
@@ -102,7 +110,7 @@ public class Classes extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, true, true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -176,6 +184,48 @@ public class Classes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+        /**
+     *
+     * @param id_annee
+     * @return
+     */
+    public static AnneeScolaire findYear(int id_annee){
+        AnneeScolaire annee=new AnneeScolaire();
+        for(int i=0;i<allYears.size();i++){
+                if(allYears.get(i).getId_anneeScolaire()==id_annee)
+                    annee=new AnneeScolaire(allYears.get(i).getId_anneeScolaire());
+                else{
+                    System.out.println("oups");
+                }
+            }
+        return annee;
+        
+    }
+    
+    /**
+     *
+     * @param id_niveau
+     * @return
+     */
+    public static Niveau findLevel(String nom_niveau){
+        
+        Niveau niveau=new Niveau();
+        for(int i=0;i<allLevels.size();i++){
+                if(allLevels.get(i).getNom().equals(nom_niveau)){
+                    //System.out.println("hello");
+                    niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
+                }
+                    
+                else
+                    System.out.println("Niveau inexistant");
+                
+
+            } 
+        
+        return niveau;
+    }
+    
+    
     
     //Retour
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -188,7 +238,6 @@ public class Classes extends javax.swing.JFrame {
     //Ajouter une classe
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        AddClass addClass=new AddClass();
         addClass.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -231,7 +280,7 @@ public class Classes extends javax.swing.JFrame {
             
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Etudiants.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Persons.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -254,21 +303,46 @@ public class Classes extends javax.swing.JFrame {
                 }
             }
             
-            //On récup toutes la ligne puis la mettre à jour
+            else{
+            
+            //On récup toutes la ligne puis instanciation à partir de l'arraylist.
             int currentRow=jTable1.getSelectedRow();
             
             int id=(int)modelClass.getValueAt(currentRow,0);
+            
+            
             String nom=(String)modelClass.getValueAt(currentRow, 1);
-            int annee=(int)modelClass.getValueAt(currentRow, 2);
-            String ecole=(String)modelClass.getValueAt(currentRow, 3);
-            String niveau=(String)modelClass.getValueAt(currentRow, 4);
+            
+            String nom_annee=(String)modelClass.getValueAt(currentRow, 2);   
+            int id_annee=Integer.parseInt(nom_annee);
+            AnneeScolaire annee=new AnneeScolaire(id_annee);
+                    
+            String nom_ecole=(String)modelClass.getValueAt(currentRow, 3);
+            Ecole ecole=new Ecole(1,nom_ecole);
+            
+            String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
+            Niveau niveau=findLevel("ING3");
+            
+            //Instanciation de la classe modifiée
+            classe=new Classe(id,nom,annee,ecole,niveau);
+            
+            System.out.println("classe modifiee:");
+            classe.afficher();
+          
+            
+            if(classe.equals(classeDAO.update(classe))){           
+                JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");  
+            }
+            else{
+                System.out.println("oups");
+            }
             
             
             
-            //classe=new Classe(id,nom,annee,ecole,niveau);
+        }
             
             } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Classes.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Erreur de modification");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
