@@ -38,14 +38,16 @@ public class PersonneDAO extends DAO<Personne>{
                 String type=rs.getString("type");
                 
                 personne=new Personne(id,nom,prenom,type);
-                
+                return personne;
             }
+            else
+                throw new SQLException();
         }
         catch(SQLException e){
-            System.out.println("Non trouvé...");
+            System.out.println("La personne n'existe pas...");
+            return null;
         }
-        
-        return personne;
+      
         
         
     }

@@ -371,7 +371,7 @@ public class Classes extends javax.swing.JFrame {
         }
             
             } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Erreur de modification");
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

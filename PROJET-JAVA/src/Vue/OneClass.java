@@ -55,7 +55,7 @@ public class OneClass extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         className.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
 
@@ -129,12 +129,15 @@ public class OneClass extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    //Retire un etudiant de la classe (inscription à supprimer de la bdd)
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
-    //Ajoute un étudiant existant dans la classe
+    //Ajouter un étudiant dans la classe
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
@@ -147,7 +150,10 @@ public class OneClass extends javax.swing.JFrame {
             
             //Récupérer la classe et l'étudiant sélectionné
             int id_personne=Integer.parseInt(jTextField1.getText());
-            personne=personnedao.find(id_personne);
+            if(personnedao.find(id_personne)==null)
+                throw new SQLException();
+            else
+                personne=personnedao.find(id_personne);
             
             //Demander confirmation
             int confirm=JOptionPane.showConfirmDialog(null, "Ajouter "+personne.getNom()+" "+personne.getPrenom()+" ?");
@@ -159,15 +165,10 @@ public class OneClass extends javax.swing.JFrame {
                 Object [] student={personne.getId(),personne.getNom(),personne.getPrenom()};
                 modelClass.insertRow(jTable1.getRowCount(), student);
                 
-            }
-            
-            
-            
-            
-            
+            }            
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(OneClass.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

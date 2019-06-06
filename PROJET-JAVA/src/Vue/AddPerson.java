@@ -149,7 +149,7 @@ public class AddPerson extends javax.swing.JFrame {
             dispose();
 
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddPerson.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
         
         
