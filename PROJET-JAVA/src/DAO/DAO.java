@@ -27,7 +27,7 @@ public abstract class DAO<T>{
     public DAO() throws ClassNotFoundException, SQLException{
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd(), Connexion.getUsername(), Connexion.getPassword());  
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd()+"?autoReconnect=true&useSSL=false", Connexion.getUsername(), Connexion.getPassword());  
             
             if(con==null){
                 throw new ClassNotFoundException();          

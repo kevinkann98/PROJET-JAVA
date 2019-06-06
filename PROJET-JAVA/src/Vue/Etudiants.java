@@ -36,11 +36,17 @@ public class Etudiants extends javax.swing.JFrame {
      */
     public Etudiants(String type0) { 
         initComponents();
-        
-
         modelStudent=(DefaultTableModel)jTable1.getModel();
+        fillPersons(type0);
+          
         
-             
+    }
+    
+    /**
+     *Remplit le tableau de personnes
+     */
+    public void fillPersons(String type0){
+        
         try {
             
             personnesDAO = new PersonneDAO();           
@@ -61,8 +67,7 @@ public class Etudiants extends javax.swing.JFrame {
             
         } catch (ClassNotFoundException | SQLException ex) {
             
-        }
-       
+        }      
         
     }
 
@@ -209,7 +214,7 @@ public class Etudiants extends javax.swing.JFrame {
         // TODO add your handling code here:
         AddPerson addpers= new AddPerson();
         addpers.setVisible(true);
-        //dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Retour au menu principal

@@ -60,15 +60,17 @@ public class DetailBulletinDAO extends DAO<DetailBulletin>{
             rs=stmt.executeQuery("SELECT * FROM detailbulletin WHERE id_detail="+id);
             if(rs.first()){
                 String appreciation=rs.getString("appreciation");
+                int id_bulletin=rs.getInt("id_bulletin");
+                int id_enseignement=rs.getInt("id_enseignement");
                 
                 //Instanciation du bulletin correspondant
-                int id_bulletin=rs.getInt("id_bulletin");
+                
                 Bulletin bulletin=new Bulletin();
                 BulletinDAO bulletindao=new BulletinDAO();
                 bulletin=bulletindao.find(id_bulletin);
                 
                 //Instanciation de l'enseignement correspondant
-                int id_enseignement=rs.getInt("id_enseignement");
+                
                 Enseignement enseignement=new Enseignement();
                 EnseignementDAO enseignementDAO=new EnseignementDAO();
                 enseignement=enseignementDAO.find(id_enseignement);

@@ -5,12 +5,17 @@
  */
 package Vue;
 
+import DAO.AnneeScolaireDAO;
 import DAO.ClasseDAO;
+import DAO.NiveauDAO;
+import DAO.PersonneDAO;
 import Modele.AnneeScolaire;
 import Modele.Classe;
 import Modele.Ecole;
 import Modele.Niveau;
+import Modele.Personne;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +30,46 @@ public class AddClass extends javax.swing.JFrame {
      */
     public AddClass() {
         initComponents();
+        fillLevels();
+        //fillYears();
+        
+    }
+    
+    /**
+     *  Remplit le dropbox de niveaux avec ceux existants dans la bdd 
+     */
+    public void fillLevels(){
+        ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
+        try {
+            NiveauDAO niveaudao=new NiveauDAO();
+
+            allLevels=niveaudao.all(); //On récupère tous les niveaux dans un arraylist
+            for(int i=0;i<allLevels.size();i++)
+                level.addItem(allLevels.get(i).getNom());
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Remplit le dropbox d'années ave ceux existants dans la bdd
+     */
+    public void fillYears(){
+        
+        try {
+            ArrayList<AnneeScolaire>allYears=new ArrayList<AnneeScolaire>();
+            AnneeScolaireDAO anneescolairedao=new AnneeScolaireDAO();
+            
+            allYears=anneescolairedao.all();
+            for(int i=0;i<allYears.size();i++){
+                String yearTemp=""+allYears.get(i).getId_anneeScolaire();
+                year.addItem(yearTemp);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -43,7 +88,7 @@ public class AddClass extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         name = new javax.swing.JTextField();
-        schlyr = new javax.swing.JComboBox<>();
+        year = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,7 +98,6 @@ public class AddClass extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Nom:");
 
-        level.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         level.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 levelActionPerformed(evt);
@@ -80,6 +124,12 @@ public class AddClass extends javax.swing.JFrame {
             }
         });
 
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,7 +147,7 @@ public class AddClass extends javax.swing.JFrame {
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(schlyr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -118,7 +168,7 @@ public class AddClass extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
-                        .addComponent(schlyr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -147,17 +197,22 @@ public class AddClass extends javax.swing.JFrame {
             AnneeScolaire annee=new AnneeScolaire();
             Ecole ecole=new Ecole();
             Niveau niveau=new Niveau();
-            
-            
+                       
             int id=0;                       
             String nom=name.getText();
                
-            int id_annee=(int)schlyr.getSelectedItem();
+            int id_annee=(int)year.getSelectedItem();
+            annee=new AnneeScolaire(id_annee);
+            
             String nom_ecole="ECE Paris";
+            //ecole=new Ecole(nom_ecole);
+            
             String id_niveau=(String)level.getSelectedItem();
             
-            //Rechercher l'école dans la bdd et retourner 
             
+            //Instancier la classe puis l'ajouter dans la bdd
+            classe=new Classe(id,nom,annee,ecole,niveau);
+            classe=classeDAO.create(classe);
         
             
             
@@ -171,6 +226,10 @@ public class AddClass extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_yearActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -180,6 +239,6 @@ public class AddClass extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JComboBox<String> level;
     private javax.swing.JTextField name;
-    private javax.swing.JComboBox<String> schlyr;
+    private javax.swing.JComboBox<String> year;
     // End of variables declaration//GEN-END:variables
 }

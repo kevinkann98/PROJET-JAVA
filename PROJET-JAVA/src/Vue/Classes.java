@@ -29,14 +29,13 @@ public class Classes extends javax.swing.JFrame {
      * Creates new form Classes
      */
     public Classes(){
-        try {
-            initComponents();
-            
-            modelClass=(DefaultTableModel) jTable1.getModel();
-            
+        initComponents();          
+        modelClass=(DefaultTableModel) jTable1.getModel();
+        
+        try {          
             classeDAO= new ClasseDAO();
             
-            classes=classeDAO.all();
+            classes=classeDAO.all(); //On récupère toutes les lignes de la table classe
             pack();
             
             for(int i=0;i<classes.size();i++){
@@ -48,9 +47,13 @@ public class Classes extends javax.swing.JFrame {
                 String ecole=classes.get(i).getEcole().getNom();
                 
                 //Cree l'object à mettre dans le model
-                Object[]cls={id,nom,niveau,annee,ecole};
+                Object[]cls={id,nom,annee,ecole,niveau};
                 
                 modelClass.insertRow(modelClass.getRowCount(), cls);
+                
+                classes.get(i).afficher();
+                
+                
                 
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -73,6 +76,9 @@ public class Classes extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,16 +91,36 @@ public class Classes extends javax.swing.JFrame {
 
         jTextField1.setText("Rechercher");
 
+        jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Identifiant", "Nom", "Niveau", "Année Scolaire", "Ecole"
+                "Identifiant", "Nom", "Année Scolaire", "Ecole", "Niveau"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
+
+        jButton2.setText("Ajouter");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Supprimer");
+
+        jButton4.setText("Modifier");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,7 +135,14 @@ public class Classes extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(125, 125, 125)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(351, 351, 351)
+                        .addComponent(jButton2)
+                        .addGap(165, 165, 165)
+                        .addComponent(jButton3)
+                        .addGap(156, 156, 156)
+                        .addComponent(jButton4)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,7 +154,12 @@ public class Classes extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addGap(72, 72, 72)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addContainerGap(227, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,9 +174,20 @@ public class Classes extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //Ajouter une classe
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        AddClass addClass=new AddClass();
+        addClass.setVisible(true);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

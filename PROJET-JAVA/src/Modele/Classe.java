@@ -82,4 +82,12 @@ public class Classe {
         this.niveau = niveau;
     }
     
+    public void afficher(){
+        System.out.println("Id:"+id_classe);
+        System.out.println("Nom:"+nom);
+        System.out.println("Annee Scolaire:"+annee.getId_anneeScolaire());
+        System.out.println("Ecole:"+ecole.getNom());
+        System.out.println("Niveau:"+niveau.getNom());
+    }
+    
 }

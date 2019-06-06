@@ -55,7 +55,7 @@ public class EcoleDAO extends DAO<Ecole>{
         Ecole ecole=new Ecole();
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rs=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id);
+            ResultSet rs=stmt.executeQuery("SELECT * FROM ecole WHERE id_ecole="+id);
             
             if(rs.first()){
                 String nom=rs.getString("nom");              

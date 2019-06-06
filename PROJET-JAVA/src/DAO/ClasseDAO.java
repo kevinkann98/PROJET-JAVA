@@ -39,29 +39,32 @@ public class ClasseDAO extends DAO<Classe>{
             
             if(rs.first()){
                 
-                String nom=rs.getString("nom");
-                
-                //Instancier une annee
+                String nom=rs.getString("nom");              
                 int id_annee=rs.getInt("id_annee");
+                int id_ecole=rs.getInt("id_ecole");
+                int id_niveau=rs.getInt("id_niveau");
+                               
+                
+                //Instancier une annee              
                 AnneeScolaireDAO anneescolairedao=new AnneeScolaireDAO();
                 annee=anneescolairedao.find(id_annee);
-       
-                //Instancier l'ecole à l'aide de l'id
-                int id_ecole=rs.getInt("id_ecole");
-                EcoleDAO ecoledao=new EcoleDAO();
-                ecole=ecoledao.find(id_ecole);
+                
                 
                 //Instancier un niveau
-                int id_niveau=rs.getInt("id_niveau");
                 NiveauDAO niveaudao=new NiveauDAO();
                 niveau=niveaudao.find(id_niveau);
-                
+       
+                //Instancier l'ecole à l'aide de l'id
+                EcoleDAO ecoledao=new EcoleDAO();
+                ecole=ecoledao.find(id_ecole);
+                            
                 
                 //Instancier la classe puis la retourner
                 classe=new Classe(id,nom,annee,ecole,niveau);
+                
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Non trouvé...");
         }
         return classe;
         
@@ -156,9 +159,8 @@ public class ClasseDAO extends DAO<Classe>{
             
             while(rs1.next()){
                 int id=rs1.getInt("id_classe");
-                
-                
-                //Instancier la classe puis l'Array de liste de toutes les classes trouvées
+                                
+                //Instancier la classe puis l'ajouter à l'Array de toutes les classes
                 Classe classe=new Classe();
                 classe=this.find(id);
                 

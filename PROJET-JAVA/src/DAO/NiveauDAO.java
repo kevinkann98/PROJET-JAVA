@@ -38,6 +38,7 @@ public class NiveauDAO extends DAO<Niveau>{
                 
                 Niveau niveau=new Niveau();
                 niveau=this.find(id_niveau);
+                
                 niveaux.add(niveau);
                 
             }

@@ -114,24 +114,24 @@ public class MenuPrincipal extends javax.swing.JFrame {
     //Afficher les classes
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Etudiants recherche=new Etudiants("etudiant");
-        recherche.setVisible(true);
+        Classes classes=new Classes();
+        classes.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     //Afficher les élèves
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Etudiants recherche=new Etudiants("etudiant");
-        recherche.setVisible(true);
+        Etudiants etudiant=new Etudiants("etudiant");
+        etudiant.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Afficher les enseignants
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Etudiants recherche=new Etudiants("enseignant");
-        recherche.setVisible(true);
+        Etudiants etudiant=new Etudiants("enseignant");
+        etudiant.setVisible(true);
         dispose();
         
     }//GEN-LAST:event_jButton3ActionPerformed

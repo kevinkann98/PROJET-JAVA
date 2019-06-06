@@ -137,7 +137,7 @@ public class AddPerson extends javax.swing.JFrame {
         //Instancier la personne crééee et la DAO associée
         Personne personne=new Personne(id,name,prename,type);
         
-        DAO<Personne> personneDAO;
+        PersonneDAO personneDAO;
         try {
             personneDAO = new PersonneDAO();
             personneDAO.create(personne); //ajout de cette personne dans la bdd

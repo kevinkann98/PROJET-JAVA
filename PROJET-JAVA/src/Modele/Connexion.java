@@ -34,7 +34,7 @@ public class Connexion {
         
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd, username, password);
+                con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd+"?autoReconnect=true&useSSL=false", username, password);
                 
                 if(con!=null){
                     System.out.println("Connexion à la base "+bdd+" OK");                     
