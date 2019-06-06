@@ -103,7 +103,7 @@ public class InscriptionDAO extends DAO<Inscription>{
             prepare.executeUpdate();
             
             if(prepare!=null){
-                rs=stmt.executeQuery("SELECT id_inscription WHERE id_classe="+obj.getClasse().getId_classe()+"AND id_personne="+obj.getPersonne().getId());
+                rs=stmt.executeQuery("SELECT id_inscription WHERE id_classe="+obj.getClasse().getId_classe()+" AND id_personne="+obj.getPersonne().getId());
             
                 if(rs.first()){
                     int id=rs.getInt("id_inscription");

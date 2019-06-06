@@ -66,7 +66,7 @@ public class Persons extends javax.swing.JFrame {
             }            
             
         } catch (ClassNotFoundException | SQLException ex) {
-            
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }      
         
     }

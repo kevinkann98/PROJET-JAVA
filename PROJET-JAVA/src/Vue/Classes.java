@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -40,7 +41,15 @@ public class Classes extends javax.swing.JFrame {
         initComponents();          
         modelClass=(DefaultTableModel) jTable1.getModel();
         addClass=new AddClass(); //ON récupère tous les niveaux, annees associés.
+        fillClasses();
         
+        
+    }
+    
+    /**
+     * Remplit le tableau de classes avec celles trouvées dans la bdd
+     */
+    public void fillClasses(){
         try {          
             classeDAO= new ClasseDAO();
             
@@ -66,10 +75,8 @@ public class Classes extends javax.swing.JFrame {
                 
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Classes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
-        
-        
     }
 
     /**
@@ -88,6 +95,7 @@ public class Classes extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +108,7 @@ public class Classes extends javax.swing.JFrame {
 
         jTextField1.setText("Rechercher");
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,6 +150,13 @@ public class Classes extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Afficher les élèves");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,12 +172,14 @@ public class Classes extends javax.swing.JFrame {
                         .addGap(125, 125, 125)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(351, 351, 351)
+                        .addGap(205, 205, 205)
                         .addComponent(jButton2)
-                        .addGap(165, 165, 165)
+                        .addGap(152, 152, 152)
                         .addComponent(jButton3)
-                        .addGap(156, 156, 156)
-                        .addComponent(jButton4)))
+                        .addGap(175, 175, 175)
+                        .addComponent(jButton4)
+                        .addGap(150, 150, 150)
+                        .addComponent(jButton5)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -172,12 +190,13 @@ public class Classes extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addContainerGap(227, Short.MAX_VALUE))
         );
 
@@ -212,7 +231,7 @@ public class Classes extends javax.swing.JFrame {
         Niveau niveau=new Niveau();
         for(int i=0;i<allLevels.size();i++){
                 if(allLevels.get(i).getNom().equals(nom_niveau)){
-                    //System.out.println("hello");
+                    System.out.println("hello");
                     niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
                 }
                     
@@ -280,10 +299,40 @@ public class Classes extends javax.swing.JFrame {
             
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Persons.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Une erreur est survenue");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     *Instancie et retourne une classe en selectionnant sa ligne dans le tableau
+     */
+    public Classe selectClass(){
+        
+        Classe classe=new Classe();
+        //On récup toutes la ligne puis instanciation à partir de l'arraylist.
+            int currentRow=jTable1.getSelectedRow();
+            
+            int id=(int)modelClass.getValueAt(currentRow,0);
+            
+            
+            String nom=(String)modelClass.getValueAt(currentRow, 1);
+            
+            String nom_annee=(String)modelClass.getValueAt(currentRow, 2);   
+            int id_annee=Integer.parseInt(nom_annee);
+            AnneeScolaire annee=new AnneeScolaire(id_annee);
+                    
+            String nom_ecole=(String)modelClass.getValueAt(currentRow, 3);
+            Ecole ecole=new Ecole(1,nom_ecole);
+            
+            String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
+            Niveau niveau=findLevel(nom_niveau);
+            
+            //Instanciation de la classe modifiée
+            classe=new Classe(id,nom,annee,ecole,niveau);
+            
+            return classe;
+        
+    }
     
     //Modifier une classe
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -304,30 +353,10 @@ public class Classes extends javax.swing.JFrame {
             }
             
             else{
-            
-            //On récup toutes la ligne puis instanciation à partir de l'arraylist.
-            int currentRow=jTable1.getSelectedRow();
-            
-            int id=(int)modelClass.getValueAt(currentRow,0);
-            
-            
-            String nom=(String)modelClass.getValueAt(currentRow, 1);
-            
-            String nom_annee=(String)modelClass.getValueAt(currentRow, 2);   
-            int id_annee=Integer.parseInt(nom_annee);
-            AnneeScolaire annee=new AnneeScolaire(id_annee);
-                    
-            String nom_ecole=(String)modelClass.getValueAt(currentRow, 3);
-            Ecole ecole=new Ecole(1,nom_ecole);
-            
-            String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
-            Niveau niveau=findLevel("ING3");
-            
-            //Instanciation de la classe modifiée
-            classe=new Classe(id,nom,annee,ecole,niveau);
-            
-            System.out.println("classe modifiee:");
-            classe.afficher();
+                classe=selectClass();
+                     
+                System.out.println("classe modifiee:");
+                classe.afficher();
           
             
             if(classe.equals(classeDAO.update(classe))){           
@@ -346,12 +375,37 @@ public class Classes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    
+    //Afficher les élèves de la classe sélectionnée
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        //Si aucune ligne n'est sélectionnée...
+        if(jTable1.getSelectedRow()==-1){
+            if(modelClass.getRowCount()==0){
+                JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
+            }
+        }
+        else{
+            classe=selectClass();
+            OneClass oneclass=new OneClass(classe);
+            oneclass.setVisible(true);
+        }
+             
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

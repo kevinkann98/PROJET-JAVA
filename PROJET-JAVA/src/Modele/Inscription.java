@@ -11,8 +11,9 @@ package Modele;
  */
 public class Inscription {
     private int id_inscription;
+    
     private Classe classe;
-    private Personne personne; //ATTENTION: l'id de personne est la clé étrangère, on travaille avec celle-ci pour la référencer.
+    private Personne personne; 
     
     public Inscription(){
         id_inscription=0;
