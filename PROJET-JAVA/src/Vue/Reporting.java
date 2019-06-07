@@ -5,8 +5,8 @@
  */
 package Vue;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.data.general.DefaultPieDataset;
+//import org.jfree.chart.ChartFactory;
+//import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
