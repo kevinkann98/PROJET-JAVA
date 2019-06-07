@@ -39,7 +39,7 @@ public class InscriptionDAO extends DAO<Inscription>{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs1=stmt.executeQuery("SELECT * FROM inscription");
             
-            if(rs1.next()){
+            while(rs1.next()){
                 int id=rs1.getInt("id_inscription");
                 
                 Inscription inscription=new Inscription();
@@ -59,6 +59,8 @@ public class InscriptionDAO extends DAO<Inscription>{
     public Inscription find(int id) {
         
         Inscription inscription=new Inscription();
+        Classe classe=new Classe();
+        Personne personne=new Personne();
         
         try{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);            
@@ -69,8 +71,6 @@ public class InscriptionDAO extends DAO<Inscription>{
                 int id_classe=rs.getInt("id_classe");
                 int id_personne=rs.getInt("id_personne");
 
-                Classe classe=new Classe();
-                Personne personne=new Personne();
 
                 //Instancier une classe de l'inscription
                 ClasseDAO classedao=new ClasseDAO();

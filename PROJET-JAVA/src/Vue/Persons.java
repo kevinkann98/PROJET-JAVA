@@ -25,9 +25,10 @@ import javax.swing.table.TableModel;
  */
 public class Persons extends javax.swing.JFrame {
 
-    ArrayList<Personne> personnes= new ArrayList();       
-    PersonneDAO personnesDAO;
+    static ArrayList<Personne> personnes= new ArrayList();       
+    static PersonneDAO personnesDAO;
     static DefaultTableModel modelStudent;   
+    static String type;
     
         
     /**
@@ -35,9 +36,11 @@ public class Persons extends javax.swing.JFrame {
      * @param type0 le type de personne à afficher etudiant ou enseignant?
      */
     public Persons(String type0) { 
+        type=type0;
+        
         initComponents();
         modelStudent=(DefaultTableModel)jTable1.getModel();
-        fillPersons(type0);
+        fillPersons();
           
         
     }
@@ -45,13 +48,13 @@ public class Persons extends javax.swing.JFrame {
     /**
      *Remplit le tableau de personnes
      */
-    public void fillPersons(String type0){
+    public void fillPersons(){
         
         try {
             
             personnesDAO = new PersonneDAO();           
             //On récupère tout le monde
-            personnes=personnesDAO.all(type0);        
+            personnes=personnesDAO.all(type);        
             pack();
             
             for(int i=0;i<personnes.size();i++){
@@ -256,7 +259,10 @@ public class Persons extends javax.swing.JFrame {
                 int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+personne.getNom()+" "+personne.getPrenom()+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
                     personneDAO.delete(personne); //Enlever de la bdd
-                    modelStudent.removeRow(currentRow);                            
+                    modelStudent.removeRow(currentRow);   
+                    
+                    //Mettre à jour l'arraylist de personnes
+                    personnes=personneDAO.all(type);
                 }
 
             }
@@ -326,11 +332,13 @@ public class Persons extends javax.swing.JFrame {
                 
                 
                                    
-                    personne=new Personne(id,nom,prenom,type); //instanciation
+                personne=new Personne(id,nom,prenom,type); //instanciation
 
 
-                    if(personne.equals(personneDAO.update(personne)))              
-                      JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");               
+                    if(personne.equals(personneDAO.update(personne))){              
+                      JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès."); 
+                      personnes=personnesDAO.all(type); //On met à jour l'arraylist
+                    }
                     else
                       throw new SQLException(); 
             }

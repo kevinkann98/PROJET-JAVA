@@ -230,6 +230,9 @@ public class AddClass extends javax.swing.JFrame {
             //L'afficher dans le tableau
             Object []classes={classe.getId_classe(),classe.getNom(),classe.getAnnee().getId_anneeScolaire(),classe.getEcole().getNom(),classe.getNiveau().getNom()}; 
             modelClass.insertRow(modelClass.getRowCount(), classes);
+            
+            //mettre à jour l'arraylist de classes
+            Classes.classes=Classes.classeDAO.all();
 
             dispose();
         

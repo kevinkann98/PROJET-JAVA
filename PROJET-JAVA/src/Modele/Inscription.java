@@ -28,6 +28,14 @@ public class Inscription {
         this.personne = personne;
     }
     
+    /**
+     *Afficher une inscription
+     */
+    public void afficher(){
+        System.out.println(id_inscription);
+        System.out.println(classe.getId_classe()+" "+classe.getNom());
+        System.out.println(personne.getId()+" "+personne.getNom());
+    }
     
     //Getters setters
 

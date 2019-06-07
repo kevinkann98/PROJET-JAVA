@@ -13,6 +13,7 @@ import Modele.Inscription;
 import Modele.Personne;
 import static Vue.Classes.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,6 +26,11 @@ import javax.swing.table.DefaultTableModel;
 public class OneClass extends javax.swing.JFrame {
 
     Classe classe=new Classe();
+    
+    Inscription inscription=new Inscription();
+    InscriptionDAO inscriptiondao;
+    
+    ArrayList<Inscription> inscriptions= new ArrayList<Inscription>();
     private DefaultTableModel modelClass;
     
     /** Creates new form OneClass */
@@ -32,10 +38,51 @@ public class OneClass extends javax.swing.JFrame {
         initComponents();
         this.classe=classe;
         
-        modelClass=(DefaultTableModel) jTable1.getModel();
-        
-        
+        modelClass=(DefaultTableModel) jTable1.getModel();      
         className.setText(classe.getNom()+" "+classe.getNiveau().getNom()+" "+classe.getAnnee().getId_anneeScolaire());
+      
+        fillStudents();
+        
+        
+        
+    }
+    
+    /**
+     *
+     */
+    public void fillStudents(){
+        
+        try {
+            //Remplir le tableau avec les étudiants de la classe
+            
+            //On récupère d'abord les inscriptions
+            inscriptiondao=new InscriptionDAO();
+            inscriptions=inscriptiondao.all();
+            
+            
+            //Récupérer les étudiants de la classe
+            for(int i=0;i<inscriptions.size();i++){
+                inscriptions.get(i).afficher();
+                if(inscriptions.get(i).getClasse().getId_classe()==classe.getId_classe()){
+                    int id_personne=inscriptions.get(i).getPersonne().getId();
+                    
+                    PersonneDAO personnedao=new PersonneDAO();
+                    Personne personne=new Personne();
+                    personne=personnedao.find(id_personne); //Instanciation de la personne en la cherchant dans la bdd
+                    
+                    
+                    
+                    Object []infos={inscriptions.get(i).getId_inscription(), personne.getPrenom(), personne.getNom()};
+                    
+                    modelClass.insertRow(jTable1.getRowCount(), infos);                   
+                    
+                }
+            }
+         
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(OneClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
 
@@ -65,9 +112,18 @@ public class OneClass extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identifiant", "Nom", "Prénom"
+                "Identifiant d'inscription", "Nom", "Prénom"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(20);
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Retirer de la classe");
@@ -93,13 +149,12 @@ public class OneClass extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 6, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 6, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
@@ -130,9 +185,49 @@ public class OneClass extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    //Retire un etudiant de la classe (inscription à supprimer de la bdd)
+    //Retirer un etudiant de la classe (inscription à supprimer de la bdd)
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:      
+        
+        
+        if(jTable1.getSelectedRow()==-1){//Si aucune ligne est selectionnee
+            if(modelClass.getRowCount()==0){
+                JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne.");                
+            }
+            
+        }
+        else{
+            try {
+                inscription=new Inscription();
+                inscriptiondao=new InscriptionDAO();
+                
+                int currentRow=jTable1.getSelectedRow();
+                int id_inscription=(int) modelClass.getValueAt(currentRow, 0); //Récupérer l'id d'inscription à supprimer
+                String nom=(String) modelClass.getValueAt(currentRow, 1);
+                String prenom=(String) modelClass.getValueAt(currentRow, 2);
+                
+                inscription=inscriptiondao.find(id_inscription);
+                
+                //Demande de confirmation
+                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment retirer "+nom+" "+prenom+" de la classe ?");
+                
+                if(confirm==JOptionPane.YES_OPTION){                   
+                    inscriptiondao.delete(inscription); //Enlever de la bdd
+                    modelClass.removeRow(currentRow);
+                    
+                    ///on met à jour l'arraylist d'inscriptions
+                    inscriptions=inscriptiondao.all();
+                }
+                
+                
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(OneClass.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -141,8 +236,8 @@ public class OneClass extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
-            Inscription inscription=new Inscription();           
-            InscriptionDAO inscriptiondao=new InscriptionDAO();
+            inscription=new Inscription();           
+            inscriptiondao=new InscriptionDAO();
             Personne personne=new Personne();
             PersonneDAO personnedao=new PersonneDAO();
             
@@ -150,22 +245,42 @@ public class OneClass extends javax.swing.JFrame {
             
             //Récupérer la classe et l'étudiant sélectionné
             int id_personne=Integer.parseInt(jTextField1.getText());
+            
+            for(int i=0;i<inscriptions.size();i++){
+                if(inscriptions.get(i).getClasse().getId_classe()==classe.getId_classe() && inscriptions.get(i).getPersonne().getId()==id_personne)
+                    throw new SQLException();
+            }
+            
             if(personnedao.find(id_personne)==null)
                 throw new SQLException();
-            else
-                personne=personnedao.find(id_personne);
             
-            //Demander confirmation
-            int confirm=JOptionPane.showConfirmDialog(null, "Ajouter "+personne.getNom()+" "+personne.getPrenom()+" ?");
-            if(confirm==JOptionPane.YES_OPTION){
-                //Instancier une inscription
-                inscription=new Inscription(id_inscription,classe,personne);
-                inscription=inscriptiondao.create(inscription);
+                    
+            else{
+                personne=personnedao.find(id_personne);
                 
-                Object [] student={personne.getId(),personne.getNom(),personne.getPrenom()};
-                modelClass.insertRow(jTable1.getRowCount(), student);
+                if(!personne.getType().equals("etudiant")){
+                    JOptionPane.showMessageDialog(rootPane, personne.getNom()+" "+personne.getPrenom()+"n'est pas un étudiant");
+
+                }
+                else{
+                  
+
+                    //Demander confirmation
+                    int confirm=JOptionPane.showConfirmDialog(null, "Ajouter "+personne.getNom()+" "+personne.getPrenom()+" ?");
+                    if(confirm==JOptionPane.YES_OPTION){
+                        //Instancier une inscription
+                        inscription=new Inscription(id_inscription,classe,personne);
+                        inscription=inscriptiondao.create(inscription);
+
+                        Object [] student={personne.getId(),personne.getNom(),personne.getPrenom()};
+                        modelClass.insertRow(jTable1.getRowCount(), student);
+                        
+                        inscriptions=inscriptiondao.all();
+
+                    }  
+                }
                 
-            }            
+        }
             
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");

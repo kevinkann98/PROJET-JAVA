@@ -144,6 +144,9 @@ public class AddPerson extends javax.swing.JFrame {
             
             Object[]pers ={personne.getId(),personne.getNom(),personne.getPrenom(),personne.getType()};
             Persons.modelStudent.insertRow(Persons.modelStudent.getRowCount(),pers);
+            
+            //On met à jour l'arraylist de personnes
+            Persons.personnes=Persons.personnesDAO.all(Persons.type);
         
             //Fermer la fenêtre
             dispose();

@@ -24,8 +24,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Classes extends javax.swing.JFrame {
     
-    ArrayList<Classe> classes=new ArrayList();
-    ClasseDAO classeDAO;
+    static ArrayList<Classe> classes=new ArrayList();
+    static ClasseDAO classeDAO;
     Classe classe=new Classe();
     AddClass addClass=new AddClass();
     
@@ -67,8 +67,7 @@ public class Classes extends javax.swing.JFrame {
                 //Cree l'object à mettre dans le model
                 Object[]cls={id,nom,annee,ecole,niveau};
                 
-                modelClass.insertRow(modelClass.getRowCount(), cls);
-                
+                modelClass.insertRow(modelClass.getRowCount(), cls);                
                 classes.get(i).afficher();
                 
                 
@@ -292,7 +291,9 @@ public class Classes extends javax.swing.JFrame {
                 int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+classe.getNom()+" "+classe.getNiveau().getNom()+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
                     classeDAO.delete(classe); //Enlever de la bdd
-                    modelClass.removeRow(currentRow);                            
+                    modelClass.removeRow(currentRow); 
+                    
+                    classes=classeDAO.all(); //On remet à jour l'arraylist de classes
                 }
 
             }
@@ -361,6 +362,7 @@ public class Classes extends javax.swing.JFrame {
             
             if(classe.equals(classeDAO.update(classe))){           
                 JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");  
+                classes=classeDAO.all(); //On remet à jour l'arraylist de classes depuis la bdd
             }
             else{
                 System.out.println("oups");
