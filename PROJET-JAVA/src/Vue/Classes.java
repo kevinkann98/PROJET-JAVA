@@ -223,7 +223,7 @@ public class Classes extends javax.swing.JFrame {
     
     /**
      *
-     * @param id_niveau
+     * @param nom_niveau
      * @return
      */
     public static Niveau findLevel(String nom_niveau){
