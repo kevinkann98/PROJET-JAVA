@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Un detail de bulletin est constitué d'un id, d'une appréciation, appartient à un bulletin et détaille un enseignement précis
  * @author kevin
  */
 public class DetailBulletin {

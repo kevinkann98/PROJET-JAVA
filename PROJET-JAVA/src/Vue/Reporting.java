@@ -9,7 +9,7 @@ package Vue;
 //import org.jfree.data.general.DefaultPieDataset;
 
 /**
- *
+ *Classe de statistiques
  * @author Sofia
  */
 public class Reporting extends javax.swing.JFrame {

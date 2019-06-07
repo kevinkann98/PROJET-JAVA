@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *Le menu principal permet d'afficher des classes, des élèves, des enseignants ou des statistiques
  * @author kevin
  */
 

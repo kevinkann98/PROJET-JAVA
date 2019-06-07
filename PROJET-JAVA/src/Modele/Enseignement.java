@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Un enseignement d'une discipline est dispensé par un enseignant à une classe
  * @author kevin
  */
 public class Enseignement {

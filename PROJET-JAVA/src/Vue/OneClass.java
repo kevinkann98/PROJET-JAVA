@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ *Affiche une classe spécifique, permet aussi d'ajouter et supprimer des étudiants de la classe
  * @author kevin
  */
 public class OneClass extends javax.swing.JFrame {

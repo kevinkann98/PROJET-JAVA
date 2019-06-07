@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ * Un niveau scolaire possible : ING1,ING2,ING3...
  * @author kevin
  */
 public class Niveau {

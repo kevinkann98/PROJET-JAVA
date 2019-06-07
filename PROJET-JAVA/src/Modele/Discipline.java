@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Une discipline (maths, physique, java...)
  * @author kevin
  */
 public class Discipline {

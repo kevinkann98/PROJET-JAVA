@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 /**
- *
+ *Une personne est soit un enseignant soit un étudiant
  * @author kevin
  */
 public class Personne implements Comparable<Personne>{

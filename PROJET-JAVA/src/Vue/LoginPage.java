@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *La page de connexion
  * @author kevin
  */
 public class LoginPage extends javax.swing.JFrame {

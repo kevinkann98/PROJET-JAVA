@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Un bulletin contient un id, une appreciation, appartient à un trimestre et à uns inscription
  * @author kevin
  */
 public class Bulletin {

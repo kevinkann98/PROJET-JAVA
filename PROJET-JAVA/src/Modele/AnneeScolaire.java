@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Une annee scolaire contient un id
  * @author kevin
  */
 public class AnneeScolaire {

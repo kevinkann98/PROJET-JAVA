@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
+ *Affiche toutes les personnes en fonction du type (étudiant ou enseignant)
  * @author kevin
  */
 public class Persons extends javax.swing.JFrame {

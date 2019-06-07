@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Un élève est une personne qui est inscrit à une classe pour l'année de cette classe, laquelle est caractérisée par son niveau
  * @author kevin
  */
 public class Inscription {

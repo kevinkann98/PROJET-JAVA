@@ -8,7 +8,7 @@ package Modele;
 import java.sql.Date;
 
 /**
- *
+ *Un trimestre est marqué par un numéro (1,2 ou 3), caractérisé par une date de début, de fin et est lié à une année scolaire
  * @author kevin
  */
 public class Trimestre {

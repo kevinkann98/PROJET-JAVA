@@ -17,7 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *Joue le rôle de classe intermédiaire entre la table discipline de la BD et la classe Discipline
+ *Gère les requêtes
  * @author kevin
  */
 public class DisciplineDAO extends DAO<Discipline>{

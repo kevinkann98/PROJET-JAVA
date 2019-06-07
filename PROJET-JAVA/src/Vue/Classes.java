@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ *Affiche la liste de toutes les classes
  * @author kevin
  */
 public class Classes extends javax.swing.JFrame {

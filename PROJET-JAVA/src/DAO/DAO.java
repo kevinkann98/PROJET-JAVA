@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- *
+ *Interface DAO permettant de mapper correctement les tables de la BD avec les classes 
  * @author kevin
  * @param <T>
  */

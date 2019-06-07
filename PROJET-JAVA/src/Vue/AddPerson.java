@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *Ajoute une personne dans la bdd (etudiant/enseignant
  * @author kevin
- * Ajoute une personne dans la bdd (etudiant/enseignant)
+ * )
  */
 public class AddPerson extends javax.swing.JFrame {
 

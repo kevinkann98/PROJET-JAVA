@@ -13,7 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *Joue le rôle de classe intermédiaire entre la table bulletin de la BD et la classe Bulletin
+ * Gère les requêtes
  * @author kevin
  */
 public class BulletinDAO extends DAO<Bulletin>{

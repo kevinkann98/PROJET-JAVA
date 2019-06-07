@@ -13,7 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *Joue le rôle de classe intermédiaire entre la table personne de la BD et la classe Personne
+ * Gère les requêtes
  * @author kevin
  */
 public class PersonneDAO extends DAO<Personne>{

@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Une école a un id, un nom
  * @author kevin
  */
 public class Ecole {

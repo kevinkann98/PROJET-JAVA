@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *Classe permettant de se connecter à la BD
  * @author kevin
  */
 public class Connexion {

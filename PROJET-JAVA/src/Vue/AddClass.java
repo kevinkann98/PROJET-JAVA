@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *Formulaire d'ajout d'une classe
  * @author kevin
  */
 public class AddClass extends javax.swing.JFrame {

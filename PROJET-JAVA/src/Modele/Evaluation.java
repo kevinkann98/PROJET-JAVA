@@ -6,7 +6,7 @@
 package Modele;
 
 /**
- *
+ *Une note précise, avec sa valeur et son appréciation.Elle est rattachée à un détail de bulletin, donc à un bulletin, donc à un trimestre. 
  * @author kevin
  */
 public class Evaluation {

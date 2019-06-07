@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
+ *Une classe est constituée d'un id, d'un nom, d'une annee scolaire, d'une ecole et d'un niveau
  * @author kevin
  */
 public class Classe {
