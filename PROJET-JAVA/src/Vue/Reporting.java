@@ -6,6 +6,12 @@
 package Vue;
 
 //import org.jfree.chart.ChartFactory;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
 //import org.jfree.data.general.DefaultPieDataset;
 
 /**
@@ -84,7 +90,18 @@ public class Reporting extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+        // TODO add your handling code here:
+        DefaultPieDataset test = new DefaultPieDataset();
+        test.setValue("ING1",10);
+        test.setValue("ING2", 20);
+        test.setValue("ING3", 4);
+        test.setValue("ING4", 56);
+        test.setValue("ING5", 39);
+        
+        JFreeChart chart = ChartFactory.createPieChart("Nombre d'élèves par niveau", test, true, true, false);
+        ChartFrame frame = new ChartFrame("Statistique 1", chart);
+        frame.pack();
+        frame.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
