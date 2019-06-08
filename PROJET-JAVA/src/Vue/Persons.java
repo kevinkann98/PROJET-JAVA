@@ -263,6 +263,8 @@ public class Persons extends javax.swing.JFrame {
                     
                     //Mettre à jour l'arraylist de personnes
                     personnes=personneDAO.all(type);
+                    
+                    JOptionPane.showConfirmDialog(null, personne.getNom()+" "+personne.getPrenom()+" a été supprimé.");
                 }
 
             }
@@ -274,8 +276,6 @@ public class Persons extends javax.swing.JFrame {
         
     }//GEN-LAST:event_deleteActionPerformed
 
-    
-  
     
     //Recherche les etudiants par id
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed

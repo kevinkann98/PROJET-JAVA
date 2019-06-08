@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *Formulaire d'ajout d'une classe
@@ -39,7 +40,7 @@ public class AddClass extends javax.swing.JFrame {
     }
     
     /**
-     *  Remplit le dropbox de niveaux avec ceux existants dans la bdd 
+     *Remplit le dropbox de niveaux avec ceux existants dans la bdd 
      */
     public void fillLevels(){
         
@@ -91,7 +92,7 @@ public class AddClass extends javax.swing.JFrame {
         level = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        create = new javax.swing.JButton();
         name = new javax.swing.JTextField();
         year = new javax.swing.JComboBox<>();
 
@@ -115,10 +116,10 @@ public class AddClass extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Année scolaire:");
 
-        jButton1.setText("Inscrire");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        create.setText("Inscrire");
+        create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                createActionPerformed(evt);
             }
         });
 
@@ -154,7 +155,7 @@ public class AddClass extends javax.swing.JFrame {
                     .addComponent(level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(create, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -176,7 +177,7 @@ public class AddClass extends javax.swing.JFrame {
                         .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(create)
                 .addGap(135, 135, 135))
         );
 
@@ -193,7 +194,7 @@ public class AddClass extends javax.swing.JFrame {
 
     
     //Ajout d'une classe
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         try {
             // TODO add your handling code here:
             
@@ -233,11 +234,12 @@ public class AddClass extends javax.swing.JFrame {
             
             //mettre à jour l'arraylist de classes
             Classes.classes=Classes.classeDAO.all();
+            
+            //Message de confirmation
+            JOptionPane.showMessageDialog(rootPane, "La classe "+classe.getNom()+" "+classe.getNiveau()+" "+classe.getAnnee()+" a été ajoutée.");
 
             dispose();
-        
-            
-            
+                
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddClass.class.getName()).log(Level.SEVERE, null, ex);
@@ -246,7 +248,7 @@ public class AddClass extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_createActionPerformed
 
     private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
         // TODO add your handling code here:
@@ -254,7 +256,7 @@ public class AddClass extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton create;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

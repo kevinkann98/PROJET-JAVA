@@ -42,7 +42,7 @@ public class AddPerson extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         nom = new javax.swing.JTextField();
         prenom = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        create = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -67,11 +67,11 @@ public class AddPerson extends javax.swing.JFrame {
         prenom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         prenom.setText("Prenom");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("Inscrire");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        create.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        create.setText("Inscrire");
+        create.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                createActionPerformed(evt);
             }
         });
 
@@ -94,7 +94,7 @@ public class AddPerson extends javax.swing.JFrame {
                 .addContainerGap(463, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(create)
                 .addGap(329, 329, 329))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -117,7 +117,7 @@ public class AddPerson extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(create)
                 .addContainerGap(159, Short.MAX_VALUE))
         );
 
@@ -127,15 +127,14 @@ public class AddPerson extends javax.swing.JFrame {
     
     
     //Inscription d'une personne dans la bdd
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         // TODO add your handling code here:
         String name=nom.getText();
         String prename=prenom.getText();
-        String type="etudiant";
         int id=0; 
             
         //Instancier la personne crééee et la DAO associée
-        Personne personne=new Personne(id,name,prename,type);
+        Personne personne=new Personne(id,name,prename,Persons.type);
         
         PersonneDAO personneDAO;
         try {
@@ -147,6 +146,9 @@ public class AddPerson extends javax.swing.JFrame {
             
             //On met à jour l'arraylist de personnes
             Persons.personnes=Persons.personnesDAO.all(Persons.type);
+            
+            //Message de confirmation
+            JOptionPane.showMessageDialog(rootPane, personne.getNom()+" "+personne.getPrenom()+" a été inscrit.");
         
             //Fermer la fenêtre
             dispose();
@@ -157,7 +159,7 @@ public class AddPerson extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_createActionPerformed
 
     private void nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomActionPerformed
         // TODO add your handling code here:
@@ -165,7 +167,7 @@ public class AddPerson extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton create;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -91,10 +91,10 @@ public class Classes extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        add = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        update = new javax.swing.JButton();
+        displayStudents = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,31 +128,31 @@ public class Classes extends javax.swing.JFrame {
         jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("Ajouter");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        add.setText("Ajouter");
+        add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Supprimer");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        delete.setText("Supprimer");
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Modifier");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        update.setText("Modifier");
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Afficher les élèves");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        displayStudents.setText("Afficher les élèves");
+        displayStudents.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                displayStudentsActionPerformed(evt);
             }
         });
 
@@ -172,13 +172,13 @@ public class Classes extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(205, 205, 205)
-                        .addComponent(jButton2)
+                        .addComponent(add)
                         .addGap(152, 152, 152)
-                        .addComponent(jButton3)
+                        .addComponent(delete)
                         .addGap(175, 175, 175)
-                        .addComponent(jButton4)
+                        .addComponent(update)
                         .addGap(150, 150, 150)
-                        .addComponent(jButton5)))
+                        .addComponent(displayStudents)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -192,10 +192,10 @@ public class Classes extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(add)
+                    .addComponent(delete)
+                    .addComponent(update)
+                    .addComponent(displayStudents))
                 .addContainerGap(227, Short.MAX_VALUE))
         );
 
@@ -203,7 +203,7 @@ public class Classes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
         /**
-     *
+     *Cherche une année dans l'arraylist avec un id
      * @param id_annee
      * @return
      */
@@ -221,7 +221,7 @@ public class Classes extends javax.swing.JFrame {
     }
     
     /**
-     *
+     *Cherche un niveau dans l'arraylist avec un nom de niveau
      * @param nom_niveau
      * @return
      */
@@ -230,14 +230,10 @@ public class Classes extends javax.swing.JFrame {
         Niveau niveau=new Niveau();
         for(int i=0;i<allLevels.size();i++){
                 if(allLevels.get(i).getNom().equals(nom_niveau)){
-                    System.out.println("hello");
+                   
                     niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
                 }
-                    
-                else
-                    System.out.println("Niveau inexistant");
                 
-
             } 
         
         return niveau;
@@ -254,14 +250,14 @@ public class Classes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Ajouter une classe
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
         addClass.setVisible(true);
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addActionPerformed
 
     //Supprimer une classe
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
          try {
              
             if(jTable1.getSelectedRow()==-1){//Si aucune ligne est selectionnee
@@ -294,6 +290,8 @@ public class Classes extends javax.swing.JFrame {
                     modelClass.removeRow(currentRow); 
                     
                     classes=classeDAO.all(); //On remet à jour l'arraylist de classes
+                    JOptionPane.showConfirmDialog(null, "La classe "+classe.getNom()+" "+classe.getNiveau().getNom()+" a été supprimé.");
+                    
                 }
 
             }
@@ -302,7 +300,7 @@ public class Classes extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Une erreur est survenue");
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_deleteActionPerformed
 
     /**
      *Instancie et retourne une classe en selectionnant sa ligne dans le tableau
@@ -336,7 +334,7 @@ public class Classes extends javax.swing.JFrame {
     }
     
     //Modifier une classe
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         try {
             // TODO add your handling code here:
             
@@ -375,11 +373,11 @@ public class Classes extends javax.swing.JFrame {
             } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_updateActionPerformed
 
     
     //Afficher les élèves de la classe sélectionnée
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void displayStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayStudentsActionPerformed
         // TODO add your handling code here:
         
         //Si aucune ligne n'est sélectionnée...
@@ -398,18 +396,18 @@ public class Classes extends javax.swing.JFrame {
         }
              
         
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_displayStudentsActionPerformed
 
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton add;
+    private javax.swing.JButton delete;
+    private javax.swing.JButton displayStudents;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }

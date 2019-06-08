@@ -28,6 +28,14 @@ public class Enseignement {
         this.enseignant = personne;
         this.discipline = discipline;
     }
+    
+    public void afficher(){
+        System.out.println(id_enseignement);
+        classe.afficher();
+        enseignant.afficher();
+        System.out.println(discipline.getNom());
+        
+    }
 
     //Getters setters
     public int getId_enseignement() {

@@ -6,9 +6,13 @@
 
 package Vue;
 
+import DAO.DisciplineDAO;
+import DAO.EnseignementDAO;
 import DAO.InscriptionDAO;
 import DAO.PersonneDAO;
 import Modele.Classe;
+import Modele.Discipline;
+import Modele.Enseignement;
 import Modele.Inscription;
 import Modele.Personne;
 import static Vue.Classes.*;
@@ -28,32 +32,43 @@ public class OneClass extends javax.swing.JFrame {
     Classe classe=new Classe();
     
     Inscription inscription=new Inscription();
-    InscriptionDAO inscriptiondao;
+    InscriptionDAO inscriptiondao;  
+    ArrayList<Inscription> inscriptions= new ArrayList<>();
     
-    ArrayList<Inscription> inscriptions= new ArrayList<Inscription>();
-    private DefaultTableModel modelClass;
+    ArrayList<Discipline> allSubjects=new ArrayList<>();
     
-    /** Creates new form OneClass */
+    ArrayList<Enseignement> allEnseignements=new ArrayList<>();
+    EnseignementDAO enseignementdao;
+    Enseignement enseignement;
+    
+    private final DefaultTableModel modelClass;
+    private final DefaultTableModel modelEnseignement;
+    
+    /** Creates new form OneClass
+     * 
+     * @param classe La classe sélectionnée à afficher*/
     public OneClass(Classe classe) {
         initComponents();
         this.classe=classe;
         
-        modelClass=(DefaultTableModel) jTable1.getModel();      
+        modelClass=(DefaultTableModel) jTable1.getModel();  
+        modelEnseignement=(DefaultTableModel) jTable2.getModel();
+        
         className.setText(classe.getNom()+" "+classe.getNiveau().getNom()+" "+classe.getAnnee().getId_anneeScolaire());
       
-        fillStudents();
-        
-        
+        fillStudents(); //Remplir le tableau avec les étudiants de la classe
+        fillSubjects(); //Remplir le dropdown list avec les disciplines possibles
+        fillEnseignements();
         
     }
     
     /**
-     *
+     *Remplir le tableau avec les étudiants de la classe
      */
     public void fillStudents(){
         
         try {
-            //Remplir le tableau avec les étudiants de la classe
+            
             
             //On récupère d'abord les inscriptions
             inscriptiondao=new InscriptionDAO();
@@ -64,15 +79,11 @@ public class OneClass extends javax.swing.JFrame {
             for(int i=0;i<inscriptions.size();i++){
                 inscriptions.get(i).afficher();
                 if(inscriptions.get(i).getClasse().getId_classe()==classe.getId_classe()){
-                    int id_personne=inscriptions.get(i).getPersonne().getId();
                     
-                    PersonneDAO personnedao=new PersonneDAO();
-                    Personne personne=new Personne();
-                    personne=personnedao.find(id_personne); //Instanciation de la personne en la cherchant dans la bdd
-                    
-                    
-                    
-                    Object []infos={inscriptions.get(i).getId_inscription(), personne.getPrenom(), personne.getNom()};
+                    String nom=inscriptions.get(i).getPersonne().getNom();
+                    String prenom=inscriptions.get(i).getPersonne().getPrenom();
+                                      
+                    Object []infos={inscriptions.get(i).getId_inscription(), nom, prenom};
                     
                     modelClass.insertRow(jTable1.getRowCount(), infos);                   
                     
@@ -98,9 +109,16 @@ public class OneClass extends javax.swing.JFrame {
         className = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        deleteStudent = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        addStudent = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jTextField2 = new javax.swing.JTextField();
+        subjects = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        addProf = new javax.swing.JButton();
+        deleteProf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,7 +130,7 @@ public class OneClass extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identifiant d'inscription", "Nom", "Prénom"
+                "N° Inscription", "Nom", "Prénom"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -123,22 +141,60 @@ public class OneClass extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(20);
+        jTable1.setRowHeight(15);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Retirer de la classe");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        deleteStudent.setText("Retirer de la classe");
+        deleteStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                deleteStudentActionPerformed(evt);
             }
         });
 
         jTextField1.setText("Identifiant de l'étudiant");
 
-        jButton2.setText("Ajouter dans la classe");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addStudent.setText("Ajouter dans la classe");
+        addStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addStudentActionPerformed(evt);
+            }
+        });
+
+        jTable2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "N° Enseignement", "Nom", "Prénom", "Discipline"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setRowHeight(25);
+        jScrollPane2.setViewportView(jTable2);
+
+        jTextField2.setText("Identifiant de l'enseignant");
+
+        jLabel1.setText("Sélectionner une discpiline:");
+
+        addProf.setText("Ajouter dans la classe");
+        addProf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProfActionPerformed(evt);
+            }
+        });
+
+        deleteProf.setText("Retirer de la classe");
+        deleteProf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteProfActionPerformed(evt);
             }
         });
 
@@ -146,39 +202,55 @@ public class OneClass extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 6, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
             .addGroup(layout.createSequentialGroup()
                 .addGap(405, 405, 405)
                 .addComponent(className)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(addStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                    .addComponent(deleteStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField2)
+                    .addComponent(subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(addProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addComponent(className)
-                .addGap(74, 74, 74)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(223, 223, 223)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(addStudent)
+                        .addGap(37, 37, 37)
+                        .addComponent(deleteStudent))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(addProf)
+                        .addGap(34, 34, 34)
+                        .addComponent(deleteProf))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(157, 157, 157))
         );
 
         pack();
@@ -186,7 +258,7 @@ public class OneClass extends javax.swing.JFrame {
 
     
     //Retirer un etudiant de la classe (inscription à supprimer de la bdd)
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void deleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStudentActionPerformed
         // TODO add your handling code here:      
         
         
@@ -229,11 +301,11 @@ public class OneClass extends javax.swing.JFrame {
             
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_deleteStudentActionPerformed
 
     
-    //Ajouter un étudiant dans la classe
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    //Ajouter un étudiant dans la classe (création d'une ligne d'inscription)
+    private void addStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentActionPerformed
         try {
             // TODO add your handling code here:
             inscription=new Inscription();           
@@ -246,6 +318,7 @@ public class OneClass extends javax.swing.JFrame {
             //Récupérer la classe et l'étudiant sélectionné
             int id_personne=Integer.parseInt(jTextField1.getText());
             
+            //Un même étudiant ne peut être inscrit qu'une seule fois
             for(int i=0;i<inscriptions.size();i++){
                 if(inscriptions.get(i).getClasse().getId_classe()==classe.getId_classe() && inscriptions.get(i).getPersonne().getId()==id_personne)
                     throw new SQLException();
@@ -285,16 +358,195 @@ public class OneClass extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_addStudentActionPerformed
+
+    
+    
+    //Ajouter les disciplines disponibles
+    public void fillSubjects(){
+        
+        try {
+            DisciplineDAO disciplinedao=new DisciplineDAO();
+            allSubjects=disciplinedao.all();
+            for(int i=0;i<allSubjects.size();i++){
+                subjects.addItem(allSubjects.get(i).getNom());
+            }
+            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(OneClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    //Afficher la liste des enseignements de la classe(avec le prof et la discipline enseignée)
+    public void fillEnseignements(){
+        try {
+            enseignementdao=new EnseignementDAO();
+            allEnseignements=enseignementdao.all();
+            
+            for(int i=0;i<allEnseignements.size();i++){
+                allEnseignements.get(i).afficher();
+                if(allEnseignements.get(i).getClasse().getId_classe()==classe.getId_classe()){
+                    
+                    int id_enseignement=allEnseignements.get(i).getId_enseignement();
+                    String nom=allEnseignements.get(i).getPersonne().getNom();
+                    String prenom=allEnseignements.get(i).getPersonne().getPrenom();
+                    String name_subject=allEnseignements.get(i).getDiscipline().getNom();                                     
+                    
+                   
+                    
+                    Object[]infos={id_enseignement,nom,prenom,name_subject};
+                    modelEnseignement.insertRow(jTable2.getRowCount(), infos);
+                    
+                }
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(OneClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    //Trouve une discipline avec le nom en param
+    public Discipline findSubject(String subject_name){
+        Discipline discipline=null;
+        for(int i=0;i<allSubjects.size();i++){
+            if(allSubjects.get(i).getNom().equals(subject_name))
+            discipline=new Discipline(allSubjects.get(i).getId_discipline(),allSubjects.get(i).getNom());
+        }
+        
+        return discipline;
+    }
+    
+    //Ajouter un prof dans une classe (création d'une ligne d'enseignement)
+    private void addProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProfActionPerformed
+        try {
+            // TODO add your handling code here:
+            enseignement=new Enseignement();
+            enseignementdao=new EnseignementDAO();
+            
+            Personne personne=new Personne();
+            PersonneDAO personnedao=new PersonneDAO();
+            Discipline discipline=new Discipline();
+            
+            int id_enseignement=0;
+            
+            //Réupérations des données saisies
+            int id_prof=Integer.parseInt((String) jTextField2.getText());
+            
+            String subject_name=(String) subjects.getSelectedItem();
+            discipline=findSubject(subject_name); 
+            if(discipline==null)
+                throw new SQLException();
+            
+            //Un enseignant ne peux pas dispenser deux fois une même matière dans la même classe
+            for(int i=0;i<allEnseignements.size();i++){
+                if(allEnseignements.get(i).getClasse().getId_classe()==classe.getId_classe()){
+                    if(allEnseignements.get(i).getPersonne().getId()==id_prof && allEnseignements.get(i).getDiscipline().getNom().equals(subject_name)){
+                        throw new SQLException();
+                    }
+                }
+            }
+            
+            //On vérifie que le prof existe dans la base          
+            if(personnedao.find(id_prof)==null)
+                throw new SQLException();
+            
+            personne=personnedao.find(id_prof);
+            if(!personne.getType().equals("enseignant")){
+                JOptionPane.showMessageDialog(rootPane, personne.getNom()+" "+personne.getPrenom()+"n'est pas un enseignant");
+            }
+            else{
+                //Demander confirmation
+                int confirm=JOptionPane.showConfirmDialog(null, "Ajouter "+personne.getNom()+" "+personne.getPrenom()+" ?");
+                if(confirm==JOptionPane.YES_OPTION){
+                    //Instancier une inscription
+                    enseignement=new Enseignement(id_enseignement,classe,personne,discipline);
+                    enseignement=enseignementdao.create(enseignement);
+
+                    Object [] infos={enseignement.getId_enseignement(),personne.getNom(),personne.getPrenom(),discipline.getNom()};
+                    modelEnseignement.insertRow(jTable2.getRowCount(), infos);
+                        
+                    allEnseignements=enseignementdao.all();
+
+                    }  
+                
+                
+            }
+                           
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        }
+        
+        
+    }//GEN-LAST:event_addProfActionPerformed
+
+    
+    //Retire un enseignant de la classe (supprimer un enseignement)
+    private void deleteProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProfActionPerformed
+        // TODO add your handling code here:
+        
+        if(jTable2.getSelectedRow()==-1){//Si aucune ligne est selectionnee
+            if(modelEnseignement.getRowCount()==0){
+                JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne.");                
+            }
+            
+        }
+        else{
+            
+            try {
+                enseignement=new Enseignement();
+                enseignementdao=new EnseignementDAO();
+                
+                //On récupère la ligne
+                int currentRow=jTable2.getSelectedRow();
+                
+                int id_enseignement=(int) modelEnseignement.getValueAt(currentRow, 0);
+                String nom=(String) modelEnseignement.getValueAt(currentRow, 1);
+                String prenom=(String) modelEnseignement.getValueAt(currentRow, 2);
+                
+                enseignement=enseignementdao.find(id_enseignement); //Chercher l'enseignement dans la bdd
+                
+                //Demande de confirmation
+                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment retirer "+nom+" "+prenom+" de la classe ?");
+                
+                if(confirm==JOptionPane.YES_OPTION){
+                    enseignementdao.delete(enseignement); //Enlever de la bdd
+                    modelEnseignement.removeRow(currentRow);
+                    
+                    //on met à jour l'arraylist d'inscriptions
+                    allEnseignements=enseignementdao.all();
+                    
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+            }
+            
+            
+        
+        }
+    }//GEN-LAST:event_deleteProfActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addProf;
+    private javax.swing.JButton addStudent;
     private javax.swing.JLabel className;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton deleteProf;
+    private javax.swing.JButton deleteStudent;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox<String> subjects;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -128,9 +128,9 @@ public class EnseignementDAO extends DAO<Enseignement>{
     public void delete(Enseignement obj) {
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            rs=stmt.executeQuery("DELETE FROM enseignement WHERE id_enseignement="+obj.getId_enseignement());
+            rss=stmt.executeUpdate("DELETE FROM enseignement WHERE id_enseignement= "+obj.getId_enseignement());
             
-            if(rs.first()){
+            if(rss!=0){
                 System.out.println("L'enseignement "+obj.getDiscipline().getNom()+" enseigné par "+obj.getPersonne().getNom()+"a étét supprimé.");
             }
             else
