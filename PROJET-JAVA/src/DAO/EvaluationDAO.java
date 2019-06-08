@@ -6,7 +6,7 @@
 package DAO;
 
 import static DAO.DAO.con;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import Modele.DetailBulletin;
 import Modele.Evaluation;
 import java.sql.PreparedStatement;
@@ -60,7 +60,7 @@ public class EvaluationDAO extends DAO<Evaluation>{
             
             rs=stmt.executeQuery("SELECT * FROM evaluation WHERE id_evaluation="+id);
             if(rs.first()){
-                int note=rs.getInt("note");
+                float note=rs.getFloat("note");
                 String appreciation=rs.getString("appreciation");
                 int id_detail=rs.getInt("id_detail");
                 
@@ -87,7 +87,7 @@ public class EvaluationDAO extends DAO<Evaluation>{
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             PreparedStatement prepare=con.prepareStatement("INSERT INTO evaluation (note,appreciation,id_detail) VALUES (?,?,?)");
             
-            prepare.setInt(1, obj.getNote());
+            prepare.setFloat(1, obj.getNote());
             prepare.setString(2, obj.getAppreciation());
             prepare.setInt(3, obj.getDetail().getId_detail());
             prepare.executeUpdate();

@@ -5,8 +5,7 @@
  */
 package DAO;
 import Modele.AnneeScolaire;
-import Modele.Connexion;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import Modele.Personne;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

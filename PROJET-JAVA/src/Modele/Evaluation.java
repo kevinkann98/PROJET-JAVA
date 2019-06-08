@@ -11,7 +11,7 @@ package Modele;
  */
 public class Evaluation {
     private int id_evaluation;
-    private int note;
+    private float note;
     private String appreciation;
        
     private DetailBulletin detail; //Rattachée à un detail de bulletin donc à un bulletin
@@ -39,11 +39,11 @@ public class Evaluation {
         this.id_evaluation = id_evaluation;
     }
 
-    public int getNote() {
+    public float getNote() {
         return note;
     }
 
-    public void setNote(int note) {
+    public void setNote(float note) {
         this.note = note;
     }
 

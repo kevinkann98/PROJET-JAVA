@@ -6,7 +6,7 @@
 package DAO;
 
 import static DAO.DAO.con;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import Modele.Ecole;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

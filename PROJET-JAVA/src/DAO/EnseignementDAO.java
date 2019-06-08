@@ -7,7 +7,7 @@ package DAO;
 
 import static DAO.DAO.con;
 import Modele.Classe;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import Modele.Discipline;
 import Modele.Enseignement;
 import Modele.Personne;

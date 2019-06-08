@@ -19,7 +19,6 @@ public interface Comparable<T> {
      * @return 
      */
 
-    @Override
-    public boolean equals(Object obj);
+ 
     
 }

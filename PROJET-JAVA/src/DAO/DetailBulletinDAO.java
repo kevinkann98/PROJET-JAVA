@@ -7,7 +7,7 @@ package DAO;
 
 import static DAO.DAO.con;
 import Modele.Bulletin;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import Modele.DetailBulletin;
 import Modele.Enseignement;
 import java.sql.PreparedStatement;

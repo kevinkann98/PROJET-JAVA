@@ -6,7 +6,7 @@
 package Vue;
 
 
-import Modele.Connexion;
+import DAO.Connexion;
 import Modele.Personne;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -216,14 +216,14 @@ public class LoginPage extends javax.swing.JFrame {
         Connexion.setPassword(motdepasse.getText());  
         
         
-        if(Connexion.connect()!=null){
+        if(Connexion.Connexion()!=null){
             MenuPrincipal menuprincipal= new MenuPrincipal();
             menuprincipal.setVisible(true);
             dispose();
             //Afficher les personnes
         } else {
             
-            JOptionPane.showMessageDialog(rootPane, "Identifiant ou mot de passe incorrect");
+            JOptionPane.showMessageDialog(rootPane, "Erreur de connexion");
         }
         
         

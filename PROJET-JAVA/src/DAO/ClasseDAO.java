@@ -6,7 +6,7 @@
 package DAO;
 
 import Modele.*;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;

@@ -5,7 +5,7 @@
  */
 package Modele;
 
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import java.sql.Connection;
 import java.sql.Statement;
 import Vue.LoginPage;
@@ -18,9 +18,8 @@ import java.util.Objects;
  * @author kevin
  */
 public class Personne implements Comparable<Personne>{
-    private static Statement stmt=null;
     
-    
+       
     private int id_personne;
     private String nom;
     private String prenom;
@@ -60,31 +59,6 @@ public class Personne implements Comparable<Personne>{
         
     }
     
-    /**
-     * Recup toutes les personnes inscrites de la bdd
-     * @throws SQLException
-     */
-    public static void getAllPersonnes() throws SQLException{
-        try{
-            //Appel au module de connexion
-            
-            stmt=getCon().createStatement();
-            rs=stmt.executeQuery("SELECT * FROM personne");
-            
-            System.out.println("Voici les personnes:");
-            while(rs.next()){
-                
-                System.out.println(rs.getString("nom"));
-            }
-            
-        }
-        catch(SQLException e){
-            
-            System.out.println("Aucune personne n'est présente dans la base.");
-            
-        }
-        
-    }
     
     /**
      * 

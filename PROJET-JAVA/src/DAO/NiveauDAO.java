@@ -7,7 +7,7 @@ package DAO;
 
 import static DAO.DAO.con;
 import Modele.Niveau;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

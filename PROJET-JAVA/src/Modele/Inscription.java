@@ -13,19 +13,19 @@ public class Inscription {
     private int id_inscription;
     
     private Classe classe;
-    private Personne personne; 
+    private Personne eleve; 
     
     public Inscription(){
         id_inscription=0;
         classe=null;
-        personne=null;
+        eleve=null;
         
     }
 
     public Inscription(int id_inscription, Classe classe, Personne personne) {
         this.id_inscription = id_inscription;
         this.classe = classe;
-        this.personne = personne;
+        this.eleve = personne;
     }
     
     /**
@@ -34,7 +34,7 @@ public class Inscription {
     public void afficher(){
         System.out.println(id_inscription);
         System.out.println(classe.getId_classe()+" "+classe.getNom());
-        System.out.println(personne.getId()+" "+personne.getNom());
+        System.out.println(eleve.getId()+" "+eleve.getNom());
     }
     
     //Getters setters
@@ -56,11 +56,11 @@ public class Inscription {
     }
 
     public Personne getPersonne() {
-        return personne;
+        return eleve;
     }
 
     public void setPersonne(Personne personne) {
-        this.personne = personne;
+        this.eleve = personne;
     }
     
     

@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modele;
-import Vue.*;
+package DAO;
+//import Vue.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +18,7 @@ public class Connexion {
     private static Connection con=null;
     public static Statement stmt=null;
     public static ResultSet rs=null;
-    public static int rss=0;
+    public static int rss=0; //Permet de détecter si une ligne d'une table a été mise à jour ou pas
     
     private static String serveur;
     private static String bdd;
@@ -29,7 +29,7 @@ public class Connexion {
      **Cree une connection avec un objet de la classe Connection
      * @return
      */
-    static public Connection connect(){
+    static public Connection Connexion(){
                       
         
             try {

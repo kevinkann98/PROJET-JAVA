@@ -8,7 +8,7 @@ package DAO;
 import static DAO.DAO.con;
 import Modele.AnneeScolaire;
 import Modele.Classe;
-import static Modele.Connexion.*;
+import static DAO.Connexion.*;
 import Modele.Ecole;
 import Modele.Inscription;
 import Modele.Niveau;

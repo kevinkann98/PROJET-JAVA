@@ -12,20 +12,20 @@ package Modele;
 public class Enseignement {
     private int id_enseignement;
     private Classe classe;
-    private Personne personne;
+    private Personne enseignant;
     private Discipline discipline;
     
     public Enseignement(){
         id_enseignement=0;
         classe=null;
-        personne=null;
+        enseignant=null;
         discipline=null;
     }
 
     public Enseignement(int id_enseignement, Classe classe, Personne personne, Discipline discipline) {
         this.id_enseignement = id_enseignement;
         this.classe = classe;
-        this.personne = personne;
+        this.enseignant = personne;
         this.discipline = discipline;
     }
 
@@ -47,11 +47,11 @@ public class Enseignement {
     }
 
     public Personne getPersonne() {
-        return personne;
+        return enseignant;
     }
 
     public void setPersonne(Personne personne) {
-        this.personne = personne;
+        this.enseignant = personne;
     }
 
     public Discipline getDiscipline() {
