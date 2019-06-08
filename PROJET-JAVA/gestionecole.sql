@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 05 juin 2019 à 15:07
+-- Généré le :  sam. 08 juin 2019 à 14:00
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -33,14 +33,18 @@ CREATE TABLE IF NOT EXISTS `anneescolaire` (
   `id_annee` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_annee`),
   UNIQUE KEY `id_annee` (`id_annee`)
-) ENGINE=InnoDB AUTO_INCREMENT=2016 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2020 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `anneescolaire`
 --
 
 INSERT INTO `anneescolaire` (`id_annee`) VALUES
-(2015);
+(2015),
+(2016),
+(2017),
+(2018),
+(2019);
 
 -- --------------------------------------------------------
 
@@ -76,7 +80,19 @@ CREATE TABLE IF NOT EXISTS `classe` (
   KEY `id_annee` (`id_annee`),
   KEY `id_ecole` (`id_ecole`),
   KEY `id_niveau` (`id_niveau`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `classe`
+--
+
+INSERT INTO `classe` (`id_classe`, `nom`, `id_annee`, `id_ecole`, `id_niveau`) VALUES
+(1, 'TD5', 2019, 1, 3),
+(2, 'TD6', 2019, 1, 3),
+(3, 'TD1', 2015, 1, 4),
+(4, 'TD3', 2016, 1, 3),
+(7, 'TD4', 2017, 1, 4),
+(12, 'TD10', 2019, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -106,7 +122,14 @@ CREATE TABLE IF NOT EXISTS `discipline` (
   `id_discipline` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id_discipline`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `discipline`
+--
+
+INSERT INTO `discipline` (`id_discipline`, `nom`) VALUES
+(1, 'mathematiques');
 
 -- --------------------------------------------------------
 
@@ -155,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `enseignement` (
 DROP TABLE IF EXISTS `evaluation`;
 CREATE TABLE IF NOT EXISTS `evaluation` (
   `id_evaluation` int(11) NOT NULL AUTO_INCREMENT,
-  `note` int(11) NOT NULL,
+  `note` float NOT NULL,
   `appreciation` varchar(255) NOT NULL,
   `id_detail` int(11) NOT NULL,
   PRIMARY KEY (`id_evaluation`),
@@ -176,7 +199,15 @@ CREATE TABLE IF NOT EXISTS `inscription` (
   PRIMARY KEY (`id_inscription`),
   KEY `id_classe` (`id_classe`),
   KEY `id_personne` (`id_personne`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `inscription`
+--
+
+INSERT INTO `inscription` (`id_inscription`, `id_classe`, `id_personne`) VALUES
+(14, 7, 29),
+(15, 7, 22);
 
 -- --------------------------------------------------------
 
@@ -216,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id_personne`),
   UNIQUE KEY `id_personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `personne`
@@ -228,7 +259,7 @@ INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `type`) VALUES
 (19, 'Tran', 'Maxime', 'etudiant'),
 (22, 'Mahouni', 'Emy', 'etudiant'),
 (23, 'Sauteee', 'Alexis', 'etudiant'),
-(27, 'Nom', 'Prenom', 'etudiant');
+(29, 'Kann', 'KK', 'etudiant');
 
 -- --------------------------------------------------------
 
@@ -245,7 +276,14 @@ CREATE TABLE IF NOT EXISTS `trimestre` (
   `id_annee` int(11) NOT NULL,
   PRIMARY KEY (`id_trimestre`),
   KEY `id_annee` (`id_annee`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `trimestre`
+--
+
+INSERT INTO `trimestre` (`id_trimestre`, `numero`, `fin`, `debut`, `id_annee`) VALUES
+(1, 1, '2019-01-04', '2019-01-01', 2015);
 
 --
 -- Contraintes pour les tables déchargées

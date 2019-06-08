@@ -44,7 +44,7 @@ public class LoginPage extends javax.swing.JFrame {
         motdepasse = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        connection = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         pswforgot = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -81,11 +81,11 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Mot de passe:");
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Connexion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        connection.setBackground(new java.awt.Color(255, 255, 255));
+        connection.setText("Connexion");
+        connection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                connectionActionPerformed(evt);
             }
         });
 
@@ -160,7 +160,7 @@ public class LoginPage extends javax.swing.JFrame {
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(jLabel4))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(connection, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(548, 548, 548))
         );
         layout.setVerticalGroup(
@@ -193,7 +193,7 @@ public class LoginPage extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(pswforgot, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(connection, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -208,7 +208,7 @@ public class LoginPage extends javax.swing.JFrame {
     
     
     //Vérifier les données de connexion
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void connectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectionActionPerformed
         // TODO add your handling code here:
         Connexion.setServeur((String)jComboBox1.getSelectedItem());
         Connexion.setBdd(database.getText());
@@ -227,7 +227,7 @@ public class LoginPage extends javax.swing.JFrame {
         }
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_connectionActionPerformed
 
     private void pswforgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pswforgotMouseClicked
         // TODO add your handling code here:
@@ -280,10 +280,10 @@ public class LoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton connection;
     private javax.swing.JTextField database;
     private javax.swing.JButton exit;
     private javax.swing.JTextField identifiant;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
