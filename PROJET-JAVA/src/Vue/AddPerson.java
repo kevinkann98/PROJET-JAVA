@@ -136,8 +136,9 @@ public class AddPerson extends javax.swing.JFrame {
         //Instancier la personne crééee et la DAO associée
         Personne personne=new Personne(id,name,prename,Persons.type);
         
-        PersonneDAO personneDAO;
+        
         try {
+            PersonneDAO personneDAO=new PersonneDAO();
             personneDAO = new PersonneDAO();
             personne=personneDAO.create(personne); //ajout de cette personne dans la bdd
             
@@ -152,6 +153,8 @@ public class AddPerson extends javax.swing.JFrame {
         
             //Fermer la fenêtre
             dispose();
+            
+            Persons.personnes=personneDAO.all();
 
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");

@@ -110,7 +110,7 @@ public class EnseignementDAO extends DAO<Enseignement>{
             prepare.executeUpdate(); //Execution de la requête
             
             
-           rs=stmt.executeQuery("SELECT id_enseignement FROM enseignement WHERE id_classe="+obj.getClasse().getId_classe()+"AND id_personne="+obj.getPersonne().getId()+"AND id_discipline="+obj.getDiscipline().getId_discipline());
+           rs=stmt.executeQuery("SELECT id_enseignement FROM enseignement WHERE id_classe= "+obj.getClasse().getId_classe()+" AND id_personne= "+obj.getPersonne().getId()+" AND id_discipline= "+obj.getDiscipline().getId_discipline());
        
            if(rs.first()){
                int id=rs.getInt("id_enseignement");

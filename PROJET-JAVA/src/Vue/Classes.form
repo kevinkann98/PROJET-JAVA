@@ -139,7 +139,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="displayStudents">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Afficher les &#xe9;l&#xe8;ves"/>
+        <Property name="text" type="java.lang.String" value="Afficher la classe"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayStudentsActionPerformed"/>

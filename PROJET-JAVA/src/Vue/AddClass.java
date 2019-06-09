@@ -239,7 +239,9 @@ public class AddClass extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "La classe "+classe.getNom()+" "+classe.getNiveau()+" "+classe.getAnnee()+" a été ajoutée.");
 
             dispose();
-                
+        
+            
+            
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddClass.class.getName()).log(Level.SEVERE, null, ex);

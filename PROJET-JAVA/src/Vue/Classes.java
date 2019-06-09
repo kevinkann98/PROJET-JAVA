@@ -149,7 +149,7 @@ public class Classes extends javax.swing.JFrame {
             }
         });
 
-        displayStudents.setText("Afficher les élèves");
+        displayStudents.setText("Afficher la classe");
         displayStudents.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 displayStudentsActionPerformed(evt);
@@ -213,7 +213,7 @@ public class Classes extends javax.swing.JFrame {
                 if(allYears.get(i).getId_anneeScolaire()==id_annee)
                     annee=new AnneeScolaire(allYears.get(i).getId_anneeScolaire());
                 else{
-                    System.out.println("oups");
+                    JOptionPane.showMessageDialog(null, "Année non valide.");
                 }
             }
         return annee;
@@ -232,6 +232,9 @@ public class Classes extends javax.swing.JFrame {
                 if(allLevels.get(i).getNom().equals(nom_niveau)){
                    
                     niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Niveau.");
                 }
                 
             } 

@@ -119,6 +119,8 @@ public class OneClass extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         addProf = new javax.swing.JButton();
         deleteProf = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -141,7 +143,7 @@ public class OneClass extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(15);
+        jTable1.setRowHeight(25);
         jScrollPane1.setViewportView(jTable1);
 
         deleteStudent.setText("Retirer de la classe");
@@ -182,7 +184,7 @@ public class OneClass extends javax.swing.JFrame {
 
         jTextField2.setText("Identifiant de l'enseignant");
 
-        jLabel1.setText("Sélectionner une discpiline:");
+        jLabel1.setText("Sélectionner ou créer une discpiline:");
 
         addProf.setText("Ajouter dans la classe");
         addProf.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +200,15 @@ public class OneClass extends javax.swing.JFrame {
             }
         });
 
+        jTextField3.setText("Nouveau");
+
+        jButton1.setText("Afficher le bulletin");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,14 +221,19 @@ public class OneClass extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextField1)
-                    .addComponent(addStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                    .addComponent(addStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deleteStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField2)
-                    .addComponent(subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(deleteProf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -235,22 +251,28 @@ public class OneClass extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(addStudent)
                         .addGap(37, 37, 37)
-                        .addComponent(deleteStudent))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(deleteStudent)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(subjects, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
                         .addComponent(addProf)
-                        .addGap(34, 34, 34)
-                        .addComponent(deleteProf))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(157, 157, 157))
+                        .addGap(48, 48, 48)
+                        .addComponent(deleteProf)
+                        .addGap(118, 118, 118))))
         );
 
         pack();
@@ -368,6 +390,7 @@ public class OneClass extends javax.swing.JFrame {
         try {
             DisciplineDAO disciplinedao=new DisciplineDAO();
             allSubjects=disciplinedao.all();
+            subjects.addItem("None");
             for(int i=0;i<allSubjects.size();i++){
                 subjects.addItem(allSubjects.get(i).getNom());
             }
@@ -429,6 +452,7 @@ public class OneClass extends javax.swing.JFrame {
             Personne personne=new Personne();
             PersonneDAO personnedao=new PersonneDAO();
             Discipline discipline=new Discipline();
+            DisciplineDAO disciplinedao=new DisciplineDAO();
             
             int id_enseignement=0;
             
@@ -436,9 +460,30 @@ public class OneClass extends javax.swing.JFrame {
             int id_prof=Integer.parseInt((String) jTextField2.getText());
             
             String subject_name=(String) subjects.getSelectedItem();
-            discipline=findSubject(subject_name); 
-            if(discipline==null)
+            
+            //Si l'utilisateur saisit "None", créer une nouvelle discipline
+            
+            if(subject_name!="None"){
+                    discipline=findSubject(subject_name); 
+                if(discipline==null)
+                    throw new SQLException();
+            }
+            else if(!jTextField3.getText().equals(""))
+            {
+                subject_name=(String)jTextField3.getText();
+                int id_subject=0;
+                
+                discipline=new Discipline(id_subject,subject_name);
+                discipline=disciplinedao.create(discipline);
+                
+                jTextField3.setText("Nouveau");
+                
+            }
+            else
                 throw new SQLException();
+            
+            
+            
             
             //Un enseignant ne peux pas dispenser deux fois une même matière dans la même classe
             for(int i=0;i<allEnseignements.size();i++){
@@ -467,6 +512,8 @@ public class OneClass extends javax.swing.JFrame {
 
                     Object [] infos={enseignement.getId_enseignement(),personne.getNom(),personne.getPrenom(),discipline.getNom()};
                     modelEnseignement.insertRow(jTable2.getRowCount(), infos);
+                    
+                    JOptionPane.showConfirmDialog(null,personne.getNom()+" "+personne.getPrenom()+" a été ajouté dans la classe.");
                         
                     allEnseignements=enseignementdao.all();
 
@@ -532,6 +579,13 @@ public class OneClass extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteProfActionPerformed
 
+    
+    //Affiche le bulletin de l'élève sélectionné
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addProf;
@@ -539,6 +593,7 @@ public class OneClass extends javax.swing.JFrame {
     private javax.swing.JLabel className;
     private javax.swing.JButton deleteProf;
     private javax.swing.JButton deleteStudent;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -546,6 +601,7 @@ public class OneClass extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JComboBox<String> subjects;
     // End of variables declaration//GEN-END:variables
 
