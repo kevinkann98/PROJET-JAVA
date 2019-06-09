@@ -10,6 +10,7 @@ import Modele.Personne;
 import static com.sun.jmx.mbeanserver.Util.cast;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -331,10 +332,10 @@ public void findPersons(int find){
 		String prenom=personne.getPrenom();
 		String type=personne.getType();
 		*/
-		
-		
+
+    	
 		//System.out.println("Size tableau: "+personnes.size());
-		for (int i =personnes.size()-1;i>=0;i--) 
+		for (int i =jTable1.getRowCount()-1;i>=0;i--) 
 		{
 		System.out.println("numero:"+i);
 		modelStudent.removeRow(i);   		
