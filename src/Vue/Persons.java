@@ -53,7 +53,7 @@ public class Persons extends javax.swing.JFrame {
         try {
             
             personnesDAO = new PersonneDAO();           
-            //On récupère tout le monde
+            //On recupere tout le monde
             personnes=personnesDAO.all(type);        
             pack();
             
@@ -79,7 +79,7 @@ public void findPersons(int find){
         try {
             
             personnesDAO = new PersonneDAO();           
-            //On récupère tout le monde
+            //On recupere tout le monde
             personnes=personnesDAO.all(type);        
             pack();
             
@@ -90,17 +90,24 @@ public void findPersons(int find){
                 int id = personnes.get(j).getId();
                 
                 if(id == find)
-                {findI=j; // findi enregistre le i de la personne ayant l'ID recherch�
+                {findI=j; // findi enregistre le j de la personne ayant l'ID recherch�
                 }       
             }   
             
+            if(findI!=0) {
+
                 int id=personnes.get(findI).getId();
                 String nom=personnes.get(findI).getNom();
                 String prenom=personnes.get(findI).getPrenom();
                 String type=personnes.get(findI).getType();
-                
+
                 Object[] pers={id,nom,prenom,type}; //Creation de l'objet
                 modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
+            }
+            else
+            {
+            	System.out.println("ID inconnu.");
+            }
                
                       
             
@@ -319,32 +326,23 @@ public void findPersons(int find){
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
 		
-		/*
-		Personne personne =new Personne();
-		           
-		PersonneDAO personneDAO= new PersonneDAO();
-		int id=Integer.parseInt(recherche.getText());            
-		personne=personneDAO.find(id);
-		
-		//Recuperer les champs de la personne
-		id=personne.getId();
-		String nom=personne.getNom();
-		String prenom=personne.getPrenom();
-		String type=personne.getType();
-		*/
-
-    	
-		//System.out.println("Size tableau: "+personnes.size());
 		for (int i =jTable1.getRowCount()-1;i>=0;i--) 
 		{
-		System.out.println("numero:"+i);
 		modelStudent.removeRow(i);   		
 		}
 		
 		String rechercheStr = recherche.getText(); //recuperation depuis la boite Jtextfield
 		int rechercheInt; 
+
+		if( rechercheStr != "") {
+		System.out.println("balise");
 		rechercheInt = Integer.parseInt(rechercheStr); //Conversion de Str vers int
 		findPersons(rechercheInt);
+		}
+		else {
+			System.out.println("ID inconnu");
+		}
+
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
