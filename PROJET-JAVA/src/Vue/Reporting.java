@@ -5,6 +5,14 @@
  */
 package Vue;
 
+import DAO.InscriptionDAO;
+import DAO.PersonneDAO;
+import Modele.Classe;
+import Modele.Inscription;
+import Modele.Personne;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
@@ -87,12 +95,82 @@ public class Reporting extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+       int cptING =0 ;
+        int cptING1 = 0;
+        int cptING2 = 0;
+        int cptING3 = 0;
+        int cptING4 = 0;
+        int cptING5 = 0;    
+        
+         //Instancier l'arraylist créée et la DAO associée
+        ArrayList<Personne> etu= new ArrayList<Personne>();
+        ArrayList<Integer> identifiants = new ArrayList<Integer>();
+        ArrayList<Inscription> ins = new ArrayList<Inscription>();
+        ArrayList<Integer> classe = new ArrayList<Integer>();
+            
+        PersonneDAO personneDAO;
+        InscriptionDAO inscriptionDAO;
+        Classe classe_1;
+                    
+        try {
+            personneDAO = new PersonneDAO();
+            inscriptionDAO= new InscriptionDAO();
+            classe_1 = new Classe();
+            
+            etu = personneDAO.all("etudiant"); //recupere les etudiants seulement  
+            ins = inscriptionDAO.all(); //recupere les etudiants inscrits
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        }
+        
+        for(int i = 0 ; i < etu.size(); i++)
+        {
+            cptING++; //compteur du nombre d'étudiant 
+            System.out.println("identifiant de l'étudiant: " + etu.get(i).getId());
+            identifiants.add(etu.get(i).getId()); //ajout de l'identifiant de l'étudiant dans arraylist identifiant
+        }
+        
+        //Parcourt de l'arraylist des étudiants inscrits
+        for(int j = 0; j < ins.size(); j++)
+        {
+            classe_1 = ins.get(j).getClasse(); //recupere la classe de l'etudiant inscrit
+            classe.add(classe_1.getId_classe()); //ajout de l'identifiant de la classe dans arraylist classe
+            classe_1.afficher(); //affiche la classe
+            
+            //si niveau de la classe est egale à 1 alors incrémentation du compteur ING1
+            if(classe_1.getNiveau().getId_niveau() == 1)
+            {
+                cptING1++;
+            }
+            
+            if(classe_1.getNiveau().getId_niveau() == 2)
+            {
+                cptING2++;
+            }
+            
+            if(classe_1.getNiveau().getId_niveau() == 3)
+            {
+                cptING3++;
+            }
+           
+            if(classe_1.getNiveau().getId_niveau() == 4)
+            {
+                cptING4++;
+            }
+            
+            if(classe_1.getNiveau().getId_niveau() == 5)
+            {
+                cptING5++;
+            }                      
+        }
+               
         DefaultPieDataset test = new DefaultPieDataset();
-        test.setValue("ING1",10);
-        test.setValue("ING2", 20);
-        test.setValue("ING3", 4);
-        test.setValue("ING4", 56);
-        test.setValue("ING5", 39);
+        test.setValue("ING1", cptING1);
+        test.setValue("ING2", cptING2);
+        test.setValue("ING3", cptING3);
+        test.setValue("ING4", cptING4);
+        test.setValue("ING5", cptING5);
         
         JFreeChart chart = ChartFactory.createPieChart("Nombre d'élèves par niveau", test, true, true, false);
         ChartFrame frame = new ChartFrame("Statistique 1", chart);
