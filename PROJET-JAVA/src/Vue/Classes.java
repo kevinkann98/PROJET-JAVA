@@ -26,7 +26,7 @@ public class Classes extends javax.swing.JFrame {
     
     static ArrayList<Classe> classes=new ArrayList();
     static ClasseDAO classeDAO;
-    Classe classe=new Classe();
+    static Classe classe=new Classe();
     AddClass addClass=new AddClass();
     
     static ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
@@ -314,10 +314,8 @@ public class Classes extends javax.swing.JFrame {
         //On récup toutes la ligne puis instanciation à partir de l'arraylist.
             int currentRow=jTable1.getSelectedRow();
             
-            int id=(int)modelClass.getValueAt(currentRow,0);
-            
-            
-            String nom=(String)modelClass.getValueAt(currentRow, 1);
+            int id=(int)modelClass.getValueAt(currentRow,0);           
+            /*String nom=(String)modelClass.getValueAt(currentRow, 1);
             
             String nom_annee=(String)modelClass.getValueAt(currentRow, 2);   
             int id_annee=Integer.parseInt(nom_annee);
@@ -327,10 +325,16 @@ public class Classes extends javax.swing.JFrame {
             Ecole ecole=new Ecole(1,nom_ecole);
             
             String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
-            Niveau niveau=findLevel(nom_niveau);
+            Niveau niveau=findLevel(nom_niveau);*/
+            
+            for(int i=0;i<classes.size();i++){
+                if(classes.get(i).getId_classe()==id){
+                    classe=classes.get(i);
+                }
+            }
             
             //Instanciation de la classe modifiée
-            classe=new Classe(id,nom,annee,ecole,niveau);
+            //classe=new Classe(id,nom,annee,ecole,niveau);
             
             return classe;
         
@@ -379,7 +383,7 @@ public class Classes extends javax.swing.JFrame {
     }//GEN-LAST:event_updateActionPerformed
 
     
-    //Afficher les élèves de la classe sélectionnée
+    //Afficher les infos de la classe sélectionnée
     private void displayStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayStudentsActionPerformed
         // TODO add your handling code here:
         
@@ -394,7 +398,7 @@ public class Classes extends javax.swing.JFrame {
         }
         else{
             classe=selectClass();
-            OneClass oneclass=new OneClass(classe);
+            OneClass oneclass=new OneClass();
             oneclass.setVisible(true);
         }
              

@@ -15,7 +15,7 @@ import Modele.Discipline;
 import Modele.Enseignement;
 import Modele.Inscription;
 import Modele.Personne;
-import static Vue.Classes.*;
+import static Vue.Classes.classe;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,9 +29,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class OneClass extends javax.swing.JFrame {
 
-    Classe classe=new Classe();
     
-    Inscription inscription=new Inscription();
+    static Inscription inscription=new Inscription();
     InscriptionDAO inscriptiondao;  
     ArrayList<Inscription> inscriptions= new ArrayList<>();
     
@@ -47,9 +46,8 @@ public class OneClass extends javax.swing.JFrame {
     /** Creates new form OneClass
      * 
      * @param classe La classe sélectionnée à afficher*/
-    public OneClass(Classe classe) {
+    public OneClass() {
         initComponents();
-        this.classe=classe;
         
         modelClass=(DefaultTableModel) jTable1.getModel();  
         modelEnseignement=(DefaultTableModel) jTable2.getModel();
@@ -579,10 +577,49 @@ public class OneClass extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_deleteProfActionPerformed
 
+    /**
+     *  Retourne l'inscription sélectionnée dans le tableau
+     */
+    public Inscription selectRegistration(){
+        Inscription inscription=new Inscription();
+        
+        //Récupere les infos de la ligne
+        int currentRow=jTable1.getSelectedRow();
+        
+        int id_inscription=(int)modelClass.getValueAt(currentRow,0);
+        
+        for(int i=0;i<inscriptions.size();i++){
+            if(inscriptions.get(i).getId_inscription()==id_inscription){
+                inscription=inscriptions.get(i);
+            }
+            //inscriptions.get(i).afficher();
+        }
+        
+        return inscription;
+        
+        
+    }
     
     //Affiche le bulletin de l'élève sélectionné
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        if(jTable1.getSelectedRow()==-1){
+            if(modelClass.getRowCount()==0){
+                JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
+            }
+        }
+        else{
+            //L'inscription courante devient celle qui est sélectionnée dans le tableau
+            inscription=selectRegistration();
+            inscription.afficher();
+            Bulletin bulletin=new Bulletin();
+            bulletin.setVisible(true);
+        }
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
