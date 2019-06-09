@@ -36,9 +36,23 @@ public class Trimestre {
         this.annee = annee;
     }
     
+    /**
+     *Affiche le trimestre
+     */
     public void afficher(){
         System.out.println("Trimestre "+numero+" au "+debut+"-"+fin);
     }
+    
+    @Override
+    public boolean equals(Object trimestre){
+        return trimestre instanceof Trimestre &&
+                ((Trimestre) trimestre).annee.equals(this.annee)&&
+                ((Trimestre) trimestre).debut.equals(this.debut)&&
+                ((Trimestre) trimestre).fin.equals(this.fin)&&
+                ((Trimestre) trimestre).numero==this.numero;
+                
+    }
+    
     //Getters setters
 
     public int getId_trimestre() {

@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package Vue;
+import DAO.BulletinDAO;
 import DAO.TrimestreDAO;
+import Modele.Bulletin;
 import Modele.Trimestre;
 import static Vue.OneClass.inscription;
 import static Vue.Classes.classe;
@@ -12,22 +14,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
- *
+ * Affiche les trimestres et les bulletins
  * @author kevin
  */
-public class Bulletin extends javax.swing.JFrame {
+public class SchoolReport extends javax.swing.JFrame {
     
-    ArrayList<Trimestre> allQuarters =new ArrayList<>();
+    ArrayList<Trimestre> allQuarters =new ArrayList<>(); //Tous les trimestres de la table
     TrimestreDAO quarterdao;
-    Bulletin bulletin;
+    Trimestre trimestre=new Trimestre(); //Trimestre courant
+    
+    Bulletin bulletin; //Bulletin courant
+    BulletinDAO bulletindao;
+    ArrayList<Bulletin>allReports=new ArrayList<>(); //Tous les bulletins de la table
+    
     
 
     /**
      * Creates new form Bulletin
      */
-    public Bulletin() {
+    public SchoolReport() {
         initComponents();
         
         fillQuarters();
@@ -36,24 +44,27 @@ public class Bulletin extends javax.swing.JFrame {
         
     }
     
-    //On récupère les 3 trimestres de l'année
+    //On récupère les 3 trimestres de l'année, s'il en manque les créer...
     public void fillQuarters(){
         
         try {
             quarterdao=new TrimestreDAO();
             allQuarters=quarterdao.all();
             
-            //Remplir les choix de trimestre avec ceux de l'année de la classe
+            quarters.addItem("None");
+            
+            //Remplir les choix de trimestre de l'année correspondante
             for(int i=0;i<allQuarters.size();i++){
                 if(allQuarters.get(i).getAnnee().equals(classe.getAnnee())){
-                    allQuarters.get(i).afficher();
+                    allQuarters.get(i).afficher(); //Un trimestre de l'année
                     int numero= allQuarters.get(i).getNumero();
-                    quarters.addItem("Trimestre "+numero);
+                    quarters.addItem(""+numero);
                 }
+                
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Bulletin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SchoolReport.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -76,6 +87,7 @@ public class Bulletin extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,10 +113,18 @@ public class Bulletin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable2);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
         jLabel3.setText("Appréciation générale:");
+
+        jButton1.setText("Sauvegarder les modifications");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,6 +146,10 @@ public class Bulletin extends javax.swing.JFrame {
                         .addComponent(jScrollPane2)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)))
                 .addGap(77, 77, 77))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(293, 293, 293))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,27 +162,133 @@ public class Bulletin extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(quarters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(26, 26, 26)
+                .addComponent(jButton1)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Retourne un trimestre de l'arraylist des trimestres en fonction de son numéro de trimestre (1,2 ou 3)
+     * @return
+     */
+    public Trimestre findQuarter(int numero){
+        Trimestre trimestre=null;
+        
+        for(int i=0;i<allQuarters.size();i++){
+            if(allQuarters.get(i).getAnnee().equals(classe.getAnnee())){
+                if(allQuarters.get(i).getNumero()==numero){
+                    trimestre=allQuarters.get(i);
+                }
+                
+            }
+        }
+        
+        return trimestre;
+        
+    }
     
-    //Choisir le trimestre correspondant et l'afficher
+    
+    //Choisir le trimestre correspondant à l'inscription (classe & etudiant) et afficher le bulletin
+    //Si il n'existe pas, le créer.
     private void quartersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quartersActionPerformed
-        // TODO add your handling code here:
+          
+        if(quarters.getSelectedItem().equals("None")){
+            
+        }
+        else{
+        
+                try {
+                // TODO add your handling code here:
+                
+                bulletindao=new BulletinDAO();
+                allReports=bulletindao.all();
+
+                //Récuperer le trimestre sélectionné dans l'arraylist de trimestre,
+                int numero=Integer.parseInt((String) quarters.getSelectedItem());           
+                if(findQuarter(numero)!=null){
+                    trimestre=findQuarter(numero);
+                }
+                else{
+                    
+                    throw new SQLException();
+                }
+                
+                boolean reportfound=false;
+
+                //Trouver le bulletin correspondant à l'inscription et le trimestre courant, se le bulletin n'existe pas, le créer
+                for(int i=0;i<allReports.size();i++){
+                    if(allReports.get(i).getInscription().equals(inscription)){
+                        if(allReports.get(i).getTrimestre().equals(trimestre)){
+                            bulletin=allReports.get(i);
+                            reportfound=true;
+                        }
+                    }            
+                }
+                
+                //Si bulletin non trouvé dans l'arraylist, le créer
+                if(reportfound==false){
+                    
+                    int id_bulletin=0;
+                    String appreciation="";                           
+                    bulletin=new Bulletin(id_bulletin,appreciation,trimestre,inscription);
+                    bulletin=bulletindao.create(bulletin);                          
+                    allReports=bulletindao.all();
+                }
+                
+                bulletin.afficher();
+                
+                //Et remplir les appréciations dans le tetArea
+                fillReport();
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane,"Bulletin non trouvé");
+            }
+        }
         
 
     }//GEN-LAST:event_quartersActionPerformed
 
+    
+    //Update un bulletin
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        String appreciation=jTextArea1.getText();
+        
+        //Modifier une appréciation
+        bulletin.setAppreciation(appreciation);
+        bulletin.afficher();
+        
+        if(bulletin.equals(bulletindao.update(bulletin))){
+            JOptionPane.showMessageDialog(rootPane, "Bulletin sauvegardé.");
+            allReports=bulletindao.all();
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     *Remplir le tableau de bulletin
+     */
+    public void fillReport(){
+        jTextArea1.setText(bulletin.getAppreciation());
+    }
+    
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

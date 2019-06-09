@@ -11,7 +11,7 @@ package Modele;
  */
 public class Bulletin {
     private int id_bulletin;
-    private final String appreciation;  
+    private String appreciation;  
     private final Trimestre trimestre;
     private final Inscription inscription;
 
@@ -32,6 +32,30 @@ public class Bulletin {
         inscription=_inscription;
     }
     
+    /**
+     * Affiche le bulletin en console
+     */
+    public void afficher(){
+        System.out.println("Voici le bulletin:");
+        System.out.println(id_bulletin);
+        System.out.println(appreciation);
+        trimestre.afficher();
+        inscription.afficher();
+    }
+    
+    
+    @Override
+    public boolean equals(Object bulletin){
+       return bulletin instanceof Bulletin &&
+               ((Bulletin) bulletin).appreciation.equals(this.appreciation)&&
+               ((Bulletin) bulletin).id_bulletin==this.id_bulletin &&
+               ((Bulletin) bulletin).inscription.equals(this.inscription)&&
+               ((Bulletin) bulletin).trimestre.equals(this.trimestre);    
+    }
+    
+    
+    //Getters setters
+    
     public int getId_bulletin() {
         return id_bulletin;
     }
@@ -42,6 +66,10 @@ public class Bulletin {
 
     public String getAppreciation() {
         return appreciation;
+    }
+    
+    public void setAppreciation(String appreciation){
+        this.appreciation=appreciation;
     }
 
     public Trimestre getTrimestre() {

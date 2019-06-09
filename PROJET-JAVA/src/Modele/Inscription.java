@@ -37,6 +37,15 @@ public class Inscription {
         System.out.println(eleve.getId()+" "+eleve.getNom());
     }
     
+    @Override
+    public boolean equals(Object inscription){
+        return inscription instanceof Inscription &&
+                ((Inscription) inscription).id_inscription==this.id_inscription &&
+                ((Inscription) inscription).classe.equals(this.classe)&&
+                ((Inscription) inscription).eleve.equals(this.eleve);
+    }
+    
+    
     //Getters setters
 
     public int getId_inscription() {

@@ -235,6 +235,9 @@ public class AddClass extends javax.swing.JFrame {
             //mettre à jour l'arraylist de classes
             Classes.classes=Classes.classeDAO.all();
             
+            
+            //Créer aussi 3 trimestres pour l'année choisie
+            
             //Message de confirmation
             JOptionPane.showMessageDialog(rootPane, "La classe "+classe.getNom()+" "+classe.getNiveau()+" "+classe.getAnnee()+" a été ajoutée.");
 

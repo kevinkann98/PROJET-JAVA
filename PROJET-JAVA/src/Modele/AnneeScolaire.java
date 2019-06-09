@@ -5,6 +5,8 @@
  */
 package Modele;
 
+import java.sql.Date;
+
 /**
  *Une annee scolaire contient un id
  * @author kevin
@@ -18,6 +20,7 @@ public class AnneeScolaire {
     //Constructeur surchargé
     public AnneeScolaire(int anneeSco){
         id_anneeScolaire=anneeSco;
+        
     }
 
     

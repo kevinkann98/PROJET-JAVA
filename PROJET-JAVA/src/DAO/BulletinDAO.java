@@ -24,7 +24,26 @@ public class BulletinDAO extends DAO<Bulletin>{
     }
 
     public ArrayList<Bulletin> all() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Bulletin> all= new ArrayList<>();
+        
+        try {         
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);          
+            ResultSet rs1=stmt.executeQuery("SELECT * FROM bulletin");           
+            while(rs1.next()){
+                int id=rs1.getInt("id_bulletin");                                
+                //Instancier la classe puis l'ajouter à l'Array de toutes les classes
+                Bulletin bulletin=new Bulletin();
+                bulletin=this.find(id);
+                
+                all.add(bulletin);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClasseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return all;
     }
 
     @Override
@@ -35,9 +54,8 @@ public class BulletinDAO extends DAO<Bulletin>{
         
         
         try {
-            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            
-            rs=stmt.executeQuery("SELECT * FROM bulletin WHERE id="+id);
+            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);            
+            rs=stmt.executeQuery("SELECT * FROM bulletin WHERE id_bulletin="+id);
             
             if(rs.next()){
                 String appreciation=rs.getString("appreciation");
@@ -87,7 +105,7 @@ public class BulletinDAO extends DAO<Bulletin>{
                 System.out.println("Bulletin ajouté dans la base de données.");
                 
                 //recuperer l'id
-                rs=stmt.executeQuery("SELECT id_bulletin FROM bulletin WHERE id_trimestre="+id_trimestre+"AND id_inscription="+id_inscription);
+                rs=stmt.executeQuery("SELECT id_bulletin FROM bulletin WHERE id_trimestre="+id_trimestre+" AND id_inscription="+id_inscription);
                 if(rs.first()){
                     int id_bulletin=rs.getInt("id_bulletin");                
                     bulletin.setId_bulletin(id_bulletin);

@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 public class OneClass extends javax.swing.JFrame {
 
     
-    static Inscription inscription=new Inscription();
+    static Inscription inscription=new Inscription(); //Une inscription!
     InscriptionDAO inscriptiondao;  
     ArrayList<Inscription> inscriptions= new ArrayList<>();
     
@@ -455,7 +455,7 @@ public class OneClass extends javax.swing.JFrame {
             int id_enseignement=0;
             
             //Réupérations des données saisies
-            int id_prof=Integer.parseInt((String) jTextField2.getText());
+            int id_prof=Integer.parseInt(jTextField2.getText());
             
             String subject_name=(String) subjects.getSelectedItem();
             
@@ -581,7 +581,7 @@ public class OneClass extends javax.swing.JFrame {
      *  Retourne l'inscription sélectionnée dans le tableau
      */
     public Inscription selectRegistration(){
-        Inscription inscription=new Inscription();
+        inscription=new Inscription();
         
         //Récupere les infos de la ligne
         int currentRow=jTable1.getSelectedRow();
@@ -616,7 +616,7 @@ public class OneClass extends javax.swing.JFrame {
             //L'inscription courante devient celle qui est sélectionnée dans le tableau
             inscription=selectRegistration();
             inscription.afficher();
-            Bulletin bulletin=new Bulletin();
+            SchoolReport bulletin=new SchoolReport();
             bulletin.setVisible(true);
         }
         

@@ -234,7 +234,7 @@ public class Classes extends javax.swing.JFrame {
                     niveau=new Niveau(allLevels.get(i).getId_niveau(),allLevels.get(i).getNom());
                 }
                 else{
-                    JOptionPane.showMessageDialog(null, "Niveau.");
+                    //JOptionPane.showMessageDialog(null, "Niveau non trouvé.");
                 }
                 
             } 
@@ -315,26 +315,20 @@ public class Classes extends javax.swing.JFrame {
             int currentRow=jTable1.getSelectedRow();
             
             int id=(int)modelClass.getValueAt(currentRow,0);           
-            /*String nom=(String)modelClass.getValueAt(currentRow, 1);
+            String nom=(String)modelClass.getValueAt(currentRow, 1);
             
-            String nom_annee=(String)modelClass.getValueAt(currentRow, 2);   
-            int id_annee=Integer.parseInt(nom_annee);
+            int id_annee =(int)modelClass.getValueAt(currentRow, 2);                      
             AnneeScolaire annee=new AnneeScolaire(id_annee);
                     
             String nom_ecole=(String)modelClass.getValueAt(currentRow, 3);
             Ecole ecole=new Ecole(1,nom_ecole);
             
             String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
-            Niveau niveau=findLevel(nom_niveau);*/
+            Niveau niveau=findLevel(nom_niveau);
             
-            for(int i=0;i<classes.size();i++){
-                if(classes.get(i).getId_classe()==id){
-                    classe=classes.get(i);
-                }
-            }
             
             //Instanciation de la classe modifiée
-            //classe=new Classe(id,nom,annee,ecole,niveau);
+            classe=new Classe(id,nom,annee,ecole,niveau);
             
             return classe;
         
