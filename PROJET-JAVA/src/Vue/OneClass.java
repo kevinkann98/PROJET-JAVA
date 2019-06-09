@@ -36,7 +36,7 @@ public class OneClass extends javax.swing.JFrame {
     
     ArrayList<Discipline> allSubjects=new ArrayList<>();
     
-    ArrayList<Enseignement> allEnseignements=new ArrayList<>();
+    static ArrayList<Enseignement> allEnseignements=new ArrayList<>(); //Tous les enseignements de la table
     EnseignementDAO enseignementdao;
     Enseignement enseignement;
     
@@ -407,7 +407,7 @@ public class OneClass extends javax.swing.JFrame {
             allEnseignements=enseignementdao.all();
             
             for(int i=0;i<allEnseignements.size();i++){
-                allEnseignements.get(i).afficher();
+                //allEnseignements.get(i).afficher();
                 if(allEnseignements.get(i).getClasse().getId_classe()==classe.getId_classe()){
                     
                     int id_enseignement=allEnseignements.get(i).getId_enseignement();

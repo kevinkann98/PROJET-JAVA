@@ -54,7 +54,7 @@ public class DisciplineDAO extends DAO<Discipline>{
         
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            rs=stmt.executeQuery("SELECT * FROM discipline WHERE id_discipline="+id);
+            rs=stmt.executeQuery("SELECT * FROM discipline WHERE id_discipline= "+id);
             if(rs.first()){
                 String nom=rs.getString("nom");
                 

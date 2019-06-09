@@ -58,7 +58,7 @@ public class DetailBulletinDAO extends DAO<DetailBulletin>{
         try {  
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             
-            rs=stmt.executeQuery("SELECT * FROM detailbulletin WHERE id_detail="+id);
+            rs=stmt.executeQuery("SELECT * FROM detailbulletin WHERE id_detail= "+id);
             if(rs.first()){
                 String appreciation=rs.getString("appreciation");
                 int id_bulletin=rs.getInt("id_bulletin");
@@ -102,7 +102,7 @@ public class DetailBulletinDAO extends DAO<DetailBulletin>{
             prepare.executeUpdate();
             
             if(prepare!=null){
-                rs=stmt.executeQuery("SELECT id_detail FROM detailbulletin WHERE id_bulletin="+obj.getBulletin().getId_bulletin()+"AND id_enseignement="+obj.getEnseignement().getId_enseignement());
+                rs=stmt.executeQuery("SELECT id_detail FROM detailbulletin WHERE id_bulletin= "+obj.getBulletin().getId_bulletin()+" AND id_enseignement= "+obj.getEnseignement().getId_enseignement());
            
                 if(rs.first()){
                     int id=rs.getInt("id_detail");

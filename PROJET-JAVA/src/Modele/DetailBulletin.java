@@ -30,6 +30,14 @@ public class DetailBulletin {
         this.bulletin = bulletin;
         this.enseignement = enseignement;
     }
+    
+    public void afficher(){
+        System.out.println(id_detail);
+        System.out.println(appreciation);
+        bulletin.afficher();
+        enseignement.afficher();
+        
+    }
 
     //Getters setters
     

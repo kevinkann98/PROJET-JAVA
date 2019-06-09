@@ -144,7 +144,7 @@ public class BulletinDAO extends DAO<Bulletin>{
         
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rss=stmt.executeUpdate("UPDATE bulletin SET appreciation='"+bulletin.getAppreciation()+"'");
+            rss=stmt.executeUpdate("UPDATE bulletin SET appreciation='"+bulletin.getAppreciation()+"' WHERE id_bulletin= "+bulletin.getId_bulletin());
             
             if(rss!=0){
                 bulletin=this.find(bulletin.getId_bulletin());

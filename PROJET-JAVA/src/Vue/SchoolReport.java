@@ -5,16 +5,21 @@
  */
 package Vue;
 import DAO.BulletinDAO;
+import DAO.DetailBulletinDAO;
 import DAO.TrimestreDAO;
 import Modele.Bulletin;
+import Modele.DetailBulletin;
+import Modele.Discipline;
+import Modele.Personne;
 import Modele.Trimestre;
-import static Vue.OneClass.inscription;
+import static Vue.OneClass.*;
 import static Vue.Classes.classe;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Affiche les trimestres et les bulletins
@@ -30,6 +35,11 @@ public class SchoolReport extends javax.swing.JFrame {
     BulletinDAO bulletindao;
     ArrayList<Bulletin>allReports=new ArrayList<>(); //Tous les bulletins de la table
     
+    ArrayList<DetailBulletin> allDetails=new ArrayList<>(); //Tous les détails de bulletin
+    DetailBulletinDAO detaildao;
+    
+    private DefaultTableModel modelReport;
+    
     
 
     /**
@@ -38,6 +48,9 @@ public class SchoolReport extends javax.swing.JFrame {
     public SchoolReport() {
         initComponents();
         
+        modelReport=(DefaultTableModel)jTable2.getModel();
+        
+        //Remplir les trimestres et les infos de l'étudiant
         fillQuarters();
         jLabel1.setText(inscription.getPersonne().getNom()+" "+inscription.getPersonne().getPrenom()+" "+inscription.getClasse().getNom());
         
@@ -51,7 +64,7 @@ public class SchoolReport extends javax.swing.JFrame {
             quarterdao=new TrimestreDAO();
             allQuarters=quarterdao.all();
             
-            quarters.addItem("None");
+            //quarters.addItem("None");
             
             //Remplir les choix de trimestre de l'année correspondante
             for(int i=0;i<allQuarters.size();i++){
@@ -93,6 +106,7 @@ public class SchoolReport extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Trimestre:");
 
         quarters.addActionListener(new java.awt.event.ActionListener() {
@@ -106,9 +120,17 @@ public class SchoolReport extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Moyenne min.", "Moyenne de l'élève", "Moyenne max.", "Appréciation"
+                "Discipline", "Enseignant", "Moyenne de l'élève", "Appréciation"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable2.setRowHeight(40);
         jScrollPane1.setViewportView(jTable2);
 
@@ -139,13 +161,17 @@ public class SchoolReport extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(quarters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)))
-                .addGap(77, 77, 77))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(77, 77, 77))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -195,21 +221,86 @@ public class SchoolReport extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Créer un bulletin avec le trimestre et l'inscription courants et les details de bulletin
+     */
+    public void addReport(){
+         int id_bulletin=0;
+         String appreciation="";                           
+         bulletin=new Bulletin(id_bulletin,appreciation,trimestre,inscription);
+         bulletin=bulletindao.create(bulletin);                          
+         allReports=bulletindao.all(); //Mettre à jour tous les bulletins
+         addDetails();
+    }
     
-    //Choisir le trimestre correspondant à l'inscription (classe & etudiant) et afficher le bulletin
+    /**
+     * Créer tous les détails d'un bulletin avec un enseignement
+     */
+    public void addDetails(){
+        
+        try {
+           detaildao=new DetailBulletinDAO();
+            
+            //Créer les details de chaque enseignement pour le bulletin
+            for(int i=0;i<allEnseignements.size();i++){
+                if(allEnseignements.get(i).getClasse().equals(classe)){
+                    
+                    //Récuperer les infos de l'enseignement et créer un detail de bulletin
+                    Discipline discipline=allEnseignements.get(i).getDiscipline();
+                    Personne nom_enseignant=allEnseignements.get(i).getPersonne();
+                    int id_detail=0;
+                    String appreciation="";
+                    
+                    DetailBulletin detail=new DetailBulletin(id_detail,appreciation,bulletin,allEnseignements.get(i));                     
+                    detail=detaildao.create(detail); //Créer le détail de bulletin dans la bdd
+                    allDetails.add(detail); //Ajouter les details dans un arraylist
+
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SchoolReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Remplit le tableau avec les details de bulletin avec l'enseignement: discipline, nom de l'enseignant, moyenne de l'eleve et appreciation
+     */
+    public void fillDetails(){
+        try {
+            detaildao=new DetailBulletinDAO();
+            allDetails=detaildao.all();
+            
+            for(int i=0;i<allDetails.size();i++){               //Id du bulletin courant
+                if(allDetails.get(i).getBulletin().getId_bulletin()==bulletin.getId_bulletin()){
+                    String nom_discipline=allDetails.get(i).getEnseignement().getDiscipline().getNom();
+                    String nom_enseignant=allDetails.get(i).getEnseignement().getPersonne().getNom()+" "+allDetails.get(i).getEnseignement().getPersonne().getPrenom();
+                    float moyenne=0;
+                    String appreciation=allDetails.get(i).getAppreciation();
+                    
+                    Object [] infos={nom_discipline,nom_enseignant,moyenne,appreciation};
+                    modelReport.insertRow(jTable2.getRowCount(), infos);
+                    //allDetails.get(i).afficher();
+                    
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SchoolReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    //Choisir le trimestre correspondant à l'inscription (classe & etudiant) et afficher le bulletin avec toutes ses infos
     //Si il n'existe pas, le créer.
     private void quartersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quartersActionPerformed
-          
-        if(quarters.getSelectedItem().equals("None")){
-            
-        }
-        else{
-        
+                 
                 try {
                 // TODO add your handling code here:
                 
                 bulletindao=new BulletinDAO();
                 allReports=bulletindao.all();
+                
+                //Clear le tableau
+                modelReport.setRowCount(0);
 
                 //Récuperer le trimestre sélectionné dans l'arraylist de trimestre,
                 int numero=Integer.parseInt((String) quarters.getSelectedItem());           
@@ -223,55 +314,72 @@ public class SchoolReport extends javax.swing.JFrame {
                 
                 boolean reportfound=false;
 
-                //Trouver le bulletin correspondant à l'inscription et le trimestre courant, se le bulletin n'existe pas, le créer
+                //Trouver le bulletin correspondant à l'inscription et le trimestre courant, si le bulletin n'existe pas, le créer
                 for(int i=0;i<allReports.size();i++){
                     if(allReports.get(i).getInscription().equals(inscription)){
                         if(allReports.get(i).getTrimestre().equals(trimestre)){
-                            bulletin=allReports.get(i);
+                            bulletin=allReports.get(i); //Récuperer les infos du bulletin
                             reportfound=true;
+                            
+                            //Et remplir les appréciations dans le textArea
+                            fillReport();
+                            
+                            //Et les détails...
+                            fillDetails();
                         }
                     }            
                 }
                 
-                //Si bulletin non trouvé dans l'arraylist, le créer
-                if(reportfound==false){
+                //Si bulletin non trouvé dans l'arraylist, le créer avec tous les détails d'enseignements
+                if(reportfound==false){                  
+                    addReport();    
                     
-                    int id_bulletin=0;
-                    String appreciation="";                           
-                    bulletin=new Bulletin(id_bulletin,appreciation,trimestre,inscription);
-                    bulletin=bulletindao.create(bulletin);                          
-                    allReports=bulletindao.all();
-                }
+                    fillDetails();
+                    //Et remplir les appréciations dans le textArea
+                    fillReport();
+                }              
+                //bulletin.afficher();             
                 
-                bulletin.afficher();
-                
-                //Et remplir les appréciations dans le tetArea
-                fillReport();
-
             } catch (ClassNotFoundException | SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane,"Bulletin non trouvé");
             }
-        }
         
 
     }//GEN-LAST:event_quartersActionPerformed
 
     
-    //Update un bulletin
+    //Update un bulletin et le sauvegarder
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        String appreciation=jTextArea1.getText();
-        
-        //Modifier une appréciation
-        bulletin.setAppreciation(appreciation);
-        bulletin.afficher();
-        
-        if(bulletin.equals(bulletindao.update(bulletin))){
-            JOptionPane.showMessageDialog(rootPane, "Bulletin sauvegardé.");
-            allReports=bulletindao.all();
+        try {
+            // TODO add your handling code here:
+            
+            String appreciation=jTextArea1.getText();
+            detaildao=new DetailBulletinDAO();
+            
+            
+            //Modifier un detail de bulletin (seulement la moyenne et l'appreciation
+            int currentRow=jTable2.getSelectedRow();
+                           
+            /*for(int i=0;i<allDetails.size();i++){
+                if(allDetails.get(i).getBulletin().getId_bulletin()==bulletin.getId_bulletin()){
+                    allDetails.get(i).setAppreciation((String)modelReport.getValueAt(currentRow,3));
+                    detaildao.update(allDetails.get(i));
+                }
+            }*/
+            
+            
+            //Modifier une appréciation
+            System.out.println("Bulletin modifie:");
+            bulletin.setAppreciation(appreciation);
+            bulletin.afficher();
+            
+            if(bulletin.equals(bulletindao.update(bulletin))){
+                JOptionPane.showMessageDialog(rootPane, "Bulletin sauvegardé.");
+                allReports=bulletindao.all();
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(SchoolReport.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

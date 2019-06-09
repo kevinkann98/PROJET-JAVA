@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 08 juin 2019 à 14:00
+-- Généré le :  Dim 09 juin 2019 à 21:24
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -61,7 +61,16 @@ CREATE TABLE IF NOT EXISTS `bulletin` (
   PRIMARY KEY (`id_bulletin`),
   KEY `id_inscription` (`id_inscription`),
   KEY `id_trimestre` (`id_trimestre`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `bulletin`
+--
+
+INSERT INTO `bulletin` (`id_bulletin`, `appreciation`, `id_trimestre`, `id_inscription`) VALUES
+(61, 'Trimestre en PLS', 4, 15),
+(62, 'CA VA MIEUX', 5, 15),
+(63, '', 6, 15);
 
 -- --------------------------------------------------------
 
@@ -80,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `classe` (
   KEY `id_annee` (`id_annee`),
   KEY `id_ecole` (`id_ecole`),
   KEY `id_niveau` (`id_niveau`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `classe`
@@ -91,8 +100,9 @@ INSERT INTO `classe` (`id_classe`, `nom`, `id_annee`, `id_ecole`, `id_niveau`) V
 (2, 'TD6', 2019, 1, 3),
 (3, 'TD1', 2015, 1, 4),
 (4, 'TD3', 2016, 1, 3),
-(7, 'TD4', 2017, 1, 4),
-(12, 'TD10', 2019, 1, 3);
+(7, 'TD5', 2017, 1, 4),
+(12, 'TD10', 2017, 1, 3),
+(13, 'TD9', 2018, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -109,7 +119,28 @@ CREATE TABLE IF NOT EXISTS `detailbulletin` (
   PRIMARY KEY (`id_detail`),
   KEY `id_bulletin` (`id_bulletin`),
   KEY `id_enseignement` (`id_enseignement`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `detailbulletin`
+--
+
+INSERT INTO `detailbulletin` (`id_detail`, `appreciation`, `id_bulletin`, `id_enseignement`) VALUES
+(36, '', 61, 5),
+(37, '', 61, 7),
+(38, '', 61, 11),
+(39, '', 61, 13),
+(40, '', 61, 14),
+(41, '', 62, 5),
+(42, '', 62, 7),
+(43, '', 62, 11),
+(44, '', 62, 13),
+(45, '', 62, 14),
+(46, '', 63, 5),
+(47, '', 63, 7),
+(48, '', 63, 11),
+(49, '', 63, 13),
+(50, '', 63, 14);
 
 -- --------------------------------------------------------
 
@@ -122,14 +153,17 @@ CREATE TABLE IF NOT EXISTS `discipline` (
   `id_discipline` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id_discipline`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `discipline`
 --
 
 INSERT INTO `discipline` (`id_discipline`, `nom`) VALUES
-(1, 'mathematiques');
+(1, 'Analyse de Fourier'),
+(2, 'java'),
+(3, 'Nouveau'),
+(5, 'Web Dynamique');
 
 -- --------------------------------------------------------
 
@@ -167,7 +201,18 @@ CREATE TABLE IF NOT EXISTS `enseignement` (
   KEY `id_classe` (`id_classe`),
   KEY `id_discipline` (`id_discipline`),
   KEY `id_personne` (`id_personne`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `enseignement`
+--
+
+INSERT INTO `enseignement` (`id_enseignement`, `id_classe`, `id_personne`, `id_discipline`) VALUES
+(5, 7, 1, 1),
+(7, 7, 37, 2),
+(11, 7, 1, 2),
+(13, 7, 3, 1),
+(14, 7, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -199,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `inscription` (
   PRIMARY KEY (`id_inscription`),
   KEY `id_classe` (`id_classe`),
   KEY `id_personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `inscription`
@@ -207,7 +252,9 @@ CREATE TABLE IF NOT EXISTS `inscription` (
 
 INSERT INTO `inscription` (`id_inscription`, `id_classe`, `id_personne`) VALUES
 (14, 7, 29),
-(15, 7, 22);
+(15, 7, 22),
+(20, 12, 19),
+(21, 4, 39);
 
 -- --------------------------------------------------------
 
@@ -247,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `personne` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id_personne`),
   UNIQUE KEY `id_personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `personne`
@@ -258,8 +305,12 @@ INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `type`) VALUES
 (3, 'Im', 'Yoona', 'enseignant'),
 (19, 'Tran', 'Maxime', 'etudiant'),
 (22, 'Mahouni', 'Emy', 'etudiant'),
-(23, 'Sauteee', 'Alexis', 'etudiant'),
-(29, 'Kann', 'KK', 'etudiant');
+(23, 'Saute', 'Alexis', 'etudiant'),
+(29, 'Kann', 'KK', 'etudiant'),
+(37, 'Hina', 'Manolo', 'enseignant'),
+(38, 'Segado', 'JP', 'enseignant'),
+(39, 'Chhem', 'Serina', 'etudiant'),
+(40, 'Morelle', 'Albin', 'enseignant');
 
 -- --------------------------------------------------------
 
@@ -276,14 +327,28 @@ CREATE TABLE IF NOT EXISTS `trimestre` (
   `id_annee` int(11) NOT NULL,
   PRIMARY KEY (`id_trimestre`),
   KEY `id_annee` (`id_annee`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `trimestre`
 --
 
 INSERT INTO `trimestre` (`id_trimestre`, `numero`, `fin`, `debut`, `id_annee`) VALUES
-(1, 1, '2019-01-04', '2019-01-01', 2015);
+(1, 1, '2019-03-01', '2019-01-01', 2019),
+(2, 2, '2019-06-01', '2019-04-01', 2019),
+(3, 3, '2019-11-01', '2019-09-01', 2019),
+(4, 1, '2017-03-01', '2017-01-01', 2017),
+(5, 2, '2017-06-01', '2017-04-01', 2017),
+(6, 3, '2017-11-01', '2017-09-01', 2017),
+(7, 1, '2018-03-01', '2018-01-01', 2018),
+(8, 2, '2018-06-01', '2018-04-01', 2018),
+(9, 3, '2018-11-01', '2018-09-01', 2018),
+(10, 1, '2016-03-01', '2016-01-01', 2016),
+(11, 2, '2016-06-01', '2016-04-01', 2016),
+(12, 3, '2016-11-01', '2016-09-01', 2016),
+(13, 1, '2015-03-01', '2015-01-01', 2015),
+(14, 2, '2015-06-01', '2015-04-01', 2015),
+(15, 3, '2015-11-01', '2015-09-01', 2015);
 
 --
 -- Contraintes pour les tables déchargées
