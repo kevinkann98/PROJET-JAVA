@@ -44,8 +44,7 @@ public class OneClass extends javax.swing.JFrame {
     private final DefaultTableModel modelEnseignement;
     
     /** Creates new form OneClass
-     * 
-     * @param classe La classe sélectionnée à afficher*/
+     * */
     public OneClass() {
         initComponents();
         
