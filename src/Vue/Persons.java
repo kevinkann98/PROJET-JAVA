@@ -318,7 +318,6 @@ public void findPersons(int find){
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
 		
-		System.out.println("balise");
 		/*
 		Personne personne =new Personne();
 		           
@@ -333,12 +332,18 @@ public void findPersons(int find){
 		String type=personne.getType();
 		*/
 		
+		
 		//System.out.println("Size tableau: "+personnes.size());
 		for (int i =personnes.size()-1;i>=0;i--) 
-		{//System.out.println("numero:"+i);
+		{
+		System.out.println("numero:"+i);
 		modelStudent.removeRow(i);   		
 		}
-		findPersons(22);
+		
+		String rechercheStr = recherche.getText(); //recuperation depuis la boite Jtextfield
+		int rechercheInt; 
+		rechercheInt = Integer.parseInt(rechercheStr); //Conversion de Str vers int
+		findPersons(rechercheInt);
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
