@@ -36,6 +36,9 @@ public class Trimestre {
         this.annee = annee;
     }
     
+    public void afficher(){
+        System.out.println("Trimestre "+numero+": "+debut+"-"+fin);
+    }
     //Getters setters
 
     public int getId_trimestre() {
