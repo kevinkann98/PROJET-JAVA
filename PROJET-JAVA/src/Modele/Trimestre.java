@@ -37,7 +37,7 @@ public class Trimestre {
     }
     
     public void afficher(){
-        System.out.println("Trimestre "+numero+": "+debut+"-"+fin);
+        System.out.println("Trimestre "+numero+" au "+debut+"-"+fin);
     }
     //Getters setters
 

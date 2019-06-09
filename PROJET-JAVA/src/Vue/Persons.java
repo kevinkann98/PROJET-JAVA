@@ -53,190 +53,83 @@ import javax.swing.table.TableModel;
 
 public class Persons extends javax.swing.JFrame {
 
-
-
     static ArrayList<Personne> personnes= new ArrayList();       
-
     static PersonneDAO personnesDAO;
-
     static DefaultTableModel modelStudent;   
-
-    static String type;
-
-    
-
-        
+    static String type;       
 
     /**
-
      * Creates new form Rechercher
-
-     * @param type0 le type de personne �  afficher etudiant ou enseignant?
-
+     * @param type0 le type de personne �  afficher etudiant ou enseignant?
      */
-
     public Persons(String type0) { 
-
         type=type0;
-
-        
-
         initComponents();
-
         modelStudent=(DefaultTableModel)jTable1.getModel();
-
         fillPersons();         
 
-        
-
     }
 
     
 
     /**
-
      *Remplit le tableau de personnes
-
      */
-
     public void fillPersons(){
-
-        
-
         try {
-
-            
-
             personnesDAO = new PersonneDAO();           
-
             //On recupere tout le monde
-
             personnes=personnesDAO.all(type);        
-
             pack();
-
-            
-
             for(int i=0;i<personnes.size();i++){
-
                 int id=personnes.get(i).getId();
-
                 String nom=personnes.get(i).getNom();
-
                 String prenom=personnes.get(i).getPrenom();
-
                 String type=personnes.get(i).getType();
-
-                
-
                 Object[] pers={id,nom,prenom,type}; //Creation de l'objet
+                modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau              
 
-                modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
+            }          
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        }     
+    }
 
-               
-
+    /**
+     * Cherche une personne dans l'arraylist avec l'id
+     * @param find
+     */
+    public void findPersons(int find){
+        try {          
+            personnesDAO = new PersonneDAO();           
+            //On recupere tout le monde
+            personnes=personnesDAO.all(type);        
+            pack();
+            int findI = 0;
+            //Boucle de recherche
+            for(int j=0;j<personnes.size();j++){
+                int id = personnes.get(j).getId();
+                if(id == find)
+                {findI=j; // findi enregistre le j de la personne ayant l'ID recherch�
+                }       
             }            
 
-            
-
-        } catch (ClassNotFoundException | SQLException ex) {
-
-            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
-
-        }      
-
-        
-
-    }
-
-    
-
-public void findPersons(int find){
-
-        
-
-        try {
-
-            
-
-            personnesDAO = new PersonneDAO();           
-
-            //On recupere tout le monde
-
-            personnes=personnesDAO.all(type);        
-
-            pack();
-
-            
-
-            int findI = 0;
-
-            
-
-            //Boucle de recherche
-
-            for(int j=0;j<personnes.size();j++){
-
-                int id = personnes.get(j).getId();
-
-                
-
-                if(id == find)
-
-                {findI=j; // findi enregistre le j de la personne ayant l'ID recherch�
-
-                }       
-
-            }   
-
-            
-
             if(findI!=0) {
-
-
-
                 int id=personnes.get(findI).getId();
-
                 String nom=personnes.get(findI).getNom();
-
                 String prenom=personnes.get(findI).getPrenom();
-
                 String type=personnes.get(findI).getType();
-
-
-
                 Object[] pers={id,nom,prenom,type}; //Creation de l'objet
-
                 modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
-
             }
-
             else
-
             {
-
-            	System.out.println("ID inconnu.");
-
+            	JOptionPane.showConfirmDialog(rootPane,"ID inconnu.");
             }
-
-               
-
-                      
-
-            
-
         } catch (ClassNotFoundException | SQLException ex) {
-
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
-
         }      
-
-        
-
-    }
-
-
-
+}
     /**
 
      * This method is called from within the constructor to initialize the form.
@@ -510,145 +403,66 @@ public void findPersons(int find){
     }// </editor-fold>//GEN-END:initComponents
 
 
-
-    
-
     //Ajouter un etudiant
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         // TODO add your handling code here:
-
         AddPerson addpers= new AddPerson();
-
         addpers.setVisible(true);
-
-        
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
-
     //Retour au menu principal
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         // TODO add your handling code here:
-
         MenuPrincipal menu=new MenuPrincipal();
-
         menu.setVisible(true);
-
         dispose();
-
     }//GEN-LAST:event_jButton4ActionPerformed
 
-
-
-
-
-    
-
     //Supprimer
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        try {
-
-             
-
+       try {
             if(jTable1.getSelectedRow()==-1){//Si aucune ligne est selectionnee
-
                 if(modelStudent.getRowCount()==0){
-
                     JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");                  
-
                 }
-
                 else{
-
                     JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne.");
-
                 }
-
-                
-
             }
-
-            else{
-
-                
-
+            else{                
                 // TODO add your handling code here:
-
                 PersonneDAO personneDAO=new PersonneDAO();
-
                 Personne personne=new Personne();
-
-
-
                 int currentRow=jTable1.getSelectedRow();
-
-
-
                 int id=(int) modelStudent.getValueAt(currentRow,0);//Récupèrer l'id de la case sélectionnée
 
-                
-
                 System.out.println(id);
-
                 personne=personneDAO.find(id); //Trouver la personne dans la bdd avec l'id
-
-
-
                 System.out.println("current row:"+currentRow);
 
                 //Demande de confirmation
-
                 int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+personne.getNom()+" "+personne.getPrenom()+" ?");
-
                 if(confirm==JOptionPane.YES_OPTION){                   
-
                     personneDAO.delete(personne); //Enlever de la bdd
-
                     modelStudent.removeRow(currentRow);   
 
-                    
-
-                    //Mettre �  jour l'arraylist de personnes
-
+                    //Mettre �  jour l'arraylist de personnes
                     personnes=personneDAO.all(type);
 
                 }
-
-
-
-            }
-
-            
-
-            
+            }           
 
         } catch (ClassNotFoundException | SQLException ex) {
 
             Logger.getLogger(Persons.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-
-        
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
-
-
-    
-
-  
-
-    
-
     //Recherche les etudiants par id
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
         // TODO add your handling code here:
@@ -694,9 +508,6 @@ public void findPersons(int find){
     }//GEN-LAST:event_jButton5ActionPerformed
 
 
-
-    
-
     //Modifier une ligne 
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -704,103 +515,49 @@ public void findPersons(int find){
         try {
 
             // TODO add your handling code here:
-
-            
-
             Personne personne=new Personne();
-
             PersonneDAO personneDAO=new PersonneDAO();
 
-            
-
             if(jTable1.getSelectedRow()==-1){ //Si aucune ligne selectionnee...
-
                 if(modelStudent.getRowCount()==0){
-
                    JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
-
-                    
-
                 }
 
                 else{
-
                     JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
-
                 }
 
             }
 
             else{
-
-                
-
                 //Recuperer toutes les valeurs de la ligne selectionnée puis update la bdd
 
                 int currentRow=jTable1.getSelectedRow();
-
-                
-
                 int id= (int) modelStudent.getValueAt(currentRow, 0); //Recuperer l'id
-
                 String nom=(String) modelStudent.getValueAt(currentRow, 1); //Recupere le nom
-
                 String prenom=(String)modelStudent.getValueAt(currentRow,2); //Recuperer le prenom
-
-                String type=(String)modelStudent.getValueAt(currentRow,3); //Recupere le type
-
-                
-
-                
-
-                                   
-
+                String type=(String)modelStudent.getValueAt(currentRow,3); //Recupere le type                    
                 personne=new Personne(id,nom,prenom,type); //instanciation
-
-
-
-
-
                     if(personne.equals(personneDAO.update(personne))){              
 
                       JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès."); 
 
-                      personnes=personnesDAO.all(type); //On met �  jour l'arraylist
-
+                      personnes=personnesDAO.all(type); //On met �  jour l'arraylist
                     }
-
                     else
-
                       throw new SQLException(); 
-
-            }
-
-
-
- 
-
-                     
-
-            
-
+            }                   
         } catch (ClassNotFoundException | SQLException ex) {
-
             JOptionPane.showMessageDialog(rootPane, "Oups...une erreur technique s'est produite");
-
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
-
-
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jTable1MouseClicked
-
-
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

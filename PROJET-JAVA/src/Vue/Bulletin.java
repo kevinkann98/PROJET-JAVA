@@ -21,6 +21,8 @@ public class Bulletin extends javax.swing.JFrame {
     
     ArrayList<Trimestre> allQuarters =new ArrayList<>();
     TrimestreDAO quarterdao;
+    Bulletin bulletin;
+    
 
     /**
      * Creates new form Bulletin
@@ -81,6 +83,12 @@ public class Bulletin extends javax.swing.JFrame {
 
         jLabel2.setText("Trimestre:");
 
+        quarters.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quartersActionPerformed(evt);
+            }
+        });
+
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -140,6 +148,14 @@ public class Bulletin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    //Choisir le trimestre correspondant et l'afficher
+    private void quartersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quartersActionPerformed
+        // TODO add your handling code here:
+        
+
+    }//GEN-LAST:event_quartersActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
