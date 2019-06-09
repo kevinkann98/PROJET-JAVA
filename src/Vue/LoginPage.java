@@ -39,12 +39,12 @@ public class LoginPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();  //Bienvenu
         identifiant = new javax.swing.JTextField();
-        motdepasse = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        motdepasse = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel(); //Identifiant
+        jLabel3 = new javax.swing.JLabel(); //Mot de passe 
+        jButton1 = new javax.swing.JButton(); // bouton de connexion
         jLabel4 = new javax.swing.JLabel();
         pswforgot = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -61,14 +61,14 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel1.setText("Bienvenue ");
 
         identifiant.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        identifiant.setText("Identifiant");
+        identifiant.setText("root");
         identifiant.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 identifiantActionPerformed(evt);
             }
         });
 
-        motdepasse.setText("jPasswordField1");
+        motdepasse.setText("");
         motdepasse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 motdepasseActionPerformed(evt);
@@ -90,7 +90,7 @@ public class LoginPage extends javax.swing.JFrame {
         });
 
         pswforgot.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        pswforgot.setText("Mot de passe oubliÃ© ?");
+        pswforgot.setText("Mot de passe oublié ?");
         pswforgot.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pswforgotMouseClicked(evt);
@@ -104,7 +104,7 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel6.setText("Nom de la base:");
 
         database.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        database.setText("Base de donnees");
+        database.setText("gestionecole");
         database.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 databaseActionPerformed(evt);
@@ -121,6 +121,11 @@ public class LoginPage extends javax.swing.JFrame {
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MySQL" }));
 
+        
+        /*
+         * layout
+         */
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -291,7 +296,7 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField motdepasse;
+    private javax.swing.JTextField motdepasse;
     private javax.swing.JLabel pswforgot;
     // End of variables declaration//GEN-END:variables
 }

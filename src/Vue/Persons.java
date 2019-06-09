@@ -40,8 +40,7 @@ public class Persons extends javax.swing.JFrame {
         
         initComponents();
         modelStudent=(DefaultTableModel)jTable1.getModel();
-        fillPersons();
-          
+        fillPersons();         
         
     }
     
@@ -67,6 +66,42 @@ public class Persons extends javax.swing.JFrame {
                 modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
                
             }            
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        }      
+        
+    }
+    
+public void findPersons(int find){
+        
+        try {
+            
+            personnesDAO = new PersonneDAO();           
+            //On récupère tout le monde
+            personnes=personnesDAO.all(type);        
+            pack();
+            
+            int findI = 0;
+            
+            //Boucle de recherche
+            for(int j=0;j<personnes.size();j++){
+                int id = personnes.get(j).getId();
+                
+                if(id == find)
+                {findI=j; // findi enregistre le i de la personne ayant l'ID recherch�
+                }       
+            }   
+            
+                int id=personnes.get(findI).getId();
+                String nom=personnes.get(findI).getNom();
+                String prenom=personnes.get(findI).getPrenom();
+                String type=personnes.get(findI).getType();
+                
+                Object[] pers={id,nom,prenom,type}; //Creation de l'objet
+                modelStudent.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
+               
+                      
             
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
@@ -228,6 +263,8 @@ public class Persons extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+
+    
     //Supprimer
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
@@ -254,7 +291,7 @@ public class Persons extends javax.swing.JFrame {
                 System.out.println(id);
                 personne=personneDAO.find(id); //Trouver la personne dans la bdd avec l'id
 
-                
+                System.out.println("current row:"+currentRow);
                 //Demande de confirmation
                 int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+personne.getNom()+" "+personne.getPrenom()+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
@@ -279,26 +316,29 @@ public class Persons extends javax.swing.JFrame {
     
     //Recherche les etudiants par id
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        try {
-            // TODO add your handling code here:
-            Personne personne =new Personne();
-                       
-            PersonneDAO personneDAO= new PersonneDAO();
-            int id=Integer.parseInt(recherche.getText());            
-            personne=personneDAO.find(id);
-            
-            //Récupérer les champs de la personne
-            id=personne.getId();
-            String nom=personne.getNom();
-            String prenom=personne.getPrenom();
-            String type=personne.getType();
-            
-            Object[] pers={id,nom,prenom,type};
-            
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Persons.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO add your handling code here:
+		
+		System.out.println("balise");
+		/*
+		Personne personne =new Personne();
+		           
+		PersonneDAO personneDAO= new PersonneDAO();
+		int id=Integer.parseInt(recherche.getText());            
+		personne=personneDAO.find(id);
+		
+		//Recuperer les champs de la personne
+		id=personne.getId();
+		String nom=personne.getNom();
+		String prenom=personne.getPrenom();
+		String type=personne.getType();
+		*/
+		
+		//System.out.println("Size tableau: "+personnes.size());
+		for (int i =personnes.size()-1;i>=0;i--) 
+		{//System.out.println("numero:"+i);
+		modelStudent.removeRow(i);   		
+		}
+		findPersons(22);
         
     }//GEN-LAST:event_jButton5ActionPerformed
 

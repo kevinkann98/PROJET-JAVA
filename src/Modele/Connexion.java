@@ -33,10 +33,17 @@ public class Connexion {
                       
         
             try {
-                Class.forName("com.mysql.jdbc.Driver");
+            	
+            	Class.forName("com.mysql.jdbc.Driver");
                 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd+"?autoReconnect=true&useSSL=false", username, password);
+                if(con==null)
+                {
+                	System.out.println("variable con Null");                  
+                } 
                 
-                if(con!=null){
+                if(con!=null)
+                {
+                	System.out.println("Balise4");
                     System.out.println("Connexion à la base "+bdd+" OK");                     
                 } 
                 else{
